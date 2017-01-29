@@ -1,5 +1,63 @@
+:root {
+  /* raw colors */
+  /* palette (temporary): http://paletton.com/#uid=73R0u0k++++qKZWAF+V+VAFZWqK */
+  --white: #fff;
+  --darkWhite: #F6F6F8;
+  --lightGray: #D7D8DE;
+  --darkGray: #54565D;
+  --black: #000;
+
+  /* untested, fetch more from paletton if needed */
+  --gray: #A6A8B1;
+  --lightBlack: #26272A;
+
+  --blue: #0033ff;
+  --lightBlue: #4367FC;
+  --purple: #5000FF;
+  --lightPurple: #7B3FFC;
+  --yellow: #FFDB00;
+  --orange: #FFB300;
+
+  /* semantic colors */
+  --primaryColor: var(--blue);
+  --primaryColorLight: var(--lightBlue);
+  --secondaryColor: var(--orange);
+  --textColor: var(--lightBlack);
+
+  --transitionTiming: 0.15s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: var(--textColor);
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+}
+
+.container.small {
+  max-width: 600px;
+}
+
+.container.large {
+  max-width: 1000px;
 }
