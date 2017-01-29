@@ -1,5 +1,6 @@
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -78,7 +79,7 @@ module.exports = {
       'react-native': 'react-native-web'
     }
   },
-
+  
   module: {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
@@ -124,7 +125,7 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel',
         query: {
-
+          
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
@@ -156,7 +157,7 @@ module.exports = {
       }
     ]
   },
-
+  
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
@@ -176,6 +177,11 @@ module.exports = {
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin({
       PUBLIC_URL: publicUrl
+    }),
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
