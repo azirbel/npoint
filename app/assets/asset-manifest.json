@@ -1,0 +1,6 @@
+{
+  "main.css": "stylesheets/application.css",
+  "main.css.map": "stylesheets/application.css.map",
+  "main.js": "javascripts/application.js",
+  "main.js.map": "javascripts/application.js.map"
+}

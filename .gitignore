@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-/app/assets
+# TODO(azirbel): Find a better build process or automate on heroku
+# /app/assets
 
 ###############################################################################
 # RAILS
