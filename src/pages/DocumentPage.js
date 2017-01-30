@@ -101,12 +101,12 @@ export default class DocumentPage extends Component {
           {this.state.canSave ? '' : <p>Cannot save.</p>}
           <p className='text-center'>
             This document is available at&nbsp;
-            <Link to={`/documents/${this.props.params.documentId}`}>
+            <Link to={`/docs/${this.props.params.documentId}`}>
               {`api.npoint.io/${this.props.params.documentId}`}
             </Link>
           </p>
           <p className='text-center'>
-            <Link to='/documents'>View all documents</Link>
+            <Link to='/docs'>View all documents</Link>
           </p>
         </div>
       </div>

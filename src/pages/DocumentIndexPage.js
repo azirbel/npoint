@@ -42,7 +42,7 @@ export default class DocumentIndexPage extends Component {
             <div>Loading...</div>
           ) : this.state.documents.map((doc) => {
               return (
-                <Link to={`/documents/${doc.id}`} className="document-row" key={doc.id}>
+                <Link to={`/docs/${doc.id}`} className="document-row" key={doc.id}>
                   {doc.title}
                   <button
                     className="button danger"

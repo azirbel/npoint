@@ -8,7 +8,7 @@ import IndexPage from './pages/IndexPage';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={IndexPage} />
-    <Route path="/documents" component={DocumentIndexPage} />
-    <Route path="/documents/:documentId" component={DocumentPage} />
+    <Route path="/docs" component={DocumentIndexPage} />
+    <Route path="/docs/:documentId" component={DocumentPage} />
   </Route>
 );

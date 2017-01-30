@@ -6,7 +6,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id='root'></div>
+  <%= yield %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
