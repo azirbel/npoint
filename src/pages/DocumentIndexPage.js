@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import {} from './DocumentIndex.css';
+import {} from './DocumentIndexPage.css';
 import Document from '../models/Document';
 
-class DocumentIndex extends Component {
+export default class DocumentIndexPage extends Component {
   state = {
     documents: [],
     isLoading: true,
@@ -78,5 +78,3 @@ class DocumentIndex extends Component {
     Document.delete(doc.id).then(() => this.loadDocuments())
   }
 }
-
-export default DocumentIndex;

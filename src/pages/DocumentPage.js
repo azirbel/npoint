@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Document extends Component {
+export default class DocumentPage extends Component {
   render() {
     return (
       <div className="container">
@@ -10,5 +10,3 @@ class Document extends Component {
     );
   }
 }
-
-export default Document;
