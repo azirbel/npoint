@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000/documents';
+const BASE_URL = '/documents';
 
 export default {
   query: () => axios.get(BASE_URL),
