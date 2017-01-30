@@ -1,4 +1,4 @@
-import axios from 'axios'
+/* global axios */
 
 const BASE_URL = '/documents';
 
