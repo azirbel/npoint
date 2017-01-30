@@ -1,15 +1,26 @@
 class DocumentsController < ApplicationController
+  SERIALIZER = DocumentSerializer
+
+  def index
+    render json: Document.all, each_serializer: SERIALIZER
+  end
+
   def show
-    render json: document.contents || {}
+    render json: document, serializer: SERIALIZER
   end
 
   def create
-    @document = Document.new(document_params)
-    head :created
+    @document = Document.create!(document_params)
+    render json: document, serializer: SERIALIZER
   end
 
   def update
     document.update!(document_params)
+    render json: document, serializer: SERIALIZER
+  end
+
+  def destroy
+    document.destroy!
     head :ok
   end
 

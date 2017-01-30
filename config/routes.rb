@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  resources :documents, only: [:create, :show, :update, :destroy]
+  resources :documents, only: [:index, :create, :show, :update, :destroy]
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
