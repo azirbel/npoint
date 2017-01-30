@@ -1,3 +1,7 @@
 .form-label {
   display: block;
 }
+
+.logo-first-letter {
+  color: var(--primaryColor);
+}

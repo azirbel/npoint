@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router'
 import Document from '../models/Document';
 
 export default class DocumentPage extends Component {
@@ -23,14 +24,22 @@ export default class DocumentPage extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>{this.state.title}</h1>
-        <input
-          type='textarea'
-          value={this.state.contents}
-          onChange={(e) => this.updateJson(e.target.value)}/>
-        {this.state.isSaving ? <p>Saving...</p> : ''}
-        {this.state.canSave ? '' : <p>Cannot save.</p>}
+      <div>
+        <header>
+          <div className="container header-container">
+            <h1>{this.state.title}</h1>
+            <button className="button">Publish</button>
+          </div>
+        </header>
+        <div className="container">
+          <Link to='/'>Back to all documents</Link>
+          <input
+            type='textarea'
+            value={this.state.contents}
+            onChange={(e) => this.updateJson(e.target.value)}/>
+          {this.state.isSaving ? <p>Saving...</p> : ''}
+          {this.state.canSave ? '' : <p>Cannot save.</p>}
+        </div>
       </div>
     );
   }

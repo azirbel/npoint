@@ -17,45 +17,53 @@ export default class DocumentIndexPage extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>All Documents</h1>
+      <div>
+        <header>
+          <div className="container header-container">
+            <h1>
+              <span className="logo-first-letter">n</span>
+              point
+            </h1>
+          </div>
+        </header>
+        <div className="container">
+          {this.state.isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <ul>
+              {this.state.documents.map((doc) => {
+                return (
+                  <li key={doc.id}>
+                    <Link to={`/edit/${doc.id}`}>{doc.title}</Link>
+                    <button onClick={() => this.deleteDocument(doc)}>Delete</button>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
 
-        {this.state.isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <ul>
-            {this.state.documents.map((doc) => {
-              return (
-                <li key={doc.id}>
-                  <Link to={`/edit/${doc.id}`}>{doc.title}</Link>
-                  <button onClick={() => this.deleteDocument(doc)}>Delete</button>
-                </li>
-              )
-            })}
-          </ul>
-        )}
+          <div>
+            <h2>Create new</h2>
+            <label className='form-label'>
+              Title
+              <input
+                type='text'
+                value={this.state.newDocumentTitle}
+                onChange={e => this.setState({ newDocumentTitle: e.target.value })}
+                />
+            </label>
 
-        <div>
-          <h2>Create new</h2>
-          <label className='form-label'>
-            Title
-            <input
-              type='text'
-              value={this.state.newDocumentTitle}
-              onChange={e => this.setState({ newDocumentTitle: e.target.value })}
-              />
-          </label>
+            <label className='form-label'>
+              JSON
+              <input
+                type='textarea'
+                value={this.state.newDocumentContents}
+                onChange={e => this.setState({ newDocumentContents: e.target.value })}
+                />
+            </label>
 
-          <label className='form-label'>
-            JSON
-            <input
-              type='textarea'
-              value={this.state.newDocumentContents}
-              onChange={e => this.setState({ newDocumentContents: e.target.value })}
-              />
-          </label>
-
-          <button onClick={() => this.createNewDocument()}>Create</button>
+            <button onClick={() => this.createNewDocument()}>Create</button>
+          </div>
         </div>
       </div>
     );

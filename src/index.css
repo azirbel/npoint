@@ -1,6 +1,6 @@
 :root {
   /* raw colors */
-  /* palette (temporary): http://paletton.com/#uid=73R0u0k++++qKZWAF+V+VAFZWqK */
+  /* palette (temporary): http://paletton.com/palette.php?uid=73g0u0kiCFn8GVde7NVmtwSqXtg */
   --white: #fff;
   --darkWhite: #F6F6F8;
   --lightGray: #D7D8DE;
@@ -11,18 +11,19 @@
   --gray: #A6A8B1;
   --lightBlack: #26272A;
 
-  --blue: #0033ff;
-  --lightBlue: #4367FC;
-  --purple: #5000FF;
-  --lightPurple: #7B3FFC;
-  --yellow: #FFDB00;
-  --orange: #FFB300;
+  --turquoise: #4FBDB5;
+  --lightTurqoise: #ADEDE8;
+  --blue: #5E81C5;
+  --yellow: #FFCC6B;
+  --orange: #FFAB6B;
 
   /* semantic colors */
-  --primaryColor: var(--blue);
-  --primaryColorLight: var(--lightBlue);
-  --secondaryColor: var(--orange);
+  --primaryColor: var(--turquoise);
+  --primaryColorLight: var(--lightTurquoise);
+  --secondaryColor: var(--blue);
   --textColor: var(--lightBlack);
+  --warningColor: var(--yellow);
+  --errorColor: var(--orange);
 
   --smallGutter: 10px;
   --largeGutter: 24px;
@@ -58,4 +59,30 @@ a:hover {
   padding-left: var(--mediumGutter);
   padding-right: var(--mediumGutter);
   max-width: 800px;
+}
+
+header {
+  height: 60px;
+  width: 100%;
+  box-shadow: 0 0 4px 0 var(--lightGray);
+}
+
+.header-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: var(--textColor);
+  background-color: var(--white);
+  border: 1px solid var(--lightGray);
+  border-radius: 3px;
+}
+
+.button.primary {
+  background-color: var(--primaryColor);
 }
