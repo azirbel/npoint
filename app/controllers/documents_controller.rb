@@ -31,6 +31,8 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :contents)
+    params
+      .require(:document).permit(:title)
+      .merge(contents: JSON.parse(params.try(:[], :document).try(:[], :contents) || {}))
   end
 end

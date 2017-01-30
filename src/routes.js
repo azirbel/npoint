@@ -7,6 +7,6 @@ import DocumentIndexPage from './pages/DocumentIndexPage';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={DocumentIndexPage} />
-    <Route path="/edit/**" component={DocumentPage} />
+    <Route path="/edit/:documentId" component={DocumentPage} />
   </Route>
 );

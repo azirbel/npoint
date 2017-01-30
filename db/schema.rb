@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170128223616) do
 
   create_table "documents", force: :cascade do |t|
     t.string   "title",      null: false
-    t.json     "contents"
+    t.jsonb    "contents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
