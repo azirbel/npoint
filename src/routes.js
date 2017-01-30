@@ -3,10 +3,12 @@ import { Route, IndexRoute } from 'react-router';
 import App from './App';
 import DocumentPage from './pages/DocumentPage';
 import DocumentIndexPage from './pages/DocumentIndexPage';
+import IndexPage from './pages/IndexPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={DocumentIndexPage} />
-    <Route path="/edit/:documentId" component={DocumentPage} />
+    <IndexRoute component={IndexPage} />
+    <Route path="/documents" component={DocumentIndexPage} />
+    <Route path="/documents/:documentId" component={DocumentPage} />
   </Route>
 );

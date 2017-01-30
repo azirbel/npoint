@@ -4,15 +4,14 @@
   --white: #fff;
   --darkWhite: #F6F6F8;
   --lightGray: #D7D8DE;
+  --gray: #A6A8B1;
   --darkGray: #54565D;
+  --lightBlack: #26272A;
   --black: #000;
 
-  /* untested, fetch more from paletton if needed */
-  --gray: #A6A8B1;
-  --lightBlack: #26272A;
-
   --turquoise: #4FBDB5;
-  --lightTurqoise: #ADEDE8;
+  --lightTurquoise: #ADEDE8;
+  --darkTurquoise: #178F86;
   --blue: #5E81C5;
   --yellow: #FFCC6B;
   --orange: #FFAB6B;
@@ -20,6 +19,7 @@
   /* semantic colors */
   --primaryColor: var(--turquoise);
   --primaryColorLight: var(--lightTurquoise);
+  --primaryColorDark: var(--darkTurquoise);
   --secondaryColor: var(--blue);
   --textColor: var(--lightBlack);
   --warningColor: var(--yellow);
@@ -29,7 +29,8 @@
   --largeGutter: 24px;
   --mediumGutter: 16px;
 
-  --transitionTiming: 0.15s;
+  --transitionTiming: 0.20s;
+  --borderRadius: 3px;
 }
 
 * {
@@ -65,6 +66,7 @@ header {
   height: 60px;
   width: 100%;
   box-shadow: 0 0 4px 0 var(--lightGray);
+  margin-bottom: 10px;
 }
 
 .header-container {
@@ -74,15 +76,55 @@ header {
   justify-content: space-between;
 }
 
+button {
+  cursor: pointer;
+}
+
 .button {
   font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: var(--textColor);
   background-color: var(--white);
   border: 1px solid var(--lightGray);
-  border-radius: 3px;
+  border-radius: var(--borderRadius);
+  transition: all ease-in-out var(--transitionTiming);
+  padding: 8px 14px;
+}
+
+.button:hover {
+  background-color: var(--darkWhite);
 }
 
 .button.primary {
   background-color: var(--primaryColor);
+  border: 1px solid transparent;
+  color: var(--white);
+}
+
+.button.primary:hover {
+  background-color: var(--primaryColorDark);
+}
+
+.button.danger:hover {
+  background-color: var(--errorColor);
+  border-color: var(--gray);
+}
+
+.button.large {
+  padding: 12px 24px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center-content {
+  display: flex;
+  justify-content: center;
 }

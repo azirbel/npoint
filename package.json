@@ -48,8 +48,10 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "lodash": "^4.17.4",
     "react": "15.4.2",
     "react-dom": "15.4.2",
+    "react-icons": "^2.2.3",
     "react-router": "3.0.2"
   },
   "scripts": {
