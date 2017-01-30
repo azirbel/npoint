@@ -72,7 +72,10 @@ export default class DocumentIndexPage extends Component {
     Document.create({
       title: this.state.newDocumentTitle,
       contents: this.state.newDocumentContents,
-    }).then(() => this.loadDocuments())
+    }).then(() => {
+      this.setState({ newDocumentTitle: '', newDocumentContents: '' })
+      this.loadDocuments()
+    })
   }
 
   deleteDocument(doc) {
