@@ -30,9 +30,14 @@ class DocumentsController < ApplicationController
     @document ||= Document.find(params[:id])
   end
 
+  # TODO(azirbel): Huge hackery
   def document_params
-    params
-      .require(:document).permit(:title)
-      .merge(contents: JSON.parse(params.try(:[], :document).try(:[], :contents) || {}))
+    if params[:document][:contents]
+      params
+        .require(:document).permit(:title)
+        .merge(contents: JSON.parse(params.try(:[], :document).try(:[], :contents) || {}))
+    else
+      params.require(:document).permit(:title)
+    end
   end
 end

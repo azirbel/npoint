@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import {} from './DocumentIndexPage.css';
 import Document from '../models/Document';
-import MdDelete from 'react-icons/lib/md/delete';
+import { MdDelete } from 'react-icons/lib/md';
 import { without } from 'lodash';
 
 export default class DocumentIndexPage extends Component {

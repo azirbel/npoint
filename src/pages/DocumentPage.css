@@ -1,0 +1,8 @@
+/* mimic h1 */
+.edit-title-input {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 0 8px;
+  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  color: var(--textColor);
+}
