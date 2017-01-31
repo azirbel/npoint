@@ -9,7 +9,7 @@ npm install
 ## Development
 
 ```
-foreman s -p 3001
+rails s -p 3001
 npm start
 ```
 
