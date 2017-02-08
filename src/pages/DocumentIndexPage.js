@@ -14,7 +14,7 @@ export default class DocumentIndexPage extends Component {
   componentDidMount() {
     this.setState({ isLoading: true })
     Document.query().then((response) => {
-      this.setState({ documents: response.data.documents, isLoading: false })
+      this.setState({ documents: response.data, isLoading: false })
     })
   }
 

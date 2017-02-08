@@ -19,8 +19,8 @@ export default class DocumentPage extends Component {
     this.setState({ isLoading: true })
     Document.get(this.props.params.documentId).then((response) => {
       this.setState({
-        title: response.data.document.title,
-        contents: JSON.stringify(response.data.document.contents, null, 2),
+        title: response.data.title,
+        contents: JSON.stringify(response.data.contents, null, 2),
         isLoading: false
       })
     })

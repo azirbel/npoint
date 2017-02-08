@@ -19,7 +19,7 @@ export default class IndexPage extends Component {
       title: 'Untitled',
       contents: this.state.newDocumentContents,
     }).then((response) => {
-      this.props.router.push(`/docs/${response.data.document.id}`)
+      this.props.router.push(`/docs/${response.data.id}`)
     })
   }
 
