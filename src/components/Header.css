@@ -1,0 +1,46 @@
+/* gutter_size is 30px */
+
+.header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@media(min-width: 700px) {
+  .header-container.small-logo {
+    max-width: calc(var(--containerWidth) + 60px); /* 2x gutter_size */
+  }
+}
+
+.logo-img-container {
+  width: 30px; /* gutter_size */
+  display: inline-block;
+}
+
+.logo-img {
+  margin-bottom: -2px; /* align with the header text */
+  width: 18px;
+  height: 18px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  color: var(--textColor);
+  user-select: none;
+}
+
+.logo-text:hover {
+  text-decoration: none;
+}
+
+.logo-text-highlight {
+  color: var(--primaryColor);
+}
+
+.inline-h1 {
+  display: inline;
+}

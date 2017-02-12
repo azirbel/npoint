@@ -31,6 +31,8 @@
 
   --transitionTiming: 0.20s;
   --borderRadius: 3px;
+
+  --containerWidth: 800px;
 }
 
 * {
@@ -59,21 +61,7 @@ a:hover {
   margin-right: auto;
   padding-left: var(--mediumGutter);
   padding-right: var(--mediumGutter);
-  max-width: 800px;
-}
-
-header {
-  height: 60px;
-  width: 100%;
-  box-shadow: 0 0 4px 0 var(--lightGray);
-  margin-bottom: 10px;
-}
-
-.header-container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  max-width: var(--containerWidth);
 }
 
 button {

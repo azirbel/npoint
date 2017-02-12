@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import JsonEditor from '../components/JsonEditor';
 import Document from '../models/Document';
+import Header from '../components/Header'
 
 export default class IndexPage extends Component {
   state = {
@@ -26,14 +27,7 @@ export default class IndexPage extends Component {
   render() {
     return (
       <div>
-        <header>
-          <div className="container header-container">
-            <h1>
-              <span className="logo-first-letter">n</span>
-              point
-            </h1>
-          </div>
-        </header>
+        <Header />
         <div className="container">
           <h1 className="text-center">
             Simple, reliable JSON storage

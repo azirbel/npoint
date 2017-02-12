@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import {} from './DocumentIndexPage.css';
 import Document from '../models/Document';
+import Header from '../components/Header'
 import { MdDelete } from 'react-icons/lib/md';
 import { without } from 'lodash';
 
@@ -28,15 +29,7 @@ export default class DocumentIndexPage extends Component {
   render() {
     return (
       <div>
-        <header>
-          <div className="container header-container">
-            <h1>
-              <span className="logo-first-letter">n</span>
-              point
-            </h1>
-            <Link className='button primary' to='/'>New</Link>
-          </div>
-        </header>
+        <Header title='All Documents' />
         <div className="container">
           {this.state.isLoading ? (
             <div>Loading...</div>
