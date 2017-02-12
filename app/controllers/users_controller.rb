@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
   SERIALIZER = UserSerializer
 
+  # TODO(azirbel): Finalize ignore ID query param
   def show
-    render json: user, serializer: SERIALIZER
+    if current_user
+      render json: current_user, serializer: SERIALIZER
+    else
+      render json: {}
+    end
   end
 
   def create
-    binding.pry
     @user = User.create!(user_params)
+    log_in @user
     render json: user, serializer: SERIALIZER
   end
 

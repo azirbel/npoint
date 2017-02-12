@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import Document from '../models/Document';
 import JsonEditor from '../components/JsonEditor';
 import Header from '../components/Header'
-import { MdDone, MdEdit } from 'react-icons/lib/md';
 import {} from './DocumentPage.css';
 
 export default class DocumentPage extends Component {

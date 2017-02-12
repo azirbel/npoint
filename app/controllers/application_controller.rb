@@ -4,4 +4,6 @@ class ApplicationController < ActionController::Base
   #
   # TODO(azirbel): Re-enable
   # protect_from_forgery with: :exception unless Rails.env.development?
+
+  include SessionsHelper
 end

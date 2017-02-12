@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   root 'app#index'
   get 'docs', to: 'app#index'
   get 'docs/:id', to: 'app#index'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   resources :documents, only: [:index, :create, :show, :update, :destroy]
 
