@@ -31,6 +31,7 @@ class DocumentsController < ApplicationController
   end
 
   # TODO(azirbel): Huge hackery
+  # TODO(azirbel): Remove `params.require(:document)`, just access directly
   def document_params
     if params[:document][:contents]
       params

@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   get 'docs/:id', to: 'app#index'
 
   resources :documents, only: [:index, :create, :show, :update, :destroy]
+
+  resources :users
 end
