@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       log_in user
+      remember user
       render json: user, serializer: UserSerializer
     else
       head :unprocessable_entity
@@ -10,7 +11,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     head :ok
   end
 end
