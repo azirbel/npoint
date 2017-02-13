@@ -1,10 +1,27 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { logIn } from './actions'
+import User from './models/User'
 import {} from './App.css'
 
-export default class App extends Component {
+class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired
   };
+
+  componentDidMount() {
+    let { dispatch } = this.props
+    console.log('app mount')
+    User.get(1).then((response) => {
+      if (response.data && response.data.name) {
+        console.log('user is logged in')
+        dispatch(logIn(response.data))
+      } else {
+        console.log('user is logged out')
+      }
+    })
+
+  }
 
   render() {
     return (
@@ -14,3 +31,11 @@ export default class App extends Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    session: state.session
+  }
+}
+
+export default connect(mapStateToProps)(App)

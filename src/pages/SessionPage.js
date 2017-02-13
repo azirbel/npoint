@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import User from '../models/User'
 import Session from '../models/Session'
 import Header from '../components/Header'
+import { logIn, logOut } from '../actions'
 import {} from './SessionPage.css'
 
-export default class SessionPage extends Component {
+class SessionPage extends Component {
   state = {
     name: '',
     email: '',
@@ -26,18 +28,25 @@ export default class SessionPage extends Component {
   }
 
   handleLogin(e) {
+    let { dispatch } = this.props
     console.log('Login');
     Session.login({
       email: this.state.email,
       password: this.state.password,
-    }).then(() => {
+    }).then((response) => {
+      let { name, email } = response.data
+      dispatch(logIn({ name, email }))
       console.log('Success!')
     })
     e.preventDefault();
   }
 
   logOut() {
-    Session.logout()
+    let { dispatch } = this.props
+    Session.logout().then(() => {
+      console.log('dispatch')
+      dispatch(logOut())
+    })
   }
 
   getUserInfo() {
@@ -47,10 +56,14 @@ export default class SessionPage extends Component {
   }
 
   render() {
+    let session = this.props.session
     return (
       <div>
         <Header title="Session" />
         <div className='container'>
+          <h1>Your Session</h1>
+          <p>{session && session.user && session.user.name}</p>
+          <p>{session && session.user && session.user.email}</p>
           <h1>Sign up</h1>
           <form onSubmit={(e) => this.handleSignup(e)}>
             <label>
@@ -92,3 +105,11 @@ export default class SessionPage extends Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    session: state.session
+  }
+}
+
+export default connect(mapStateToProps)(SessionPage)

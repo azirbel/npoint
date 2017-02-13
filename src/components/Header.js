@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import {} from './Header.css'
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
     return (
       <header className='header'>
@@ -23,10 +24,22 @@ export default class Header extends Component {
             )}
           </div>
           <div>
-            <Link to='/account'>Account</Link>
+            {this.props.session.loggedIn ? (
+              <Link to='/account'>Account</Link>
+            ) : (
+              <Link to='/session'>Log In</Link>
+            )}
           </div>
         </div>
       </header>
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    session: state.session
+  }
+}
+
+export default connect(mapStateToProps)(Header)
