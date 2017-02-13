@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router'
 import {} from './Header.css'
+import Overlay from 'react-overlays/lib/Overlay'
+import Tooltip from './Tooltip'
 
 class Header extends Component {
+  state = {
+    show: false,
+  }
+
   render() {
     return (
       <header className='header'>
@@ -24,11 +31,28 @@ class Header extends Component {
             )}
           </div>
           <div>
-            {this.props.session.loggedIn ? (
-              <Link to='/account'>Account</Link>
-            ) : (
-              <Link to='/session'>Log In</Link>
-            )}
+            <div>
+              {this.props.session.loggedIn ? (
+                <Link to='/account'>Account</Link>
+              ) : (
+                <Link to='/session'>Log In</Link>
+              )}
+            </div>
+            <button ref='target' onClick={() => this.setState({ show: true })}>
+              Show
+            </button>
+            <Overlay
+              show={this.state.show}
+              placement={'bottom'}
+              container={this}
+              target={ props => findDOMNode(this.refs.target) }
+            >
+              <Tooltip>
+                <div>
+                  HI THERE
+                </div>
+              </Tooltip>
+            </Overlay>
           </div>
         </div>
       </header>
