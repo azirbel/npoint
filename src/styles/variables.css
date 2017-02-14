@@ -1,0 +1,36 @@
+:root {
+  /* raw colors */
+  /* palette (temporary): http://paletton.com/palette.php?uid=73g0u0kiCFn8GVde7NVmtwSqXtg */
+  --white: #fff;
+  --darkWhite: #F6F6F8;
+  --lightGray: #D7D8DE;
+  --gray: #A6A8B1;
+  --darkGray: #54565D;
+  --lightBlack: #26272A;
+  --black: #000;
+
+  --turquoise: #4FBDB5;
+  --lightTurquoise: #ADEDE8;
+  --darkTurquoise: #178F86;
+  --blue: #5E81C5;
+  --yellow: #FFCC6B;
+  --orange: #FFAB6B;
+
+  /* semantic colors */
+  --primaryColor: var(--turquoise);
+  --primaryColorLight: var(--lightTurquoise);
+  --primaryColorDark: var(--darkTurquoise);
+  --secondaryColor: var(--blue);
+  --textColor: var(--lightBlack);
+  --warningColor: var(--yellow);
+  --errorColor: var(--orange);
+
+  --smallGutter: 10px;
+  --largeGutter: 24px;
+  --mediumGutter: 16px;
+
+  --transitionTiming: 0.20s;
+  --borderRadius: 3px;
+
+  --containerWidth: 800px;
+}

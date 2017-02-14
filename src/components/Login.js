@@ -1,70 +1,71 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import User from '../models/User'
 import Session from '../models/Session'
-import Header from '../components/Header'
-import { logIn, logOut } from '../actions'
-import {} from './SessionPage.css'
+import { logIn } from '../actions'
+import {} from './Login.css'
 
-class SessionPage extends Component {
+class Login extends Component {
+  static propTypes = {
+    onLogin: PropTypes.func.isRequired
+  };
+
   state = {
+    loginTab: true,
     name: '',
     email: '',
     password: '',
-    userInfo: {},
   }
 
   handleSignup(e) {
-    console.log('Signup');
     User.create({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password,
     }).then(() => {
-      console.log('Success!')
+      this.props.onLogin()
     })
     e.preventDefault();
   }
 
   handleLogin(e) {
     let { dispatch } = this.props
-    console.log('Login');
     Session.login({
       email: this.state.email,
       password: this.state.password,
     }).then((response) => {
       let { name, email } = response.data
       dispatch(logIn({ name, email }))
-      console.log('Success!')
+      this.props.onLogin()
     })
     e.preventDefault();
   }
 
-  logOut() {
-    let { dispatch } = this.props
-    Session.logout().then(() => {
-      console.log('dispatch')
-      dispatch(logOut())
-    })
-  }
-
-  getUserInfo() {
-    User.get(1).then((response) => {
-      this.setState({ userInfo: response.data })
-    })
-  }
-
   render() {
-    let session = this.props.session
     return (
       <div>
-        <Header title="Session" />
-        <div className='container'>
-          <h1>Your Session</h1>
-          <p>{session && session.user && session.user.name}</p>
-          <p>{session && session.user && session.user.email}</p>
-          <h1>Sign up</h1>
+        <div>
+          <button className='button link' onClick={() => this.setState({ loginTab: true, })}>
+            Log in
+          </button>
+          <button className='button link' onClick={() => this.setState({ loginTab: false, })}>
+            Sign up
+          </button>
+        </div>
+        {this.state.loginTab ? (
+          <form onSubmit={(e) => this.handleLogin(e)}>
+            <label>
+              Email
+              <input value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
+            </label>
+            <label>
+              Password
+              <input value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
+            </label>
+            <input type='submit' value='Submit' />
+          </form>
+        ) : (
           <form onSubmit={(e) => this.handleSignup(e)}>
             <label>
               Name
@@ -80,29 +81,9 @@ class SessionPage extends Component {
             </label>
             <input type='submit' value='Submit' />
           </form>
-
-          <h1>Log In</h1>
-          <form onSubmit={(e) => this.handleLogin(e)}>
-            <label>
-              Email
-              <input value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
-            </label>
-            <label>
-              Password
-              <input value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
-            </label>
-            <input type='submit' value='Submit' />
-          </form>
-
-          <h1>Log Out</h1>
-          <button onClick={() => this.logOut()}>Log Out</button>
-
-          <h1>Current User Info</h1>
-          <div>{JSON.stringify(this.state.userInfo)}</div>
-          <button onClick={() => this.getUserInfo()}>Get</button>
-        </div>
+        )}
       </div>
-    );
+    )
   }
 }
 
@@ -112,4 +93,4 @@ let mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(SessionPage)
+export default connect(mapStateToProps)(Login)

@@ -11,13 +11,9 @@ class App extends Component {
 
   componentDidMount() {
     let { dispatch } = this.props
-    console.log('app mount')
     User.get(1).then((response) => {
       if (response.data && response.data.name) {
-        console.log('user is logged in')
         dispatch(logIn(response.data))
-      } else {
-        console.log('user is logged out')
       }
     })
 

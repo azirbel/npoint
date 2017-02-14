@@ -1,0 +1,60 @@
+button {
+  cursor: pointer;
+}
+
+.button {
+  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: var(--textColor);
+  background-color: var(--white);
+  border: 1px solid var(--lightGray);
+  border-radius: var(--borderRadius);
+  transition: all ease-in-out var(--transitionTiming);
+  padding: 8px 14px;
+  outline: 0;
+}
+
+.button:hover {
+  background-color: var(--darkWhite);
+}
+
+.button.primary {
+  background-color: var(--primaryColor);
+  border: 1px solid transparent;
+  color: var(--white);
+}
+
+.button.primary:hover {
+  background-color: var(--primaryColorDark);
+}
+
+.button.danger:hover {
+  background-color: var(--errorColor);
+  border-color: var(--gray);
+}
+
+.button.subtle {
+  border: 1px solid transparent;
+}
+
+.button.large {
+  padding: 12px 24px;
+}
+
+.button.link {
+  border: none;
+  outline: none;
+
+  /* duplicated from <a> */
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a.button {
+  padding: 8px 14px;
+  border: none;
+}
+
+a.button:hover {
+  background-color: var(--darkWhite);
+}
