@@ -2,7 +2,11 @@ class DocumentsController < ApplicationController
   SERIALIZER = DocumentSerializer
 
   def index
-    render json: Document.all, each_serializer: SERIALIZER
+    if logged_in?
+      render json: current_user.documents, each_serializer: SERIALIZER
+    else
+      head :unauthorized
+    end
   end
 
   def show
@@ -10,7 +14,7 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    @document = Document.create!(document_params)
+    @document = Document.create!(document_params.merge(user_id: current_user&.id))
     render json: document, serializer: SERIALIZER
   end
 
@@ -33,10 +37,10 @@ class DocumentsController < ApplicationController
   # TODO(azirbel): Huge hackery
   # TODO(azirbel): Remove `params.require(:document)`, just access directly
   def document_params
-    if params[:document][:contents]
+    if params[:contents]
       params
-        .require(:document).permit(:title)
-        .merge(contents: JSON.parse(params.try(:[], :document).try(:[], :contents) || {}))
+        .permit(:title)
+        .merge(contents: JSON.parse(params.try(:[], :contents) || {}))
     else
       params.require(:document).permit(:title)
     end

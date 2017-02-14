@@ -10,12 +10,17 @@ export default class DocumentIndexPage extends Component {
   state = {
     documents: [],
     isLoading: true,
+    needsAuth: false,
   }
 
   componentDidMount() {
     this.setState({ isLoading: true })
     Document.query().then((response) => {
       this.setState({ documents: response.data, isLoading: false })
+    }, (error) => {
+      if (error.response && error.response.status === 401) {
+        this.setState({ needsAuth: true, isLoading: false })
+      }
     })
   }
 
@@ -31,22 +36,25 @@ export default class DocumentIndexPage extends Component {
       <div>
         <Header title='All Documents' />
         <div className="container">
-          {this.state.isLoading ? (
+          {this.state.isLoading && (
             <div>Loading...</div>
-          ) : this.state.documents.map((doc) => {
-              return (
-                <Link to={`/docs/${doc.id}`} className="document-row" key={doc.id}>
-                  {doc.title}
-                  <button
-                    className="button danger"
-                    onClick={(e) => this.deleteDocument(e, doc)}
-                  >
-                    <MdDelete />
-                  </button>
-                </Link>
-              )
-            })
-          }
+          )}
+          {this.state.needsAuth && (
+            <div>Please sign in to view your documents.</div>
+          )}
+          {this.state.documents.map((doc) => {
+            return (
+              <Link to={`/docs/${doc.id}`} className="document-row" key={doc.id}>
+                {doc.title}
+                <button
+                  className="button danger"
+                  onClick={(e) => this.deleteDocument(e, doc)}
+                >
+                  <MdDelete />
+                </button>
+              </Link>
+            )
+          })}
         </div>
       </div>
     );

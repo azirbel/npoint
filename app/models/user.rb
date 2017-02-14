@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
+  has_many :documents
+
   # TODO(azirbel): Can we _not_ override the defaults from has_secure_password?
   # But we need this for the remember_token... find a better way
   def self.digest(string)

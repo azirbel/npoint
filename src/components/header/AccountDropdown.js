@@ -7,6 +7,7 @@ import { Link } from 'react-router'
 import Session from '../../models/Session'
 import Tooltip from '../Tooltip'
 import { logOut } from '../../actions'
+import { push } from 'react-router-redux'
 
 class AccountDropdown extends Component {
   state = {
@@ -16,7 +17,9 @@ class AccountDropdown extends Component {
   logOut() {
     let { dispatch } = this.props
     Session.logout().then(() => {
+      // TODO(azirbel): Put the redirect dispatch inside the logOut one
       dispatch(logOut())
+      dispatch(push('/'))
     })
   }
 

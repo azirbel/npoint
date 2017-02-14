@@ -8,6 +8,7 @@ import configureStore from './store/configureStore';
 import './styles/variables.css';
 import './styles/index.css';
 import './styles/buttons.css';
+import './styles/flex.css';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
