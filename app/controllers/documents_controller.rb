@@ -2,11 +2,7 @@ class DocumentsController < ApplicationController
   SERIALIZER = DocumentSerializer
 
   def index
-    if logged_in?
-      render json: current_user.documents, each_serializer: SERIALIZER
-    else
-      head :unauthorized
-    end
+    render json: current_user.documents, each_serializer: SERIALIZER
   end
 
   def show

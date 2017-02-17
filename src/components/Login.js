@@ -18,12 +18,15 @@ class Login extends Component {
   }
 
   handleSignup(e) {
+    let { dispatch } = this.props
     User.create({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password,
-    }).then(() => {
+    }).then((response) => {
+      let { name, email } = response.data
+      dispatch(logIn({ name, email }))
       this.props.onLogin()
     })
     e.preventDefault();

@@ -11,11 +11,11 @@ class App extends Component {
 
   componentDidMount() {
     let { dispatch } = this.props
-    User.get(1).then((response) => {
+    User.me().then((response) => {
       if (response.data && response.data.name) {
         dispatch(logIn(response.data))
       }
-    })
+    }, error => {})
 
   }
 
