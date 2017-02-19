@@ -9,6 +9,8 @@ import './styles/variables.css';
 import './styles/index.css';
 import './styles/buttons.css';
 import './styles/flex.css';
+import './styles/sections.css';
+import './styles/typography.css';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

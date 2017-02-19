@@ -9,7 +9,7 @@ export default class Title extends Component {
 
   render() {
     return (
-      <div className='logo'>
+      <div>
         {this.props.title ? (
           <div>
             <Link href='/' className='logo-img-container'>

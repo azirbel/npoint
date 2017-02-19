@@ -169,7 +169,9 @@ module.exports = {
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
-      autoprefixer({
+      require('postcss-import'),
+      require('postcss-cssnext'),
+      require('postcss-autoprefixer')({
         browsers: [
           '>1%',
           'last 4 versions',

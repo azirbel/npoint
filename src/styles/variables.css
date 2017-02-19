@@ -1,29 +1,43 @@
 :root {
+  /* NEW colors -------------------------------------- */
+
+  /* raw colors */
+  --white: #FAFAFA;
+  --darkWhite: #EFF0F5;
+  --blue: #6574A6;
+  --lightBlue: #95A6DC;
+  --darkBlue: #415082;
+  --lightBlack: #3D3F45;
+  --black: #000;
+
+  --primaryColor: var(--blue);
+  --primaryColorLight: var(--lightBlue);
+  --primaryColorDark: var(--darkBlue);
+  --textColor: var(--lightBlack);
+
+
+  /* OLD colors -------------------------------------- */
+
   /* raw colors */
   /* palette (temporary): http://paletton.com/palette.php?uid=73g0u0kiCFn8GVde7NVmtwSqXtg */
-  --white: #fff;
   --darkWhite: #F6F6F8;
   --lightGray: #D7D8DE;
   --gray: #A6A8B1;
   --darkGray: #54565D;
-  --lightBlack: #26272A;
-  --black: #000;
 
   --turquoise: #4FBDB5;
   --lightTurquoise: #ADEDE8;
   --darkTurquoise: #178F86;
-  --blue: #5E81C5;
   --yellow: #FFCC6B;
   --orange: #FFAB6B;
 
   /* semantic colors */
-  --primaryColor: var(--turquoise);
-  --primaryColorLight: var(--lightTurquoise);
-  --primaryColorDark: var(--darkTurquoise);
   --secondaryColor: var(--blue);
-  --textColor: var(--lightBlack);
   --warningColor: var(--yellow);
   --errorColor: var(--orange);
+
+
+  /* OTHER VARIABLES -------------------------------------- */
 
   --smallGutter: 10px;
   --largeGutter: 24px;

@@ -6,6 +6,7 @@ import AccountPage from './pages/AccountPage';
 import DocumentIndexPage from './pages/DocumentIndexPage';
 import DocumentPage from './pages/DocumentPage';
 import IndexPage from './pages/IndexPage';
+import StyleguidePage from './pages/StyleguidePage';
 
 export default (
   <Route path="/" component={App}>
@@ -13,5 +14,6 @@ export default (
     <Route path="/docs" component={DocumentIndexPage} />
     <Route path="/docs/:documentId" component={DocumentPage} />
     <Route path="/account" component={AccountPage} />
+    <Route path="/style" component={StyleguidePage} />
   </Route>
 );

@@ -1,0 +1,9 @@
+@import '../styles/variables.css';
+
+.field {
+  padding: 20px;
+
+  &.blue {
+    background-color: var(--blue);
+  }
+}

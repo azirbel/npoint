@@ -1,3 +1,5 @@
+@import './variables.css';
+
 * {
   box-sizing: border-box;
 }
@@ -8,6 +10,7 @@ body {
   font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: var(--textColor);
+  background-color: var(--white);
 }
 
 a {

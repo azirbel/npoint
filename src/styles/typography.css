@@ -1,0 +1,11 @@
+@import '../styles/variables.css';
+
+.title {
+  font-family: 'Source Serif Pro', serif;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.text-white {
+  color: var(--white);
+}

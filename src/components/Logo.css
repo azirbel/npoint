@@ -1,0 +1,13 @@
+@import '../styles/variables.css';
+
+.logo {
+  font-family: 'Source Serif Pro', serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #FFF;
+  text-shadow: 0 1px 4px rgba(61, 63, 69, 40%); /* 40% lightBlack */
+
+  &.blue {
+    color: var(--lightBlue);
+  }
+}

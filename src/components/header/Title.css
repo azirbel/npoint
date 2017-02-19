@@ -1,3 +1,5 @@
+@import '../../styles/variables.css';
+
 .logo-img-container {
   width: 30px; /* gutter_size */
   display: inline-block;
