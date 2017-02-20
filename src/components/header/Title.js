@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router'
+import Logo from '../Logo'
 import {} from './Title.css'
 
 export default class Title extends Component {
@@ -11,17 +12,16 @@ export default class Title extends Component {
     return (
       <div>
         {this.props.title ? (
-          <div>
-            <Link href='/' className='logo-img-container'>
-              <img className='logo-img' alt='logo' src='/img/logo.png' />
+          <div className='flex align-center'>
+            <Link href='/' className='unstyled'>
+              <div className='small-logo-container'>
+                <Logo small={true} />
+              </div>
             </Link>
             <h1 className='inline-h1'>{this.props.title}</h1>
           </div>
         ) : (
-          <Link href='/' className='logo-text'>
-            <span className='logo-text-highlight'>n</span>
-            point
-          </Link>
+          <Logo />
         )}
       </div>
     );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import JsonEditor from '../components/JsonEditor';
-import Document from '../models/Document';
+import JsonEditor from '../components/JsonEditor'
+import Document from '../models/Document'
 import Header from '../components/Header'
+import {} from './IndexPage.css'
 
 export default class IndexPage extends Component {
   state = {
@@ -28,21 +29,60 @@ export default class IndexPage extends Component {
     return (
       <div>
         <Header />
-        <div className="container">
-          <h1 className="text-center">
-            Simple, reliable JSON storage
-          </h1>
-          <JsonEditor
-            value={this.state.newDocumentContents}
-            onChange={e => this.setState({ newDocumentContents: e.target.value })}
-          />
-          <div className="flex-center-content">
-            <button
-              className="button primary large"
-              onClick={() => this.createNewDocument()}
-            >
-              Save
-            </button>
+        <div className="section">
+          <div className="container">
+            <h1 className="title text-center">
+              Simple, powerful JSON endpoints
+            </h1>
+            <div className="index-editor-container">
+              <JsonEditor
+                rows={9}
+                value={this.state.newDocumentContents}
+                onChange={e => this.setState({ newDocumentContents: e.target.value })}
+              />
+              <div className="index-editor-buttons flex-center-content">
+                <button
+                  className="button primary large"
+                  onClick={() => this.createNewDocument()}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="section dark-white text-center">
+          <div className="container">
+            <h2>
+              Don't waste time making an edit interface for your static content
+            </h2>
+            <p>
+              Static content like FAQ pages or customer stories should feel like
+              part of your site. But it's important to have an interface for it,
+              so it doesn't get stale.
+            </p>
+            <p>
+              Create easily
+            </p>
+            <p>
+              Log in to edit when your content changes
+            </p>
+          </div>
+        </div>
+        <div className="section text-center">
+          <div className="container">
+            <h2>
+              Prototype fast, then move to production in... 0 steps
+            </h2>
+            <p>
+              Cloudflare CDN [premium]
+            </p>
+            <p>
+              Validations
+            </p>
+            <p>
+              Lockdown
+            </p>
           </div>
         </div>
       </div>

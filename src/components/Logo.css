@@ -2,12 +2,24 @@
 
 .logo {
   font-family: 'Source Serif Pro', serif;
-  font-size: 48px;
+  font-size: 30px;
   font-weight: bold;
   color: #FFF;
   text-shadow: 0 1px 4px rgba(61, 63, 69, 40%); /* 40% lightBlack */
+  transition: all ease-in-out var(--transitionTiming);
+  user-select: none;
+  cursor: default;
 
   &.blue {
     color: var(--lightBlue);
+  }
+}
+
+a.logo, a .logo {
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primaryColor);
+    text-decoration: none;
   }
 }

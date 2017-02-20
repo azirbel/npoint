@@ -156,21 +156,13 @@ module.exports = {
       }
     ]
   },
-  
+
 
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [
       require('postcss-import'),
       require('postcss-cssnext'),
-      require('autoprefixer')({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
-      }),
     ];
   },
   plugins: [

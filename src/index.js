@@ -13,6 +13,7 @@ import './styles/buttons.css';
 import './styles/flex.css';
 import './styles/sections.css';
 import './styles/typography.css';
+import './styles/links.css';
 
 // TODO(azirbel): Standardize where this goes (it's also in an html
 // script tag)

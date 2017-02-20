@@ -11,6 +11,7 @@
   font-family: 'Source Code Pro', monospace;
   font-size: 14px;
   color: var(--textColor);
+  background-color: white;
 }
 
 .editing-area:focus {

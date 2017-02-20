@@ -1,0 +1,12 @@
+.index-editor-container {
+  position: relative;
+  margin-bottom: 20px; /* compensate for hanging button */
+}
+
+.index-editor-buttons {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transform: translateY(50%);
+  padding-bottom: 10px; /* HACK: make it vertically aligned */
+}

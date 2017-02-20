@@ -1,6 +1,6 @@
 @import '../styles/variables.css';
 
-/* gutter_size is 30px */
+/* gutter_size is 36px */
 
 .header-container {
   position: relative;
@@ -12,6 +12,6 @@
 
 @media(min-width: 700px) {
   .header-container.small-logo {
-    max-width: calc(var(--containerWidth) + 60px); /* 2x gutter_size */
+    max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
   }
 }
