@@ -4,8 +4,8 @@ const BASE_URL = '/documents';
 
 export default {
   query: () => axios.get(BASE_URL, { data: {} }),
-  get: (id) => axios.get(`${BASE_URL}/${id}`),
+  get: (token) => axios.get(`${BASE_URL}/${token}`),
   create: (params) => axios.post(BASE_URL, params),
-  update: (id, params) => axios.patch(`${BASE_URL}/${id}`, params),
-  delete: (id) => axios.delete(`${BASE_URL}/${id}`),
+  update: (token, params) => axios.patch(`${BASE_URL}/${token}`, params),
+  delete: (token) => axios.delete(`${BASE_URL}/${token}`),
 }

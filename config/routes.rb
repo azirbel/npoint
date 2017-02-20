@@ -19,5 +19,7 @@ Rails.application.routes.draw do
   get 'docs', to: 'app#index'
   get 'docs/:id', to: 'app#index'
 
-  resources :documents, only: [:index, :create, :show, :update, :destroy]
+  resources :documents,
+    param: :token,
+    only: [:index, :create, :show, :update, :destroy]
 end

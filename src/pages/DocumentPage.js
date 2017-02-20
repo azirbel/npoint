@@ -17,7 +17,7 @@ export default class DocumentPage extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true })
-    Document.get(this.props.params.documentId).then((response) => {
+    Document.get(this.props.params.documentToken).then((response) => {
       this.setState({
         title: response.data.title,
         contents: JSON.stringify(response.data.contents, null, 2),
@@ -37,7 +37,7 @@ export default class DocumentPage extends Component {
     }
 
     this.setState({ isSaving: true, canSave: true })
-    Document.update(this.props.params.documentId, {
+    Document.update(this.props.params.documentToken, {
       contents: newValue,
     }).then(() => {
       this.setState({ isSaving: false })
@@ -45,7 +45,7 @@ export default class DocumentPage extends Component {
   }
 
   saveNewTitle() {
-    Document.update(this.props.params.documentId, {
+    Document.update(this.props.params.documentToken, {
       title: this.state.title,
     }).then(() => {
       this.setState({ isEditingTitle: false });
@@ -72,8 +72,8 @@ export default class DocumentPage extends Component {
           <p className='text-center'>
             This document is available at&nbsp;
             <a target='_blank'
-              href={`http://api.npoint.io/${this.props.params.documentId}`}>
-              {`api.npoint.io/${this.props.params.documentId}`}
+              href={`http://api.npoint.io/${this.props.params.documentToken}`}>
+              {`api.npoint.io/${this.props.params.documentToken}`}
             </a>
           </p>
           <p className='text-center'>

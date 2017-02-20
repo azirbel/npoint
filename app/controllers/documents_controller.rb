@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
   private
 
   def document
-    @document ||= Document.find(params[:id])
+    @document ||= Document.find_by(token: params[:token])
   end
 
   # TODO(azirbel): Huge hackery

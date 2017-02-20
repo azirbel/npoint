@@ -1,5 +1,5 @@
 class DocumentSerializer < ActiveModel::Serializer
-  attributes :id,
+  attributes :token,
     :title,
     :contents
 end

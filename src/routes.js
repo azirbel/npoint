@@ -12,7 +12,7 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={IndexPage} />
     <Route path="/docs" component={DocumentIndexPage} />
-    <Route path="/docs/:documentId" component={DocumentPage} />
+    <Route path="/docs/:documentToken" component={DocumentPage} />
     <Route path="/account" component={AccountPage} />
     <Route path="/style" component={StyleguidePage} />
   </Route>
