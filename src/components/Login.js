@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import User from '../models/User'
 import Session from '../models/Session'
 import { logIn } from '../actions'
-import { Tabs, Tab } from '../components/Tabs';
+import { Tabs, Tab } from '../components/Tabs'
+import Input from './Input'
 import {} from './Login.css'
 
 class Login extends Component {
@@ -49,43 +50,50 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div>
-          <Tabs
-            fullWidth={true}
-            onChange={tab => this.setState({ tab })}
-            initialValue='log-in'
-          >
-            <Tab value='log-in'>Log in</Tab>
-            <Tab value='sign-up'>Sign up</Tab>
-          </Tabs>
-        </div>
+        <Tabs
+          fullWidth={true}
+          onChange={tab => this.setState({ tab })}
+          initialValue='log-in'
+        >
+          <Tab value='log-in'>Log in</Tab>
+          <Tab value='sign-up'>Sign up</Tab>
+        </Tabs>
         {this.state.tab === 'log-in' ? (
-          <form onSubmit={(e) => this.handleLogin(e)}>
-            <label>
-              Email
-              <input value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
-            </label>
-            <label>
-              Password
-              <input value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
-            </label>
-            <input type='submit' value='Submit' />
+          <form className='form padded' onSubmit={(e) => this.handleLogin(e)}>
+            <Input
+              label='Email'
+              value={this.state.email}
+              onChange={(email) => this.setState({ email })}
+            />
+            <Input
+              label='Password'
+              value={this.state.password}
+              onChange={(password) => this.setState({ password })}
+            />
+            <div className='flex justify-end'>
+              <button className='button primary' type='submit'>Log in</button>
+            </div>
           </form>
         ) : (
-          <form onSubmit={(e) => this.handleSignup(e)}>
-            <label>
-              Name
-              <input value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })} />
-            </label>
-            <label>
-              Email
-              <input value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
-            </label>
-            <label>
-              Password
-              <input value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
-            </label>
-            <input type='submit' value='Submit' />
+          <form className='form padded' onSubmit={(e) => this.handleSignup(e)}>
+            <Input
+              label='Name'
+              value={this.state.name}
+              onChange={(name) => this.setState({ name })}
+            />
+            <Input
+              label='Email'
+              value={this.state.email}
+              onChange={(email) => this.setState({ email })}
+            />
+            <Input
+              label='Password'
+              value={this.state.password}
+              onChange={(password) => this.setState({ password })}
+            />
+            <div className='flex justify-end'>
+              <button className='button primary' type='submit'>Sign up</button>
+            </div>
           </form>
         )}
       </div>

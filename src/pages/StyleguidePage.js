@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import Logo from '../components/Logo';
-import { Tabs, Tab } from '../components/Tabs';
-import {} from './StyleguidePage.css';
+import React, { Component } from 'react'
+import Logo from '../components/Logo'
+import Input from '../components/Input'
+import { Tabs, Tab } from '../components/Tabs'
+import {} from './StyleguidePage.css'
 
 export default class StyleguidePage extends Component {
   render() {
@@ -10,6 +11,12 @@ export default class StyleguidePage extends Component {
         <div className='section blue'>
           <div className='container'>
             <h1 className='title text-white'>Styleguide</h1>
+          </div>
+        </div>
+        <div className='section'>
+          <div className='container'>
+            <h1>Input</h1>
+            <Input label='Name' />
           </div>
         </div>
         <div className='section'>

@@ -13,16 +13,16 @@ import React from 'react'
 
 const TooltipStyle = {
   position: 'absolute',
-  padding: '0 5px'
+  padding: '0 5px',
+  zIndex: 5,
 };
 
 const TooltipInnerStyle = {
-  padding: '3px 8px',
   borderRadius: 3,
   backgroundColor: '#FFF',
   borderStyle: 'solid',
   borderWidth: 1,
-  borderColor: 'var(--lightGray)',
+  borderColor: '#D7D8DE', // light gray
 };
 
 const PlacementStyles = {

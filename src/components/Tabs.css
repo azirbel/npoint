@@ -2,11 +2,23 @@
 
 .tabs {
   display: flex;
+  position: relative;
 
   &.full-width {
     & .tab {
       flex: 1;
     }
+  }
+
+  /* Light line under the tabs row */
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: var(--lightGray);
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 }
 
@@ -16,10 +28,12 @@
   padding: 0.5em 1em;
   cursor: pointer;
   border-bottom: 2px solid transparent;
+  z-index: 3;
 
   &:not(.active) {
     &:hover {
       background-color: var(--darkWhite);
+      border-bottom: 2px solid var(--lightGray);
     }
   }
 

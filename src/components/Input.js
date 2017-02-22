@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {} from './Input.css'
 
 // TODO(azirbel): Proptypes value, label, onChange
 export default class Input extends Component {
@@ -8,9 +9,13 @@ export default class Input extends Component {
 
   render() {
     return (
-      <label>
+      <label className='input'>
         {this.props.label}&nbsp;
-        <input value={this.props.value} onChange={this.handleChange}/>
+        <input
+          className='input-field'
+          value={this.props.value}
+          onChange={this.handleChange}
+        />
       </label>
     );
   }

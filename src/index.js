@@ -15,6 +15,7 @@ import './styles/sections.css';
 import './styles/typography.css';
 import './styles/links.css';
 import './styles/grid.css';
+import './styles/form.css';
 
 // TODO(azirbel): Standardize where this goes (it's also in an html
 // script tag)

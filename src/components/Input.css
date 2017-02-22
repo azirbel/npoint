@@ -1,0 +1,21 @@
+@import '../styles/variables.css';
+
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  & .input-field {
+    max-width: 200px;
+    padding: 6px 8px;
+    outline: none;
+    border: 1px solid var(--lightGray);
+    margin-top: 6px;
+    font-size: 16px;
+
+    &:active, &:focus {
+      border-color: var(--primaryColor);
+    }
+  }
+}
