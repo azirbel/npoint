@@ -50,6 +50,12 @@ export default class IndexPage extends Component {
                 </button>
               </div>
             </div>
+            <p className="text-center">
+              Save, then access your JSON via the API. For example,&nbsp;
+              <a target='_blank' href='api.lvh.me:3001/sample'>
+                api.npoint.io/sample
+              </a>.
+            </p>
           </div>
         </div>
         <div className="section text-center">

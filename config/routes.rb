@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   constraints :subdomain => 'api' do
     namespace :api, path: nil, defaults: { format: 'json' } do
-      resources :documents, path: '/', only: [:show]
+      resources :documents, param: :token, path: '/', only: [:show]
     end
   end
 
