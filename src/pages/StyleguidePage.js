@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Logo from '../components/Logo';
+import { Tabs, Tab } from '../components/Tabs';
 import {} from './StyleguidePage.css';
 
 export default class StyleguidePage extends Component {
@@ -9,6 +10,29 @@ export default class StyleguidePage extends Component {
         <div className='section blue'>
           <div className='container'>
             <h1 className='title text-white'>Styleguide</h1>
+          </div>
+        </div>
+        <div className='section'>
+          <div className='container'>
+            <h1>Tabs</h1>
+            <h3>Inline</h3>
+            <Tabs>
+              <Tab value='sign-in'>
+                Sign in
+              </Tab>
+              <Tab value='sign-up'>
+                Sign up
+              </Tab>
+            </Tabs>
+            <h3>Full Width</h3>
+            <Tabs fullWidth={true}>
+              <Tab value='sign-in'>
+                Sign in
+              </Tab>
+              <Tab value='sign-up'>
+                Sign up
+              </Tab>
+            </Tabs>
           </div>
         </div>
         <div className='section'>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import User from '../models/User'
 import Session from '../models/Session'
 import { logIn } from '../actions'
+import { Tabs, Tab } from '../components/Tabs';
 import {} from './Login.css'
 
 class Login extends Component {
@@ -11,7 +12,7 @@ class Login extends Component {
   };
 
   state = {
-    loginTab: true,
+    tab: 'log-in',
     name: '',
     email: '',
     password: '',
@@ -49,14 +50,16 @@ class Login extends Component {
     return (
       <div>
         <div>
-          <button className='button link' onClick={() => this.setState({ loginTab: true, })}>
-            Log in
-          </button>
-          <button className='button link' onClick={() => this.setState({ loginTab: false, })}>
-            Sign up
-          </button>
+          <Tabs
+            fullWidth={true}
+            onChange={tab => this.setState({ tab })}
+            initialValue='log-in'
+          >
+            <Tab value='log-in'>Log in</Tab>
+            <Tab value='sign-up'>Sign up</Tab>
+          </Tabs>
         </div>
-        {this.state.loginTab ? (
+        {this.state.tab === 'log-in' ? (
           <form onSubmit={(e) => this.handleLogin(e)}>
             <label>
               Email
