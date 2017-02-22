@@ -15,3 +15,14 @@
     max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
   }
 }
+
+.header {
+  position: fixed;
+  background-color: var(--white);
+  height: var(--headerHeight);
+  z-index: 3;
+}
+
+.header-spacer {
+  height: var(--headerHeight);
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import JsonEditor from '../components/JsonEditor'
 import Document from '../models/Document'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import {} from './IndexPage.css'
 
 export default class IndexPage extends Component {
@@ -27,11 +28,11 @@ export default class IndexPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className='index-page'>
         <Header />
-        <div className="section">
+        <div className="section dark-white index-splash">
           <div className="container">
-            <h1 className="title text-center">
+            <h1 className="title text-center index-title">
               Simple, powerful JSON endpoints
             </h1>
             <div className="index-editor-container">
@@ -40,7 +41,7 @@ export default class IndexPage extends Component {
                 value={this.state.newDocumentContents}
                 onChange={e => this.setState({ newDocumentContents: e.target.value })}
               />
-              <div className="index-editor-buttons flex-center-content">
+              <div className="index-editor-buttons flex justify-center">
                 <button
                   className="button primary large"
                   onClick={() => this.createNewDocument()}
@@ -51,10 +52,10 @@ export default class IndexPage extends Component {
             </div>
           </div>
         </div>
-        <div className="section dark-white text-center">
+        <div className="section text-center">
           <div className="container">
             <h2>
-              Don't waste time making an edit interface for your static content
+              Don't waste time making an edit interface<br/>for your static content
             </h2>
             <p>
               Static content like FAQ pages or customer stories should feel like
@@ -85,6 +86,7 @@ export default class IndexPage extends Component {
             </p>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

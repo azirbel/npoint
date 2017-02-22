@@ -6,12 +6,13 @@
 
 .editing-area {
   width: 100%;
-  border-radius: var(--borderRadius);
-  border: 1px solid var(--gray);
-  font-family: 'Source Code Pro', monospace;
-  font-size: 14px;
+  padding: 10px;
   color: var(--textColor);
   background-color: white;
+  border: 1px solid var(--gray);
+  border-radius: var(--borderRadius);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
 }
 
 .editing-area:focus {

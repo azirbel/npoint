@@ -47,4 +47,8 @@
   --borderRadius: 3px;
 
   --containerWidth: 800px;
+  --headerHeight: 60px;
+
+  --sansFontFamily: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  --serifFontFamily: 'Source Serif Pro', serif;
 }

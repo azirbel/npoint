@@ -1,12 +1,28 @@
-.index-editor-container {
-  position: relative;
-  margin-bottom: 20px; /* compensate for hanging button */
-}
+.index-page {
+  & .index-editor-container {
+    position: relative;
+    margin-bottom: 20px; /* compensate for hanging button */
+  }
 
-.index-editor-buttons {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  transform: translateY(50%);
-  padding-bottom: 10px; /* HACK: make it vertically aligned */
+  & .index-editor-buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(50%);
+    padding-bottom: 10px; /* HACK: make it vertically aligned */
+  }
+
+  & .index-splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70vh;
+    min-height: 400px;
+    max-height: 700px;
+    padding-top: 0;
+  }
+
+  & .index-title {
+    margin-bottom: 60px;
+  }
 }

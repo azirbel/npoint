@@ -25,24 +25,27 @@ class Header extends Component {
 
   render() {
     return (
-      <header className='header'>
-        <div className={'container header-container' + (this.props.title ? ' small-logo' : '')}>
-          <Title title={this.props.title} />
-          <div className='flex'>
-            <button
-              className='button primary'
-              onClick={() => this.createDocument()}
-            >
-              + New
-            </button>
-            {this.props.session.loggedIn ? (
-              <AccountDropdown />
-            ) : (
-              <LoginDropdown />
-            )}
+      <div>
+        <header className='header'>
+          <div className={'container header-container' + (this.props.title ? ' small-logo' : '')}>
+            <Title title={this.props.title} />
+            <div className='flex'>
+              <button
+                className='button primary'
+                onClick={() => this.createDocument()}
+              >
+                + New
+              </button>
+              {this.props.session.loggedIn ? (
+                <AccountDropdown />
+              ) : (
+                <LoginDropdown />
+              )}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+        <div className='header-spacer'></div>
+      </div>
     );
   }
 }

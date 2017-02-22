@@ -1,12 +1,39 @@
 @import '../styles/variables.css';
 
 .title {
-  font-family: 'Source Serif Pro', serif;
+  font-family: var(--serifFontFamily);
   font-size: 48px;
   font-weight: bold;
   margin-top: 0;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-white {
   color: var(--white);
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  font-family: var(--sansFontFamily);
+  color: var(--textColor);
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: var(--sansFontFamily);
+  color: var(--textColor);
 }
