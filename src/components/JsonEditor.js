@@ -5,7 +5,7 @@ export default class JsonEditor extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    rows: PropTypes.integer,
+    rows: PropTypes.number,
   }
 
   render() {
