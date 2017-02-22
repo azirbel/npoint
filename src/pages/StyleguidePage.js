@@ -14,14 +14,8 @@ export default class StyleguidePage extends Component {
         <div className='section'>
           <div className='container'>
             <h1>Logo</h1>
-            <div className='field'>
-              <Logo />
-              <Logo small={true} />
-            </div>
-            <div className='field blue'>
-              <Logo blue={true} />
-              <Logo blue={true} small={true} />
-            </div>
+            <Logo />
+            <Logo small={true} />
           </div>
         </div>
         <div className='section'>
