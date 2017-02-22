@@ -51,4 +51,9 @@
 
   --sansFontFamily: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
   --serifFontFamily: 'Source Serif Pro', serif;
+
+  @custom-media --screenXsMin (min-width: 480px);
+  @custom-media --screenSmMin (min-width: 768px);
+  @custom-media --screenMdMin (min-width: 992px);
+  @custom-media --screenLgMin (min-width: 1200px);
 }
