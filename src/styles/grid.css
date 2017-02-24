@@ -210,10 +210,6 @@
 }
 
 @media only screen and (--screenSmMin) {
-  .container {
-    width: @container-sm;
-  }
-
   .col-sm {
     flex-grow: 1;
     flex-basis: 0;
@@ -373,10 +369,6 @@
 }
 
 @media only screen and (--screenMdMin) {
-  .container {
-    width: @container-md;
-  }
-
   .col-md {
     flex-grow: 1;
     flex-basis: 0;
@@ -536,10 +528,6 @@
 }
 
 @media only screen and (--screenLgMin) {
-  .container {
-    width: @container-lg;
-  }
-
   .col-lg {
     flex-grow: 1;
     flex-basis: 0;
