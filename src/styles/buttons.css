@@ -14,42 +14,45 @@ button {
   transition: all ease-in-out var(--transitionTiming);
   padding: 8px 14px;
   outline: 0;
-}
+  display: block;
+  text-align: center;
 
-.button:hover {
-  background-color: var(--darkWhite);
-}
+  &:hover {
+    background-color: var(--darkWhite);
+    text-decoration: none;
+  }
 
-.button.primary {
-  background-color: var(--primaryColor);
-  border: 1px solid transparent;
-  color: var(--white);
-}
+  &.primary {
+    background-color: var(--primaryColor);
+    border: 1px solid transparent;
+    color: var(--white);
 
-.button.primary:hover {
-  background-color: var(--primaryColorDark);
-}
+    &:hover {
+      background-color: var(--primaryColorDark);
+    }
+  }
 
-.button.danger:hover {
-  background-color: var(--errorColor);
-  border-color: var(--gray);
-}
+  &.danger:hover {
+    background-color: var(--errorColor);
+    border-color: var(--gray);
+  }
 
-.button.subtle {
-  border: 1px solid transparent;
-}
+  &.large {
+    padding: 12px 24px;
+  }
 
-.button.large {
-  padding: 12px 24px;
-}
+  &.link {
+    border: none;
+    outline: none;
 
-.button.link {
-  border: none;
-  outline: none;
+    /* duplicated from <a> */
+    color: var(--blue);
+    text-decoration: none;
+  }
 
-  /* duplicated from <a> */
-  color: var(--blue);
-  text-decoration: none;
+  &.full-width {
+    width: 100%;
+  }
 }
 
 a.button {

@@ -2,27 +2,36 @@
 
 /* gutter_size is 36px */
 
-.header-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-}
-
-@media(min-width: 700px) {
-  .header-container.small-logo {
-    max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
-  }
-}
-
 .header {
   position: fixed;
   background-color: var(--white);
   height: var(--headerHeight);
+  overflow-y: hidden;
   z-index: 3;
+
+  /* Space between adjacent items in the header */
+  & .header-spaced-out > * {
+    & + * {
+      margin-left: 10px;
+    }
+  }
+
+
+  & .header-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+
+    @media(min-width: 700px) {
+      max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
+    }
+  }
 }
 
+/* Take up as much height as the header, so that the content
+ * below starts in the right place */
 .header-spacer {
   height: var(--headerHeight);
 }

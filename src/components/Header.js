@@ -29,7 +29,7 @@ class Header extends Component {
         <header className='header'>
           <div className={'container header-container' + (this.props.title ? ' small-logo' : '')}>
             <Title title={this.props.title} />
-            <div className='flex'>
+            <div className='flex header-spaced-out'>
               <button
                 className='button primary'
                 onClick={() => this.createDocument()}

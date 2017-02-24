@@ -18,7 +18,7 @@ export default class LoginDropdown extends Component {
           ref='target'
           onClick={() => this.setState({ show: !this.state.show })}
         >
-          Log in / Sign up
+          Log in
           <MdArrowDropDown />
         </button>
         <Overlay

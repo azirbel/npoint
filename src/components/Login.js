@@ -40,8 +40,8 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     }).then((response) => {
-      let { name, email } = response.data
-      dispatch(logIn({ name, email }))
+      let { name, email, avatar_url } = response.data
+      dispatch(logIn({ name, email, avatar_url }))
       this.props.onLogin()
     })
     e.preventDefault();
@@ -49,7 +49,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className='login-component'>
         <Tabs
           fullWidth={true}
           onChange={tab => this.setState({ tab })}
@@ -62,11 +62,13 @@ class Login extends Component {
           <form className='form padded' onSubmit={(e) => this.handleLogin(e)}>
             <Input
               label='Email'
+              type='email'
               value={this.state.email}
               onChange={(email) => this.setState({ email })}
             />
             <Input
               label='Password'
+              type='password'
               value={this.state.password}
               onChange={(password) => this.setState({ password })}
             />
@@ -83,11 +85,13 @@ class Login extends Component {
             />
             <Input
               label='Email'
+              type='email'
               value={this.state.email}
               onChange={(email) => this.setState({ email })}
             />
             <Input
               label='Password'
+              type='password'
               value={this.state.password}
               onChange={(password) => this.setState({ password })}
             />

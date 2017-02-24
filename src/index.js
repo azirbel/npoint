@@ -7,15 +7,16 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import configureStore from './store/configureStore';
-import './styles/variables.css';
-import './styles/index.css';
+import './styles/avatar.css';
 import './styles/buttons.css';
 import './styles/flex.css';
+import './styles/form.css';
+import './styles/grid.css';
+import './styles/index.css';
+import './styles/links.css';
 import './styles/sections.css';
 import './styles/typography.css';
-import './styles/links.css';
-import './styles/grid.css';
-import './styles/form.css';
+import './styles/variables.css';
 
 // TODO(azirbel): Standardize where this goes (it's also in an html
 // script tag)

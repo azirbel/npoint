@@ -16,6 +16,7 @@ function session(state = {
         user: {
           name: action.user.name,
           email: action.user.email,
+          avatarUrl: action.user.avatar_url,
         },
       }
     case LOG_OUT:

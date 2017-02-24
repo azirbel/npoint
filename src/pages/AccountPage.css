@@ -1,6 +1,7 @@
 @import '../styles/variables.css';
 
-.avatar {
-  border-radius: 50%;
-  height: 40px;
+.account-page {
+  & .account-info {
+    margin-top: 30px;
+  }
 }

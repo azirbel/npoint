@@ -8,6 +8,7 @@ import Session from '../../models/Session'
 import Tooltip from '../Tooltip'
 import { logOut } from '../../actions'
 import { push } from 'react-router-redux'
+import {} from './AccountDropdown.css'
 
 class AccountDropdown extends Component {
   state = {
@@ -25,14 +26,19 @@ class AccountDropdown extends Component {
 
   render() {
     return (
-      <div>
+      <div className='account-dropdown-component'>
         <button
-          className='button link'
+          className='button link account-dropdown-button'
           ref='accountDropdownTarget'
           onClick={() => this.setState({ show: !this.state.show })}
         >
-          {this.props.session.user.name}
-          <MdArrowDropDown />
+          <div className='flex align-center'>
+            <img className='avatar account-dropdown-avatar'
+              alt={this.props.session.user.name}
+              src={this.props.session.user.avatarUrl}
+            />
+            <MdArrowDropDown />
+          </div>
         </button>
         <Overlay
           show={this.state.show}
@@ -42,12 +48,26 @@ class AccountDropdown extends Component {
           onHide={() => this.setState({ show: false })}
         >
           <Tooltip>
-            <div>
-              <Link className='button' to='/account'>Account</Link>
+            <div className='account-dropdown-menu'>
+              <Link
+                className='button link full-width text-left'
+                to='/docs'
+              >
+                My Documents
+              </Link>
+              <Link
+                className='button link full-width text-left'
+                to='/account'
+              >
+                Account
+              </Link>
+              <button
+                className='button link full-width text-left'
+                onClick={() => this.logOut()}
+              >
+                Log out
+              </button>
             </div>
-            <button className='button link' onClick={() => this.logOut()}>
-              Log out
-            </button>
           </Tooltip>
         </Overlay>
       </div>

@@ -9,17 +9,15 @@ import { without } from 'lodash';
 export default class DocumentIndexPage extends Component {
   state = {
     documents: [],
-    isLoading: true,
     needsAuth: false,
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true })
     Document.query().then((response) => {
-      this.setState({ documents: response.data, isLoading: false })
+      this.setState({ documents: response.data })
     }, (error) => {
       if (error.response && error.response.status === 401) {
-        this.setState({ needsAuth: true, isLoading: false })
+        this.setState({ needsAuth: true })
       }
     })
   }
@@ -36,9 +34,6 @@ export default class DocumentIndexPage extends Component {
       <div>
         <Header title='All Documents' />
         <div className="container">
-          {this.state.isLoading && (
-            <div>Loading...</div>
-          )}
           {this.state.needsAuth && (
             <div>Please sign in to view your documents.</div>
           )}

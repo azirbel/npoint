@@ -1,0 +1,15 @@
+.account-dropdown-component {
+  & .account-dropdown-avatar {
+    height: 30px;
+    width: 30px;
+  }
+
+  & .account-dropdown-button {
+    padding: 4px 4px 4px 8px;
+  }
+}
+
+/* Can't be namespaced because it's lifted out of the DOM */
+.account-dropdown-menu {
+  min-width: 8em;
+}
