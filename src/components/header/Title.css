@@ -1,10 +1,13 @@
 @import '../../styles/variables.css';
 
-.small-logo-container {
-  width: 36px; /* gutter_size */
-  margin-bottom: 4px; /* align with the header text */
-}
+.title-component {
+  & .small-logo-container {
+    width: 36px; /* gutter_size */
+    margin-bottom: 4px; /* align with the header text */
+  }
 
-.inline-h1 {
-  display: inline;
+  & .page-title {
+    display: inline;
+    font-size: 28px;
+  }
 }

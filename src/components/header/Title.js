@@ -10,7 +10,7 @@ export default class Title extends Component {
 
   render() {
     return (
-      <div>
+      <div className='title-component'>
         {this.props.title ? (
           <div className='flex align-center'>
             <Link href='/' className='unstyled'>
@@ -18,7 +18,7 @@ export default class Title extends Component {
                 <Logo small={true} />
               </div>
             </Link>
-            <h1 className='inline-h1'>{this.props.title}</h1>
+            <h1 className='page-title'>{this.props.title}</h1>
           </div>
         ) : (
           <Logo />

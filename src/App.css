@@ -1,8 +1,0 @@
-@import './styles/variables.css';
-
-.header {
-  height: 60px;
-  width: 100%;
-  box-shadow: 0 0 4px 0 var(--lightGray);
-  margin-bottom: 10px;
-}

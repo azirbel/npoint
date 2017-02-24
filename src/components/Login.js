@@ -27,8 +27,8 @@ class Login extends Component {
       password: this.state.password,
       password_confirmation: this.state.password,
     }).then((response) => {
-      let { name, email } = response.data
-      dispatch(logIn({ name, email }))
+      let { name, email, avatar_url } = response.data
+      dispatch(logIn({ name, email, avatar_url }))
       this.props.onLogin()
     })
     e.preventDefault();

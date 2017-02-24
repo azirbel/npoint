@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { logIn } from './actions'
 import User from './models/User'
-import {} from './App.css'
 
 class App extends Component {
   static propTypes = {

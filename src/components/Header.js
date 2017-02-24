@@ -18,8 +18,8 @@ class Header extends Component {
 
   createDocument() {
     let { dispatch } = this.props
-    Document.create({ title: 'Untitled', contents: '{}' }).then((response) => {
-      dispatch(push(`/docs/${response.data.id}`))
+    Document.create({ generate_contents: true }).then((response) => {
+      dispatch(push(`/docs/${response.data.token}`))
     })
   }
 

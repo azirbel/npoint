@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
 import Document from '../models/Document';
 import JsonEditor from '../components/JsonEditor';
 import Header from '../components/Header'
@@ -15,15 +14,25 @@ export default class DocumentPage extends Component {
     canSave: true,
   }
 
-  componentDidMount() {
+  loadDocument(token) {
     this.setState({ isLoading: true })
-    Document.get(this.props.params.documentToken).then((response) => {
+    Document.get(token).then((response) => {
       this.setState({
         title: response.data.title,
         contents: JSON.stringify(response.data.contents, null, 2),
         isLoading: false
       })
     })
+  }
+
+  componentDidMount() {
+    this.loadDocument(this.props.params.documentToken)
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.params.documentToken !== this.props.params.documentToken) {
+      this.loadDocument(newProps.params.documentToken)
+    }
   }
 
   updateJson(newValue) {
@@ -62,7 +71,7 @@ export default class DocumentPage extends Component {
     return (
       <div>
         <Header title={this.state.title} />
-        <div className="container">
+        <div className="section container">
           <JsonEditor
             value={this.state.contents}
             onChange={(e) => this.updateJson(e.target.value)}
@@ -75,9 +84,6 @@ export default class DocumentPage extends Component {
               href={`http://api.npoint.io/${this.props.params.documentToken}`}>
               {`api.npoint.io/${this.props.params.documentToken}`}
             </a>
-          </p>
-          <p className='text-center'>
-            <Link to='/docs'>View all documents</Link>
           </p>
         </div>
       </div>
