@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   resources :documents,
     param: :token,
     only: [:index, :create, :show, :update, :destroy]
+
+  get '/.well-known/acme-challenge/dGUxfrhlDq0RPxoK8ZEIBTAmIbJnlJb34UBSFBSFunk' => 'pages#letsencrypt'
 end
