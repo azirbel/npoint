@@ -23,5 +23,5 @@ Rails.application.routes.draw do
     param: :token,
     only: [:index, :create, :show, :update, :destroy]
 
-  get '/.well-known/acme-challenge/dGUxfrhlDq0RPxoK8ZEIBTAmIbJnlJb34UBSFBSFunk' => 'pages#letsencrypt'
+  get '/.well-known/acme-challenge/WMR9ZsaN_jU71mT7d4Z59RBrRZa4Nw80Ms61cfmhXWY' => 'pages#letsencrypt'
 end
