@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -44,10 +44,10 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # For now, use :debug level so I can see what's going on.
+  # For now, use :info level so I can see what's going on.
   # TODO(azirbel): Later ->
   # Use :warn log level to prevent tokens from being leaked into logs
-  config.log_level = (ENV['LOG_LEVEL'] || :debug).to_sym
+  config.log_level = (ENV['LOG_LEVEL'] || :info).to_sym
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   # Prepend all log lines with the following tags.
