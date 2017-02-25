@@ -47,13 +47,11 @@ Rails.application.configure do
   # For now, use :debug level so I can see what's going on.
   # TODO(azirbel): Later ->
   # Use :warn log level to prevent tokens from being leaked into logs
-  config.log_level = :debug
+  config.log_level = (ENV['LOG_LEVEL'] || :debug).to_sym
+  config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
-
-  # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
