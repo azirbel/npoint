@@ -7,10 +7,9 @@ class ApplicationController < ActionController::Base
   # TODO(azirbel): Re-enable
   # protect_from_forgery with: :exception unless Rails.env.development?, prepend: true
 
-  # TODO(azirbel): See if devise has something like this built in
-  rescue_from CustomUnauthorized, with: :unauthorized
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  def unauthorized
-    render json: {}, status: :unauthorized
+  def not_found
+    head :not_found
   end
 end

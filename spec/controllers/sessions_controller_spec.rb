@@ -1,7 +1,7 @@
 # TODO(azirbel): Still need to test 401 on bad login, etc
 
 RSpec.describe SessionsController do
-  let(:user) { create :user }
+  let!(:user) { create :user }
 
   def serializer
     UserSerializer

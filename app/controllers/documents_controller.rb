@@ -1,6 +1,8 @@
 class DocumentsController < ApplicationController
   SERIALIZER = DocumentSerializer
 
+  before_action :authenticate_user!, :except => [:show, :create, :update]
+
   def index
     render json: current_user.documents, each_serializer: SERIALIZER
   end
@@ -32,7 +34,7 @@ class DocumentsController < ApplicationController
   private
 
   def document
-    @document ||= Document.find_by(token: params[:token])
+    @document ||= Document.find_by!(token: params[:token])
   end
 
   # TODO(azirbel): Huge hackery
