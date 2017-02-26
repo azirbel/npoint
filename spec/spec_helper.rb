@@ -7,6 +7,10 @@ abort("Rails is running in production mode!") if Rails.env.production?
 require 'rspec/rails' # Must go before other requires
 require 'devise'
 
+# Load all files in support/. Note: don't give these files names ending
+# in _spec, or else they will also be run as specs.
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
 # Check for pending migration and apply them before tests are run
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -44,4 +48,5 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include ControllerSpecHelper, :type => :controller
 end
