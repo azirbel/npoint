@@ -1,8 +1,10 @@
 class Api::DocumentsController < ApplicationController
-  SERIALIZER = DocumentSerializer
-
   def show
-    render json: document, serializer: SERIALIZER
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    render json: document.contents
   end
 
   private
