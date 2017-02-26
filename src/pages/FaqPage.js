@@ -21,7 +21,7 @@ export default class FaqPage extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://api.npoint.io/faq').then((response) => {
+    axios.get('https://api.npoint.io/faq').then((response) => {
       this.setState({ faqs: response.data })
     })
   }
