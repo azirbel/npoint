@@ -1,26 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
-  include ControllerSpecHelper
-
-  describe '#hello' do
-    it 'returns world' do
-      expect(UsersController.new.hello).to eq('world')
-    end
-  end
+RSpec.describe UsersController do
+  let(:user) { create :user }
 
   describe '#me' do
     context 'with a logged in user' do
-      before { log_in_user }
+      before { sign_in user }
 
       it 'returns the logged in user info' do
-        binding.pry
+        expect(subject.current_user).to eq(user)
       end
     end
 
     context 'without a logged in user' do
       it 'returns nothing' do
-        binding.pry
+        expect(subject.current_user).to be_nil
       end
     end
   end
