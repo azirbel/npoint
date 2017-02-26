@@ -1,7 +1,7 @@
 class Document < ActiveRecord::Base
   before_create :create_unique_identifier
 
-  has_one :user
+  belongs_to :user
 
   # TODO(azirbel): Test for collision case
   def create_unique_identifier

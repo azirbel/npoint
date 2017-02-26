@@ -32,7 +32,7 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 
   # Print the 10 slowest examples and groups at the end of a spec run
-  config.profile_examples = 10
+  # config.profile_examples = 10
 
   # Run specs in random order, allow setting --seed CLI option
   config.order = :random

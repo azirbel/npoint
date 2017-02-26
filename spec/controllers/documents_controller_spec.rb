@@ -1,10 +1,10 @@
 RSpec.describe DocumentsController do
   let!(:user) { create :user }
+  let!(:user2) { create :user }
   let!(:unowned_document) { create :document }
-
-  # TODO(azirbel): Why isn't `user: user` working?
-  let!(:owned_document1) { create :document, user_id: user.id }
-  let!(:owned_document2) { create :document, user_id: user.id }
+  let!(:owned_document1) { create :document, user: user }
+  let!(:owned_document2) { create :document, user: user }
+  let!(:user2_document) { create :document, user: user2 }
 
   def serializer
     described_class::SERIALIZER
@@ -23,6 +23,9 @@ RSpec.describe DocumentsController do
 
       it "returns the user's documents" do
         get :index
+        expect(response).to have_http_status(200)
+        expect(parsed_response)
+          .to eq(serialize_many(owned_document1, owned_document2))
       end
     end
   end
@@ -49,5 +52,64 @@ RSpec.describe DocumentsController do
       get :show, token: 'notatoken'
       expect(response).to have_http_status(404)
     end
+  end
+
+  describe '#update' do
+    context 'with no logged in user' do
+      it 'allows editing an unowned document' do
+        expect {
+          post :update, token: unowned_document.token, title: 'New title'
+        }.to change { unowned_document.reload.title }.to('New title')
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(serialize_one(unowned_document))
+      end
+
+      it 'returns a 401 for an owned document' do
+        expect {
+          post :update, token: owned_document1.token, title: 'New title'
+        }.not_to change { owned_document1.reload.title }
+
+        expect(response).to have_http_status(401)
+      end
+    end
+
+    context 'with a logged in user' do
+      before { sign_in user }
+
+      it 'allows editing an unowned document' do
+        expect {
+          post :update, token: unowned_document.token, title: 'New title'
+        }.to change { unowned_document.reload.title }.to('New title')
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(serialize_one(unowned_document))
+      end
+
+      it 'allows editing an owned document' do
+        expect {
+          post :update, token: owned_document1.token, title: 'New title'
+        }.to change { owned_document1.reload.title }.to('New title')
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(serialize_one(owned_document1))
+      end
+
+      it 'returns a 401 for a document owned by a different user' do
+        expect {
+          post :update, token: user2_document.token, title: 'New title'
+        }.not_to change { user2_document.reload.title }
+
+        expect(response).to have_http_status(401)
+      end
+    end
+  end
+
+  describe '#create' do
+    it 'works'
+  end
+
+  describe '#destroy' do
+    it 'works'
   end
 end

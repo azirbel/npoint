@@ -22,8 +22,17 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    document.update!(document_params)
-    render json: document, serializer: SERIALIZER
+    if document.user.present?
+      if user_signed_in? && current_user == document.user
+        document.update!(document_params)
+        render json: document, serializer: SERIALIZER
+      else
+        head :unauthorized
+      end
+    else
+      document.update!(document_params)
+      render json: document, serializer: SERIALIZER
+    end
   end
 
   def destroy
