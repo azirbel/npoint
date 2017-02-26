@@ -1,36 +1,47 @@
-# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+
+# Prevent database truncation if the environment is production
+abort("Rails is running in production mode!") if Rails.env.production?
+
+require 'rspec/rails' # Must go before other requires
+require 'devise'
+
+# Check for pending migration and apply them before tests are run
+ActiveRecord::Migration.maintain_test_schema!
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
-    # This option will default to `true` in RSpec 4.
+    # Will default to `true` in RSpec 4
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
   config.mock_with :rspec do |mocks|
-    # Prevents you from mocking or stubbing a method that does not exist on
-    # a real object. This is generally recommended, and will default to
-    # `true` in RSpec 4.
+    # Prevent mocking or stubbing a method that does not exist on a real object
     mocks.verify_partial_doubles = true
   end
 
-  # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
-  # have no way to turn it off -- the option exists only for backwards
-  # compatibility in RSpec 3).
+  # Will default to `:apply_to_host_groups` in RSpec 4
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  # Disable `should` matchers, use `expect` all the time instead.
+  # Disable `should` matchers, use `expect` all the time instead
   config.disable_monkey_patching!
 
-  # Print the 10 slowest examples and example groups at the
-  # end of the spec run, to help surface which specs are running
-  # particularly slow.
+  # Print the 10 slowest examples and groups at the end of a spec run
   config.profile_examples = 10
 
-  # Run specs in random order to surface order dependencies.
+  # Run specs in random order, allow setting --seed CLI option
   config.order = :random
-
-  # Seed global randomization in this process using the `--seed` CLI option.
-  # Setting this allows you to use `--seed` to deterministically reproduce
-  # test failures related to randomization by passing the same `--seed` value
-  # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  config.use_transactional_fixtures = true
+
+  # Infer things like `type: :controller`
+  config.infer_spec_type_from_file_location!
+
+  # Filter lines from Rails gems in backtraces.
+  config.filter_rails_from_backtrace!
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, :type => :controller
 end
