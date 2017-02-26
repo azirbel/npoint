@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   root 'app#index'
   get 'docs', to: 'app#index'
+  get 'faq', to: 'app#index'
   get 'docs/:id', to: 'app#index'
 
   resources :documents,
