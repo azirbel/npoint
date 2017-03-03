@@ -1,6 +1,9 @@
 @import '../../styles/variables.css';
 
 .title-component {
+  display: flex;
+  align-items: center;
+
   & .small-logo-container {
     width: 36px; /* gutter_size */
     margin-bottom: 4px; /* align with the header text */
@@ -10,4 +13,14 @@
     display: inline;
     font-size: 28px;
   }
+
+  & .title-badge {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+
+.alpha-warning-tooltip {
+  max-width: 400px;
+  padding: 10px;
 }

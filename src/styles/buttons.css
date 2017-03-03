@@ -1,7 +1,13 @@
 @import './variables.css';
 
+/* Reset */
 button {
   cursor: pointer;
+  border: none;
+  background: none;
+  margin: none;
+  padding: none;
+  outline: none;
 }
 
 .button {

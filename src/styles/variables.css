@@ -33,7 +33,7 @@
 
   /* semantic colors */
   --secondaryColor: var(--blue);
-  --warningColor: var(--yellow);
+  --warningColor: var(--orange);
   --errorColor: var(--orange);
 
 
