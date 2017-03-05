@@ -6,7 +6,6 @@
 
   & .small-logo-container {
     width: 36px; /* gutter_size */
-    margin-bottom: 4px; /* align with the header text */
   }
 
   & .page-title {
@@ -21,6 +20,6 @@
 }
 
 .alpha-warning-tooltip {
-  max-width: 400px;
+  max-width: 300px;
   padding: 10px;
 }

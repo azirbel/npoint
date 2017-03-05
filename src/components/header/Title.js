@@ -43,8 +43,10 @@ export default class Title extends Component {
         >
           <Tooltip>
             <div className='alpha-warning-tooltip'>
-              This project is in an early stage. Data you store may be deleted without
-              warning; API endpoints aren't ready for production use yet.
+              <b>This project is in an early stage.</b>
+              <br/><br/>
+              Data you store may be deleted without warning; API endpoints
+              aren't ready for production use yet.
             </div>
           </Tooltip>
         </Overlay>

@@ -50,8 +50,8 @@ export default class IndexPage extends Component {
                 </button>
               </div>
             </div>
-            <p className="text-center">
-              Save, then access your JSON via the API. For example,&nbsp;
+            <p className="text-center product-description">
+              Save your JSON data, then access it via the API. For example,&nbsp;
               <a target='_blank' href='api.lvh.me:3001/sample'>
                 api.npoint.io/sample
               </a>.
@@ -61,35 +61,84 @@ export default class IndexPage extends Component {
         <div className="section text-center">
           <div className="container">
             <h2>
-              Don't waste time making an edit interface<br/>for your static content
+              A simple interface for your website's static content
             </h2>
-            <p>
-              Static content like FAQ pages or customer stories should feel like
-              part of your site. But it's important to have an interface for it,
-              so it doesn't get stale.
-            </p>
-            <p>
-              Create easily
-            </p>
-            <p>
-              Log in to edit when your content changes
-            </p>
+            <div className="row feature-row">
+              <div className="col-xs-12 col-sm-6">
+                <h4>Edit static parts of your site without code changes</h4>
+                <p>
+                  You should be able to edit static parts of your site (like FAQ pages
+                  or customer reviews) without making code changes or doing a deploy.
+                </p>
+              </div>
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+            </div>
+            <div className="row feature-row">
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+              <div className="col-xs-12 col-sm-6">
+                <h4>Get set up fast, then log in to edit your content later.</h4>
+                <p>
+                  Something something something something.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div className="section text-center">
           <div className="container">
             <h2>
-              Prototype fast, then move to production in... 0 steps
+              Prototype fast, then move to production in 0 steps
             </h2>
-            <p>
-              Cloudflare CDN [premium]
-            </p>
-            <p>
-              Validations
-            </p>
-            <p>
-              Lockdown
-            </p>
+            <div className="row feature-row">
+              <div className="col-xs-12 col-sm-6">
+                <h4>CORS support</h4>
+                <p>
+                  n:point sets<br/>
+                  <code>Access-Control-Allow-Origin: *</code><br/> by default (and it
+                  can be customized).
+                </p>
+              </div>
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+            </div>
+            <div className="row feature-row">
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+              <div className="col-xs-12 col-sm-6">
+                <h4>Cloudfare CDN [premium]</h4>
+                <p>
+                  Something something something something.
+                </p>
+              </div>
+            </div>
+            <div className="row feature-row">
+              <div className="col-xs-12 col-sm-6">
+                <h4>Validations</h4>
+                <p>
+                  Something something something something.
+                </p>
+              </div>
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+            </div>
+            <div className="row feature-row">
+              <div className="hidden-xs-down col-sm-6">
+                <div className="diagram-placeholder">(placeholder)</div>
+              </div>
+              <div className="col-xs-12 col-sm-6">
+                <h4>Lockdown</h4>
+                <p>
+                  Something something something something.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <Footer />

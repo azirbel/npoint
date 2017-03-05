@@ -1,3 +1,5 @@
+@import '../styles/variables.css';
+
 .index-page {
   & .index-editor-container {
     position: relative;
@@ -24,5 +26,29 @@
 
   & .index-title {
     margin-bottom: 60px;
+  }
+
+  & .product-description {
+    margin-top: 44px;
+  }
+
+  & .diagram-placeholder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--white);
+    background-color: #D0D7EC;
+    border: 2px dashed var(--white);
+  }
+
+  & .feature-row {
+    margin-top: 40px;
+
+    & + .feature-row {
+      margin-top: 60px;
+    }
   }
 }
