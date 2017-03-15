@@ -74,7 +74,7 @@ export default class DocumentPage extends Component {
         <div className="section container">
           <JsonEditor
             value={this.state.contents}
-            onChange={(e) => this.updateJson(e.target.value)}
+            onChange={newValue => this.updateJson(newValue)}
           />
           {this.state.isSaving ? <p>Saving...</p> : ''}
           {this.state.canSave ? '' : <p>Cannot save.</p>}

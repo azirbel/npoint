@@ -2,19 +2,13 @@
 
 .json-editor {
   width: 100%;
-}
 
-.editing-area {
-  width: 100%;
-  padding: 10px;
-  color: var(--textColor);
-  background-color: white;
-  border: 1px solid var(--gray);
-  border-radius: var(--borderRadius);
-  font-family: 'Source Code Pro', monospace;
-  font-size: 14px;
-}
-
-.editing-area:focus {
-  outline: 0;
+  & .json-ace-editor {
+    border: 1px solid var(--gray);
+    border-radius: var(--borderRadius);
+    color: var(--textColor);
+    background-color: white;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+  }
 }
