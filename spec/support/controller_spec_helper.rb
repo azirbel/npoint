@@ -2,7 +2,10 @@ module ControllerSpecHelper
   extend ActiveSupport::Concern
 
   def parsed_response
-    result = JSON.parse(response.body)
+    result = case response.content_type
+      when 'text/plain' then response.body
+      else JSON.parse(response.body)
+    end
     result = result.with_indifferent_access if result.is_a?(Hash)
     yield result if block_given?
     result
