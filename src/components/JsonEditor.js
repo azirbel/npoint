@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import AceEditor from 'react-ace';
 import {} from './JsonEditor.css';
 
 export default class JsonEditor extends Component {
@@ -11,11 +12,13 @@ export default class JsonEditor extends Component {
   render() {
     return (
       <div className="json-editor">
-        <textarea
-          rows={this.props.rows || 20}
-          className="editing-area"
+        <AceEditor
+          mode="java"
+          theme="github"
           value={this.props.value}
-          onChange={(e) => this.props.onChange(e)}
+          onChange={(newValue) => this.props.onChange(newValue)}
+          name="UNIQUE_ID_OF_DIV"
+          editorProps={{$blockScrolling: true}}
         />
       </div>
     );

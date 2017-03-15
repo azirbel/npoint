@@ -39,7 +39,7 @@ export default class IndexPage extends Component {
               <JsonEditor
                 rows={9}
                 value={this.state.newDocumentContents}
-                onChange={e => this.setState({ newDocumentContents: e.target.value })}
+                onChange={newValue => this.setState({ newDocumentContents: newValue })}
               />
               <div className="index-editor-buttons flex justify-center">
                 <button
