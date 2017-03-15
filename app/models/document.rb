@@ -1,6 +1,11 @@
 class Document < ActiveRecord::Base
   before_create :create_unique_identifier
 
+  # TODO(azirbel): Allow storing ECMA-404-valid JSON here, not just
+  # arrays and objects
+
+  # TODO(azirbel): Allow "null" values in the JSON
+
   belongs_to :user
 
   # TODO(azirbel): Test for collision case
