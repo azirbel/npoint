@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {} from './Header.css'
-import Title from './header/Title'
+import Logo from './Logo'
+import { Link } from 'react-router'
 import LoginDropdown from './header/LoginDropdown'
 import AccountDropdown from './header/AccountDropdown'
 import Document from '../models/Document'
 import { push } from 'react-router-redux'
 
 class Header extends Component {
-  state = {
-    show: false,
-  }
-
-  toggleShow() {
-    this.setState({ show: !this.state.show })
-  }
-
   createDocument() {
     let { dispatch } = this.props
     Document.create({ generate_contents: true }).then((response) => {
@@ -27,8 +20,8 @@ class Header extends Component {
     return (
       <div>
         <header className='header'>
-          <div className={'container header-container' + (this.props.title ? ' small-logo' : '')}>
-            <Title title={this.props.title} />
+          <div className={'container header-container' + (this.props.children ? ' small-logo' : '')}>
+            {this.renderTitle()}
             <div className='flex header-spaced-out'>
               <button
                 className='button primary'
@@ -47,6 +40,25 @@ class Header extends Component {
         <div className='header-spacer'></div>
       </div>
     );
+  }
+
+  renderTitle() {
+    return (
+      <div>
+        {this.props.children ? (
+          <div className='flex align-center'>
+            <Link href='/' className='unstyled'>
+              <div className='small-logo-container'>
+                <Logo small={true} />
+              </div>
+            </Link>
+            {this.props.children}
+          </div>
+        ) : (
+          <Logo />
+        )}
+      </div>
+    )
   }
 }
 

@@ -70,7 +70,9 @@ export default class DocumentPage extends Component {
   render() {
     return (
       <div>
-        <Header title={this.state.title} />
+        <Header>
+          <h1 className='page-title'>{this.state.title}</h1>
+        </Header>
         <div className="section container">
           <JsonEditor
             value={this.state.contents}

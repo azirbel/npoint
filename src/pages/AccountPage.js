@@ -23,7 +23,9 @@ export default class AccountPage extends Component {
   render() {
     return (
       <div className='account-page'>
-        <Header title='Account' />
+        <Header>
+          <h1 className='page-title'>Account</h1>
+        </Header>
         <div className='container'>
           <div className='account-info'>
             <p>

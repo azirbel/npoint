@@ -37,3 +37,8 @@ h2 {
   font-family: var(--sansFontFamily);
   color: var(--textColor);
 }
+
+.page-title {
+  display: inline;
+  font-size: 28px;
+}

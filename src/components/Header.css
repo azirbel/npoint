@@ -30,6 +30,10 @@
       max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
     }
   }
+
+  & .small-logo-container {
+    width: 36px; /* gutter_size */
+  }
 }
 
 /* Take up as much height as the header, so that the content

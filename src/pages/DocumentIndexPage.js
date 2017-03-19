@@ -35,7 +35,9 @@ export default class DocumentIndexPage extends Component {
   render() {
     return (
       <div>
-        <Header title='All Documents' />
+        <Header>
+          <h1 className='page-title'>All Documents</h1>
+        </Header>
         <div className="container">
           {!this.state.isLoading && isEmpty(this.state.documents) && (
             <div className='section text-center'>

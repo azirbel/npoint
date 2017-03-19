@@ -29,7 +29,9 @@ export default class FaqPage extends Component {
   render() {
     return (
       <div className='faq-page'>
-        <Header title='Frequently Asked Questions' />
+        <Header>
+          <h1 className='page-title'>Frequently Asked Questions</h1>
+        </Header>
         <div className='section'>
           <div className='container'>
             {this.state.faqs.map((faq) => (
