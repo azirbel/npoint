@@ -59,6 +59,10 @@ button {
   &.full-width {
     width: 100%;
   }
+
+  &.square {
+    padding: 8px 8px;
+  }
 }
 
 a.button {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Document from '../models/Document';
 import JsonEditor from '../components/JsonEditor';
 import Header from '../components/Header'
+import { MdDone, MdEdit } from 'react-icons/lib/md';
 import {} from './DocumentPage.css';
 
 export default class DocumentPage extends Component {
@@ -69,9 +70,9 @@ export default class DocumentPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className='document-page'>
         <Header>
-          <h1 className='page-title'>{this.state.title}</h1>
+          {this.renderEditableTitle()}
         </Header>
         <div className="section container">
           <JsonEditor
@@ -90,5 +91,34 @@ export default class DocumentPage extends Component {
         </div>
       </div>
     );
+  }
+
+  renderEditableTitle() {
+    return this.state.isEditingTitle ? (
+      <div className='flex align-center'>
+        <input
+          className='edit-title-input page-title'
+          value={this.state.title}
+          onKeyPress={(e) => this.handleKeyPress(e)}
+          onChange={(e) => this.setState({ title: e.target.value })}
+        />
+        <button
+          className='button link square edit-title-button'
+          onClick={() => this.saveNewTitle()}
+        >
+          <MdDone/>
+        </button>
+      </div>
+    ) : (
+      <div className='flex align-center'>
+        <h1 className='page-title'>{this.state.title}</h1>
+        <button
+          className='button link square edit-title-button'
+          onClick={() => this.setState({ isEditingTitle: true })}
+        >
+          <MdEdit/>
+        </button>
+      </div>
+    )
   }
 }

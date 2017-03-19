@@ -41,4 +41,7 @@ h2 {
 .page-title {
   display: inline;
   font-size: 28px;
+  font-weight: bold;
+  color: var(--textColor);
+  font-family: var(--sansFontFamily);
 }
