@@ -20,7 +20,6 @@ export default class JsonEditor extends Component {
           editorProps={{$blockScrolling: true}}
           mode='javascript'
           width='100%'
-          showGutter={false}
           showPrintMargin={false}
           tabSize={2}
           maxLines={this.props.rows}

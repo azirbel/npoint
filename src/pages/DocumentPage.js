@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import Document from '../models/Document';
-import JsonEditor from '../components/JsonEditor';
+import React, { Component } from 'react'
+import Document from '../models/Document'
+import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
-import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md';
+import JsonErrorParser from '../helpers/json-error-parser'
+import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css';
+import _ from 'lodash';
 
 export default class DocumentPage extends Component {
   state = {
@@ -13,7 +15,7 @@ export default class DocumentPage extends Component {
     isLoading: true,
     isSaving: false,
     isEditingTitle: false,
-    canSave: true,
+    errorMessage: '',
   }
 
   loadDocument(token) {
@@ -44,15 +46,18 @@ export default class DocumentPage extends Component {
     try {
       JSON.parse(newValue)
     } catch (e) {
-      this.setState({ isSaving: false, canSave: false })
+      let errorMessage = JsonErrorParser.readableErrorMessage(newValue, e)
+      this.setState({ isSaving: false, errorMessage })
       return;
     }
 
-    this.setState({ isSaving: true, canSave: true })
+    this.setState({ isSaving: true, errorMessage: '' })
     Document.update(this.props.params.documentToken, {
       contents: newValue,
     }).then(() => {
       this.setState({ isSaving: false })
+    }, () => {
+      this.setState({ isSaving: false, errorMessage: 'Server error, could not save' })
     })
   }
 
@@ -87,11 +92,16 @@ export default class DocumentPage extends Component {
         <div className="section container">
           <JsonEditor
             value={this.state.contents}
-            onChange={newValue => this.updateJson(newValue)}
+            onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
             readOnly={!this.state.editable}
           />
-          {this.state.isSaving ? <p>Saving...</p> : ''}
-          {this.state.canSave ? '' : <p>Cannot save.</p>}
+          <p className='text-right'>
+            {
+              (this.state.isSaving && 'Saving...') ||
+              this.state.errorMessage ||
+              'Saved'
+            }
+          </p>
           <p className='text-center'>
             This document is available at&nbsp;
             <a target='_blank'
