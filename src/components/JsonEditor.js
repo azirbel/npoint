@@ -6,6 +6,7 @@ export default class JsonEditor extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    readOnly: PropTypes.bool,
     rows: PropTypes.number,
   }
 
@@ -23,6 +24,7 @@ export default class JsonEditor extends Component {
           showPrintMargin={false}
           tabSize={2}
           maxLines={this.props.rows}
+          readOnly={this.props.readOnly}
         />
       </div>
     );

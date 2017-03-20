@@ -8,6 +8,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import './styles/avatar.css';
+import './styles/banner.css';
 import './styles/buttons.css';
 import './styles/flex.css';
 import './styles/form.css';

@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Document from '../models/Document';
 import JsonEditor from '../components/JsonEditor';
 import Header from '../components/Header'
-import { MdDone, MdEdit } from 'react-icons/lib/md';
+import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md';
 import {} from './DocumentPage.css';
 
 export default class DocumentPage extends Component {
   state = {
     title: '',
     contents: '',
+    editable: false,
     isLoading: true,
     isSaving: false,
     isEditingTitle: false,
@@ -21,6 +22,7 @@ export default class DocumentPage extends Component {
       this.setState({
         title: response.data.title,
         contents: JSON.stringify(response.data.contents, null, 2),
+        editable: response.data.editable,
         isLoading: false
       })
     })
@@ -74,10 +76,19 @@ export default class DocumentPage extends Component {
         <Header>
           {this.renderEditableTitle()}
         </Header>
+        {!this.state.isLoading && !this.state.editable && (
+          <div className="banner dark-gray">
+            <div className="container flex align-center justify-center">
+              <MdLock className='locked-icon'/>
+              This document belongs to another user. Log in to make changes, or make a copy.
+            </div>
+          </div>
+        )}
         <div className="section container">
           <JsonEditor
             value={this.state.contents}
             onChange={newValue => this.updateJson(newValue)}
+            readOnly={!this.state.editable}
           />
           {this.state.isSaving ? <p>Saving...</p> : ''}
           {this.state.canSave ? '' : <p>Cannot save.</p>}
@@ -112,12 +123,14 @@ export default class DocumentPage extends Component {
     ) : (
       <div className='flex align-center'>
         <h1 className='page-title'>{this.state.title}</h1>
-        <button
-          className='button link square edit-title-button'
-          onClick={() => this.setState({ isEditingTitle: true })}
-        >
-          <MdEdit/>
-        </button>
+        {this.state.editable && (
+          <button
+            className='button link square edit-title-button'
+            onClick={() => this.setState({ isEditingTitle: true })}
+          >
+            <MdEdit/>
+          </button>
+        )}
       </div>
     )
   }

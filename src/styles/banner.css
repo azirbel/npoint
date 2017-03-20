@@ -1,0 +1,11 @@
+@import '../styles/variables.css';
+
+.banner {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+  &.dark-gray {
+    background-color: var(--darkGray);
+    color: var(--white);
+  }
+}

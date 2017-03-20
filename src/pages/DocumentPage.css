@@ -16,4 +16,8 @@
     align-items: center;
     margin-left: 8px;
   }
+
+  & .locked-icon {
+    margin-right: 6px;
+  }
 }

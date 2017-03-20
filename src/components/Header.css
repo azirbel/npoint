@@ -7,7 +7,7 @@
   background-color: var(--white);
   height: var(--headerHeight);
   overflow-y: hidden;
-  box-shadow: 0 0 4px 0 var(--lightGray);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
   width: 100%;
   z-index: 3;
 

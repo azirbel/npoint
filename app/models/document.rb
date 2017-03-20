@@ -20,4 +20,9 @@ class Document < ActiveRecord::Base
       self.token = SecureRandom.hex(10)
     end while self.class.exists?(:token => token)
   end
+
+  def editable_by_user?(u)
+    return true unless user.present?
+    u == user
+  end
 end

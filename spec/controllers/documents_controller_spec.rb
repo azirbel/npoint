@@ -25,32 +25,73 @@ RSpec.describe DocumentsController do
         get :index
         expect(response).to have_http_status(200)
         expect(parsed_response)
-          .to eq(serialize_many(owned_document1, owned_document2))
+          .to eq([
+            serialize_one(owned_document1).merge('editable' => true),
+            serialize_one(owned_document2).merge('editable' => true),
+          ])
       end
     end
   end
 
   describe '#show' do
-    it 'returns owned documents' do
-      get :show, token: owned_document1.token
-      expect(response).to have_http_status(200)
-      expect(parsed_response).to eq(serialize_one(owned_document1))
+    context 'with no logged in user' do
+      it 'returns owned documents' do
+        get :show, token: owned_document1.token
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(
+          serialize_one(owned_document1).merge('editable' => false)
+        )
+      end
+
+      it 'returns unowned documents' do
+        get :show, token: unowned_document.token
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(
+          serialize_one(unowned_document).merge('editable' => true)
+        )
+      end
+
+      it 'does not return the document id' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['id']).to be_nil
+      end
+
+      it 'gives a 404 for nonexistant documents' do
+        get :show, token: 'notatoken'
+        expect(response).to have_http_status(404)
+      end
     end
 
-    it 'returns unowned documents' do
-      get :show, token: unowned_document.token
-      expect(response).to have_http_status(200)
-      expect(parsed_response).to eq(serialize_one(unowned_document))
+    context 'with a logged in user' do
+      before { sign_in user }
+
+      it 'returns owned documents' do
+        get :show, token: owned_document1.token
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(
+          serialize_one(owned_document1).merge('editable' => true)
+        )
+      end
+
+      it 'returns unowned documents' do
+        get :show, token: unowned_document.token
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(
+          serialize_one(unowned_document).merge('editable' => true)
+        )
+      end
     end
 
-    it 'does not return the document id' do
-      get :show, token: unowned_document.token
-      expect(parsed_response['id']).to be_nil
-    end
+    context 'a different logged in user' do
+      before { sign_in user2 }
 
-    it 'gives a 404 for nonexistant documents' do
-      get :show, token: 'notatoken'
-      expect(response).to have_http_status(404)
+      it 'returns owned documents' do
+        get :show, token: owned_document1.token
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq(
+          serialize_one(owned_document1).merge('editable' => false)
+        )
+      end
     end
   end
 
@@ -62,7 +103,9 @@ RSpec.describe DocumentsController do
         }.to change { unowned_document.reload.title }.to('New title')
 
         expect(response).to have_http_status(200)
-        expect(parsed_response).to eq(serialize_one(unowned_document))
+        expect(parsed_response).to eq(
+          serialize_one(unowned_document).merge('editable' => true)
+        )
       end
 
       it 'returns a 401 for an owned document' do
@@ -83,7 +126,9 @@ RSpec.describe DocumentsController do
         }.to change { unowned_document.reload.title }.to('New title')
 
         expect(response).to have_http_status(200)
-        expect(parsed_response).to eq(serialize_one(unowned_document))
+        expect(parsed_response).to eq(
+          serialize_one(unowned_document).merge('editable' => true)
+        )
       end
 
       it 'allows editing an owned document' do
@@ -92,7 +137,9 @@ RSpec.describe DocumentsController do
         }.to change { owned_document1.reload.title }.to('New title')
 
         expect(response).to have_http_status(200)
-        expect(parsed_response).to eq(serialize_one(owned_document1))
+        expect(parsed_response).to eq(
+          serialize_one(owned_document1).merge('editable' => true)
+        )
       end
 
       it 'returns a 401 for a document owned by a different user' do
