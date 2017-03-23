@@ -14,6 +14,19 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  # Render a goblin if the user is signed in, or an ogre if they are signed out.
+  # This is just for CSRF testing. It bothers me that lack of CSRF checking for
+  # GET requests leaks information about whether the user is signed in.
+  #
+  # See http://alexzirbel.com/npoint-csrf-test/.
+  def image
+    if user_signed_in?
+      send_file 'public/img/goblin.png', type: 'image/png', disposition: 'inline'
+    else
+      send_file 'public/img/ogre.png', type: 'image/png', disposition: 'inline'
+    end
+  end
+
   # TODO(azirbel): This is a lot of code for a pretty simple 401 response
   # on failure
   def unauthorized

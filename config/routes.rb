@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'users/me' => 'sessions#info'
+    get 'users/me/image' => 'sessions#image'
   end
 
   constraints :subdomain => 'api' do
