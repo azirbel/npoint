@@ -19,11 +19,9 @@ import './styles/sections.css';
 import './styles/typography.css';
 import './styles/variables.css';
 
-// TODO(azirbel): Standardize where this goes (it's also in an html
-// script tag)
-axios.defaults.headers.get['Content-Type'] = 'application/json';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.delete['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['X-CSRF-Token'] =
+  document.head.querySelector("meta[name=csrf-token]").content
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
