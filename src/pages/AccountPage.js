@@ -47,7 +47,7 @@ export default class AccountPage extends Component {
               Sorry, you can't edit your profile or reset your password yet.
               For support, please contact&nbsp;
               <a href='mailto:alexzirbel+npoint@gmail.com'>
-                alexzirbel+devnull@gmail.com
+                alexzirbel+npoint@gmail.com
               </a>.
             </p>
           </div>
