@@ -27,7 +27,10 @@ axios.interceptors.response.use((response) => {
   let newToken = response.headers['x-csrf-token']
   if (newToken) {
     axios.defaults.headers.common['X-CSRF-Token'] = newToken
-    document.querySelector('meta[name=csrf-token]').setAttribute('content', newToken)
+    let csrfMeta = document.querySelector('meta[name=csrf-token]')
+    if (csrfMeta) {
+      csrfMeta.setAttribute('content', newToken)
+    }
   }
   return response;
 });

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   constraints :subdomain => 'api' do
     namespace :api, path: nil, defaults: { format: 'json' } do
-      get '/:token(/*path)', to: 'documents#show'
+      match '/:token(/*path)', to: 'documents#show', via: [:get, :options]
     end
   end
 
