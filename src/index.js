@@ -21,7 +21,16 @@ import './styles/variables.css';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['X-CSRF-Token'] =
-  document.head.querySelector("meta[name=csrf-token]").content
+  (document.head.querySelector('meta[name=csrf-token]') || {}).content
+
+axios.interceptors.response.use((response) => {
+  let newToken = response.headers['x-csrf-token']
+  if (newToken) {
+    axios.defaults.headers.common['X-CSRF-Token'] = newToken
+    document.querySelector('meta[name=csrf-token]').setAttribute('content', newToken)
+  }
+  return response;
+});
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

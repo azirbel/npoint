@@ -1,6 +1,7 @@
 class SessionsController < Devise::SessionsController
   clear_respond_to
   respond_to :json
+  after_filter :set_csrf_headers, only: [:create, :destroy]
 
   # TODO(azirbel): Extremely annoying warden expects sign in params
   # to be in format { user: { email: ... } }. Refactor so you can just
@@ -39,6 +40,12 @@ class SessionsController < Devise::SessionsController
   # on failure
   def auth_options
     { scope: resource_name, recall: "#{controller_path}#unauthorized" }
+  end
+
+  # The CSRF token changes on login and logout. Send the new token
+  # back with a successful login response, so the frontend can keep working.
+  def set_csrf_headers
+    response.headers['X-CSRF-Token'] = form_authenticity_token
   end
 
   private
