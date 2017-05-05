@@ -1,4 +1,7 @@
 class Api::DocumentsController < ApplicationController
+  class InvalidPathError < StandardError
+  end
+
   skip_before_action :verify_authenticity_token
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
@@ -9,10 +12,14 @@ class Api::DocumentsController < ApplicationController
     if params[:path]
       params[:path].split('/').each do |path_part|
         if contents.is_a? Array
-          path_part = path_part.to_i
+          begin
+            path_part = Integer(path_part, 10)
+          rescue ArgumentError
+            raise InvalidPathError
+          end
         end
         unless contents[path_part]
-          raise ApplicationController::ContentNotFoundError
+          raise InvalidPathError
         end
         contents = contents[path_part]
       end
@@ -34,6 +41,8 @@ class Api::DocumentsController < ApplicationController
     else
       render plain: contents.to_json
     end
+  rescue InvalidPathError
+    head :not_found
   end
 
   private

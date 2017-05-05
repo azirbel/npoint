@@ -26,6 +26,12 @@ RSpec.describe Api::DocumentsController do
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq('"John"')
       end
+
+      it 'returns an error for bad sub-properties' do
+        get :show, token: document.token, path: 'invalid-path'
+
+        expect(response).to have_http_status(404)
+      end
     end
 
     context 'with nested data' do
@@ -69,6 +75,18 @@ RSpec.describe Api::DocumentsController do
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq('"second"')
+      end
+
+      it 'returns an error for non-integer indexes' do
+        get :show, token: document.token, path: 'list/five'
+
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns an error for invalid indexes' do
+        get :show, token: document.token, path: 'list/30'
+
+        expect(response).to have_http_status(404)
       end
     end
 
