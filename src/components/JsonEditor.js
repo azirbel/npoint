@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import {} from 'brace';
 import AceEditor from 'react-ace';
 import {} from './JsonEditor.css';
+
+import 'brace/mode/json';
+import 'brace/snippets/json';
+import 'brace/ext/language_tools';
+import 'brace/theme/github';
 
 export default class JsonEditor extends Component {
   static propTypes = {
@@ -14,11 +20,12 @@ export default class JsonEditor extends Component {
     return (
       <div className="json-editor">
         <AceEditor
+          mode="json"
+          theme="github"
           className='json-ace-editor'
           value={this.props.value}
           onChange={(newValue) => this.props.onChange(newValue)}
           editorProps={{$blockScrolling: true}}
-          mode='javascript'
           width='100%'
           showPrintMargin={false}
           tabSize={2}
