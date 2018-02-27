@@ -51,7 +51,7 @@ class DocumentsController < ApplicationController
   def document_params
     if params[:contents]
       params
-        .permit(:title)
+        .permit(:title, :original_contents)
         .merge(contents: JSON.parse(params.try(:[], :contents) || {}))
     else
       params.permit(:title)
