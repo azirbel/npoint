@@ -20,4 +20,8 @@
   & .locked-icon {
     margin-right: 6px;
   }
+
+  & .hidden-iframe {
+    display: none;
+  }
 }

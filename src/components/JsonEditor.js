@@ -3,8 +3,8 @@ import {} from 'brace';
 import AceEditor from 'react-ace';
 import {} from './JsonEditor.css';
 
-import 'brace/mode/json';
-import 'brace/snippets/json';
+import 'brace/mode/javascript';
+import 'brace/snippets/javascript';
 import 'brace/ext/language_tools';
 import 'brace/theme/github';
 
@@ -20,7 +20,7 @@ export default class JsonEditor extends Component {
     return (
       <div className="json-editor">
         <AceEditor
-          mode="json"
+          mode="javascript"
           theme="github"
           className='json-ace-editor'
           value={this.props.value}
@@ -31,6 +31,9 @@ export default class JsonEditor extends Component {
           tabSize={2}
           maxLines={this.props.rows}
           readOnly={this.props.readOnly}
+          annotations={[]}
+          markers={[]}
+          setOptions={{useWorker: false}}
         />
       </div>
     );

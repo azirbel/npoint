@@ -4,6 +4,10 @@ const MATCH_UNEXPECTED_TOKEN =
   /^Unexpected token (.*) in JSON at position (.*)$/
 const MATCH_MISC_AT_POSITION =
   /^(.*) in JSON at position (.*)$/
+const MATCH_EVAL_UNEXPECTED_TOKEN =
+  /^Unexpected token (.*)$/
+const MATCH_EVAL_UNDEFINED =
+  /^(.*) is not defined$/
 
 let getLineAndColumn = (jsonStr, position) => {
   let partialJsonStr = jsonStr.slice(0, position)
@@ -15,7 +19,7 @@ let getLineAndColumn = (jsonStr, position) => {
   }
 }
 
-export default function(jsonStr, e) {
+export function readableParseError(jsonStr, e) {
   if (e.name !== 'SyntaxError') {
     return e.message
   }
@@ -44,4 +48,20 @@ export default function(jsonStr, e) {
   }
 
   return e.message
+}
+
+export function readableEvalError(evalErrorMessage) {
+  let match_token = evalErrorMessage.match(MATCH_EVAL_UNEXPECTED_TOKEN)
+  if (match_token) {
+    let badToken = match_token[1]
+    return `Unexpected token "${badToken}"`
+  }
+
+  let match_undefined = evalErrorMessage.match(MATCH_EVAL_UNDEFINED)
+  if (match_undefined) {
+    let badToken = match_undefined[1]
+    return `"${badToken}" is not defined`
+  }
+
+  return evalErrorMessage
 }

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Document from '../models/Document'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
-import JsonErrorParser from '../helpers/json-error-parser'
+import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
+import { readableEvalError, readableParseError } from '../helpers/readableJsonError'
 import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css';
 import _ from 'lodash';
@@ -10,7 +11,7 @@ import _ from 'lodash';
 export default class DocumentPage extends Component {
   state = {
     title: '',
-    contents: '',
+    originalContents: '',
     editable: false,
     isLoading: true,
     isSaving: false,
@@ -18,12 +19,14 @@ export default class DocumentPage extends Component {
     errorMessage: '',
   }
 
+  sandboxedIframe: null
+
   loadDocument(token) {
     this.setState({ isLoading: true })
     Document.get(token).then((response) => {
       this.setState({
         title: response.data.title,
-        contents: JSON.stringify(response.data.contents, null, 2),
+        originalContents: response.data.original_contents,
         editable: response.data.editable,
         isLoading: false
       })
@@ -40,20 +43,35 @@ export default class DocumentPage extends Component {
     }
   }
 
-  updateJson(newValue) {
-    this.setState({ contents: newValue })
+  async updateJson(newOriginalContents) {
+    this.setState({ originalContents: newOriginalContents })
 
-    try {
-      JSON.parse(newValue)
-    } catch (e) {
-      let errorMessage = JsonErrorParser.readableErrorMessage(newValue, e)
-      this.setState({ isSaving: false, errorMessage })
-      return;
+    let { json, errorMessage } =
+      await evalParseObject(newOriginalContents, this.sandboxedIframe)
+
+    if (!json) {
+      // TODO(azirbel): Log this to some logging service
+      // TODO(azirbel): Test in older browsers
+
+      // Fallback to naive JSON parse - old browsers can still use this
+      try {
+        json = JSON.parse(newOriginalContents)
+      } catch (e) {
+        this.setState({
+          isSaving: false,
+          errorMessage: errorMessage ?
+            readableEvalError(errorMessage) :
+            readableParseError(newOriginalContents, e)
+        })
+        return;
+      }
     }
+
 
     this.setState({ isSaving: true, errorMessage: '' })
     Document.update(this.props.params.documentToken, {
-      contents: newValue,
+      original_contents: newOriginalContents,
+      contents: JSON.stringify(json),
     }).then(() => {
       this.setState({ isSaving: false })
     }, () => {
@@ -76,11 +94,21 @@ export default class DocumentPage extends Component {
   }
 
   render() {
+    let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
+
     return (
       <div className='document-page'>
         <Header>
           {this.renderEditableTitle()}
         </Header>
+        <iframe
+          className='hidden-iframe'
+          sandbox='allow-scripts'
+          srcDoc={IFRAME_SRC_DOC}
+          ref={(el) => this.sandboxedIframe = el}
+          key={this.props.params.documentToken}
+        >
+        </iframe>
         {!this.state.isLoading && !this.state.editable && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
@@ -91,7 +119,7 @@ export default class DocumentPage extends Component {
         )}
         <div className="section container">
           <JsonEditor
-            value={this.state.contents}
+            value={this.state.originalContents}
             onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
             readOnly={!this.state.editable}
           />
@@ -105,8 +133,8 @@ export default class DocumentPage extends Component {
           <p className='text-center'>
             This document is available at&nbsp;
             <a target='_blank'
-              href={`http://api.npoint.io/${this.props.params.documentToken}`}>
-              {`api.npoint.io/${this.props.params.documentToken}`}
+              href={liveUrl}>
+              {liveUrl}
             </a>
           </p>
         </div>
