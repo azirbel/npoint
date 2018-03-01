@@ -8,4 +8,5 @@ export default {
   create: (params) => axios.post(BASE_URL, params),
   update: (token, params) => axios.patch(`${BASE_URL}/${token}`, params),
   delete: (token) => axios.delete(`${BASE_URL}/${token}`),
+  validateSchema: (params) => axios.post(`${BASE_URL}/validate_schema`, params),
 }

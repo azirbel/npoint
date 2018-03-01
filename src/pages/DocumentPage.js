@@ -12,20 +12,27 @@ export default class DocumentPage extends Component {
   state = {
     title: '',
     originalContents: '',
+    originalSchema: '',
+    contents: null,
     editable: false,
     isLoading: true,
     isSaving: false,
     isEditingTitle: false,
     errorMessage: '',
+    schemaErrors: [],
   }
 
   sandboxedIframe: null
 
   loadDocument(token) {
     this.setState({ isLoading: true })
+    // TODO(azirbel):
+    // need to set contents now too, and generally keep them in sync?
+    // maybe do that as a CP instead?
     Document.get(token).then((response) => {
       this.setState({
         title: response.data.title,
+        contents: response.data.contents,
         originalContents: response.data.original_contents,
         editable: response.data.editable,
         isLoading: false
@@ -68,7 +75,11 @@ export default class DocumentPage extends Component {
     }
 
 
-    this.setState({ isSaving: true, errorMessage: '' })
+    this.setState({
+      contents: json,
+      isSaving: true,
+      errorMessage: ''
+    })
     Document.update(this.props.params.documentToken, {
       original_contents: newOriginalContents,
       contents: JSON.stringify(json),
@@ -77,6 +88,41 @@ export default class DocumentPage extends Component {
     }, () => {
       this.setState({ isSaving: false, errorMessage: 'Server error, could not save' })
     })
+  }
+
+  async updateSchema(newOriginalSchema) {
+    this.setState({ originalSchema: newOriginalSchema })
+    console.log(newOriginalSchema)
+
+    let { json, errorMessage } =
+      await evalParseObject(newOriginalSchema, this.sandboxedIframe)
+
+    if (!json) {
+      // TODO(azirbel): Log this to some logging service
+      // TODO(azirbel): Test in older browsers
+
+      // Fallback to naive JSON parse - old browsers can still use this
+      try {
+        json = JSON.parse(newOriginalSchema)
+      } catch (e) {
+        this.setState({
+          isSaving: false,
+          errorMessage: errorMessage ?
+            readableEvalError(errorMessage) :
+            readableParseError(newOriginalSchema, e)
+        })
+        return;
+      }
+    }
+
+    Document.validateSchema({
+      schema: JSON.stringify(json),
+      contents: JSON.stringify(this.state.contents)
+    }).then(({ data }) => {
+      let { errors } = data;
+      console.log('errs:', errors);
+      this.setState({ schemaErrors: errors });
+    });
   }
 
   saveNewTitle() {
@@ -118,18 +164,34 @@ export default class DocumentPage extends Component {
           </div>
         )}
         <div className="section container">
-          <JsonEditor
-            value={this.state.originalContents}
-            onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
-            readOnly={!this.state.editable}
-          />
-          <p className='text-right'>
-            {
-              (this.state.isSaving && 'Saving...') ||
-              this.state.errorMessage ||
-              'Saved'
-            }
-          </p>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6">
+              <JsonEditor
+                value={this.state.originalContents}
+                onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
+                readOnly={!this.state.editable}
+              />
+              <p className='text-right'>
+                {
+                  (this.state.isSaving && 'Saving...') ||
+                  this.state.errorMessage ||
+                  'Saved'
+                }
+              </p>
+            </div>
+            <div className="col-xs-12 col-sm-6">
+              <JsonEditor
+                value={this.state.originalSchema}
+                onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
+                readOnly={!this.state.editable}
+              />
+              <div className='text-right'>
+                {this.state.schemaErrors.map((se, idx) => (
+                  <p key={idx}>{se}</p>
+                ))}
+              </div>
+            </div>
+          </div>
           <p className='text-center'>
             This document is available at&nbsp;
             <a target='_blank'
