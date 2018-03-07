@@ -23,7 +23,7 @@ export const IFRAME_SRC_DOC = `
      </script>
    </head>
   </html>
-`
+`;
 
 // TODO(azirbel): Pull out the above JS into a function, then stringify it
 // into IFRAME_HTML. Change "e" to "event".
@@ -40,7 +40,7 @@ export function evalParseObject(objStr, iframe) {
       resolve({ json: null, errorMessage: null });
     }
 
-    let handleIframeMessage = (event) => {
+    let handleIframeMessage = event => {
       // Again from https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes:
       //
       // Sandboxed iframes which lack the 'allow-same-origin'
@@ -48,13 +48,16 @@ export function evalParseObject(objStr, iframe) {
       // have to be careful about accepting data via the messaging API you
       // create. Check that source, and validate those inputs!
       if (event.origin === "null" && event.source === iframe.contentWindow) {
-        resolve({ json: event.data.data, errorMessage: event.data.errorMessage });
+        resolve({
+          json: event.data.data,
+          errorMessage: event.data.errorMessage
+        });
       } else {
         resolve({ json: null, errorMessage: null });
       }
-    }
+    };
 
-    window.addEventListener('message', handleIframeMessage);
-    iframe.contentWindow.postMessage(`(${objStr})`, '*');
+    window.addEventListener("message", handleIframeMessage);
+    iframe.contentWindow.postMessage(`(${objStr})`, "*");
   });
 }

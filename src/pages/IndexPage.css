@@ -1,4 +1,4 @@
-@import '../styles/variables.css';
+@import "../styles/variables.css";
 
 .index-page {
   & .index-editor-container {
@@ -40,7 +40,7 @@
     width: 100%;
     height: 100%;
     color: var(--white);
-    background-color: #D0D7EC;
+    background-color: #d0d7ec;
     border: 2px dashed var(--white);
   }
 

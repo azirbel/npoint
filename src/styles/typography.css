@@ -1,4 +1,4 @@
-@import '../styles/variables.css';
+@import "../styles/variables.css";
 
 .title {
   font-family: var(--serifFontFamily);
@@ -7,9 +7,15 @@
   margin-top: 0;
 }
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 
 .text-white {
   color: var(--white);

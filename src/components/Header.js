@@ -1,30 +1,35 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import {} from './Header.css'
-import Logo from './Logo'
-import { Link } from 'react-router'
-import LoginDropdown from './header/LoginDropdown'
-import AccountDropdown from './header/AccountDropdown'
-import Document from '../models/Document'
-import { push } from 'react-router-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {} from "./Header.css";
+import Logo from "./Logo";
+import { Link } from "react-router";
+import LoginDropdown from "./header/LoginDropdown";
+import AccountDropdown from "./header/AccountDropdown";
+import Document from "../models/Document";
+import { push } from "react-router-redux";
 
 class Header extends Component {
   createDocument() {
-    let { dispatch } = this.props
-    Document.create({ generate_contents: true }).then((response) => {
-      dispatch(push(`/docs/${response.data.token}`))
-    })
+    let { dispatch } = this.props;
+    Document.create({ generate_contents: true }).then(response => {
+      dispatch(push(`/docs/${response.data.token}`));
+    });
   }
 
   render() {
     return (
       <div>
-        <header className='header'>
-          <div className={'container header-container' + (this.props.children ? ' small-logo' : '')}>
+        <header className="header">
+          <div
+            className={
+              "container header-container" +
+              (this.props.children ? " small-logo" : "")
+            }
+          >
             {this.renderTitle()}
-            <div className='flex header-spaced-out'>
+            <div className="flex header-spaced-out">
               <button
-                className='button primary'
+                className="button primary"
                 onClick={() => this.createDocument()}
               >
                 + New
@@ -37,7 +42,7 @@ class Header extends Component {
             </div>
           </div>
         </header>
-        <div className='header-spacer'></div>
+        <div className="header-spacer" />
       </div>
     );
   }
@@ -46,9 +51,9 @@ class Header extends Component {
     return (
       <div>
         {this.props.children ? (
-          <div className='flex align-center'>
-            <Link href='/' className='unstyled'>
-              <div className='small-logo-container'>
+          <div className="flex align-center">
+            <Link href="/" className="unstyled">
+              <div className="small-logo-container">
                 <Logo small={true} />
               </div>
             </Link>
@@ -58,14 +63,14 @@ class Header extends Component {
           <Logo />
         )}
       </div>
-    )
+    );
   }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
     session: state.session
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps)(Header);

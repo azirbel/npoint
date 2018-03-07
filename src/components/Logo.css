@@ -1,7 +1,7 @@
-@import '../styles/variables.css';
+@import "../styles/variables.css";
 
 .logo {
-  font-family: 'Source Serif Pro', serif;
+  font-family: "Source Serif Pro", serif;
   font-size: 30px;
   font-weight: bold;
   color: var(--primaryColor);
@@ -10,7 +10,8 @@
   cursor: default;
 }
 
-a.logo, a .logo {
+a.logo,
+a .logo {
   cursor: pointer;
 
   &:hover {

@@ -9,50 +9,45 @@
  * As a workaround, we need to create a component that receives these props.
  */
 
-import React from 'react'
+import React from "react";
 
 const TooltipStyle = {
-  position: 'absolute',
-  padding: '0 5px',
-  zIndex: 5,
+  position: "absolute",
+  padding: "0 5px",
+  zIndex: 5
 };
 
 const TooltipInnerStyle = {
   borderRadius: 3,
-  backgroundColor: '#FFF',
-  borderStyle: 'solid',
+  backgroundColor: "#FFF",
+  borderStyle: "solid",
   borderWidth: 1,
-  borderColor: '#D7D8DE', // light gray
+  borderColor: "#D7D8DE" // light gray
 };
 
 const PlacementStyles = {
   left: {
-    tooltip: { marginLeft: -3, padding: '0 5px' },
+    tooltip: { marginLeft: -3, padding: "0 5px" }
   },
   right: {
-    tooltip: { marginRight: 3, padding: '0 5px' },
+    tooltip: { marginRight: 3, padding: "0 5px" }
   },
   top: {
-    tooltip: { marginTop: -3, padding: '5px 0' },
+    tooltip: { marginTop: -3, padding: "5px 0" }
   },
   bottom: {
-    tooltip: { marginBottom: 3, padding: '5px 0' },
+    tooltip: { marginBottom: 3, padding: "5px 0" }
   }
 };
 
 export default props => {
   let placementStyle = PlacementStyles[props.placement];
 
-  let {
-    style,
-    children
-  } = props;
+  let { style, children } = props;
 
   return (
-    <div style={{...TooltipStyle, ...placementStyle.tooltip, ...style}}>
-      <div style={TooltipInnerStyle}>
-        {children}
-      </div>
+    <div style={{ ...TooltipStyle, ...placementStyle.tooltip, ...style }}>
+      <div style={TooltipInnerStyle}>{children}</div>
     </div>
   );
 };

@@ -1,14 +1,14 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import App from './App';
+import React from "react";
+import { Route, IndexRoute } from "react-router";
+import App from "./App";
 
-import AccountPage from './pages/AccountPage';
-import DocumentIndexPage from './pages/DocumentIndexPage';
-import DocumentPage from './pages/DocumentPage';
-import FaqPage from './pages/FaqPage';
-import ChangelogPage from './pages/ChangelogPage';
-import IndexPage from './pages/IndexPage';
-import StyleguidePage from './pages/StyleguidePage';
+import AccountPage from "./pages/AccountPage";
+import DocumentIndexPage from "./pages/DocumentIndexPage";
+import DocumentPage from "./pages/DocumentPage";
+import FaqPage from "./pages/FaqPage";
+import ChangelogPage from "./pages/ChangelogPage";
+import IndexPage from "./pages/IndexPage";
+import StyleguidePage from "./pages/StyleguidePage";
 
 export default (
   <Route path="/" component={App}>

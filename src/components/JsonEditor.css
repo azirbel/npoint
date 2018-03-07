@@ -1,4 +1,4 @@
-@import '../styles/variables.css';
+@import "../styles/variables.css";
 
 .json-editor {
   width: 100%;
@@ -8,7 +8,7 @@
     border-radius: var(--borderRadius);
     color: var(--textColor);
     background-color: white;
-    font-family: 'Source Code Pro', monospace;
+    font-family: "Source Code Pro", monospace;
     font-size: 14px;
   }
 }
