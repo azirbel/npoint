@@ -1,23 +1,23 @@
-import React, { Component, PropTypes } from 'react';
-import {} from './Tabs.css'
+import React, { Component, PropTypes } from "react";
+import {} from "./Tabs.css";
 
 export class Tab extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     onClick: PropTypes.func,
-    activeTabValue: PropTypes.string,
+    activeTabValue: PropTypes.string
   };
 
   render() {
-    let isActive = this.props.value === this.props.activeTabValue
+    let isActive = this.props.value === this.props.activeTabValue;
     let onClickUnlessActive = () => {
       if (!isActive) {
-        this.props.onClick(this.props.value)
+        this.props.onClick(this.props.value);
       }
-    }
+    };
     return (
       <div
-        className={`tab ${isActive ? 'active' : ''}`}
+        className={`tab ${isActive ? "active" : ""}`}
         onClick={() => onClickUnlessActive()}
       >
         {this.props.children}
@@ -29,29 +29,29 @@ export class Tab extends Component {
 export class Tabs extends Component {
   static propTypes = {
     onChange: PropTypes.func,
-    initialValue: PropTypes.string,
-  }
+    initialValue: PropTypes.string
+  };
 
   state = {
-    activeTabValue: this.props.initialValue,
-  }
+    activeTabValue: this.props.initialValue
+  };
 
   onClick(tabValue) {
     if (tabValue !== this.state.activeTabValue) {
-      this.setState({ activeTabValue: tabValue })
-      this.props.onChange(tabValue)
+      this.setState({ activeTabValue: tabValue });
+      this.props.onChange(tabValue);
     }
   }
 
   render() {
-    let childrenWithProps = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, {
-        onClick: (tabValue) => this.onClick(tabValue),
-        activeTabValue: this.state.activeTabValue,
+    let childrenWithProps = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, {
+        onClick: tabValue => this.onClick(tabValue),
+        activeTabValue: this.state.activeTabValue
       })
-    )
+    );
     return (
-      <div className={`tabs ${this.props.fullWidth ? 'full-width' : ''}`}>
+      <div className={`tabs ${this.props.fullWidth ? "full-width" : ""}`}>
         {childrenWithProps}
       </div>
     );

@@ -1,4 +1,4 @@
-@import './variables.css';
+@import "./variables.css";
 
 /* Reset */
 button {
@@ -11,7 +11,7 @@ button {
 }
 
 .button {
-  font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
+  font-family: "Source Sans Pro", Arial, Helvetica, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: var(--textColor);
   background-color: var(--white);
