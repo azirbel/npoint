@@ -22,11 +22,16 @@ Rails.application.routes.draw do
   get 'changelog', to: 'app#index'
   get 'docs/:id', to: 'app#index'
 
-  resources :documents, param: :token, only: [:index, :create, :show, :update, :destroy] do
+  resources :documents, param: :token, only: [:index, :create, :show, :update, :destroy]
+
+  resources :schema, only: [] do
     collection do
-      post :validate_schema
+      post :validate
+      post :generate
     end
   end
+  #post 'schemas/validate', to: 'schemas#validate'
+  #post 'schemas/generate', to: 'schemas#generate'
 
   # Followed https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku#comment-56f2af9c524ce84ba3000005
   # to set up SSL

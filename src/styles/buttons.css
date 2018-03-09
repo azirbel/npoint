@@ -63,6 +63,11 @@ button {
   &.square {
     padding: 8px 8px;
   }
+
+  &.disabled {
+    background-color: var(--gray) !important;
+    cursor: not-allowed;
+  }
 }
 
 a.button {
@@ -72,4 +77,12 @@ a.button {
 
 a.button:hover {
   background-color: var(--darkWhite);
+}
+
+.button-group {
+  display: flex;
+
+  & .button {
+    margin-right: 8px;
+  }
 }

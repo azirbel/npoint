@@ -75,11 +75,16 @@ GEM
     json (1.8.6)
     json-schema (2.8.0)
       addressable (>= 2.4)
+    json-schema-generator (0.0.9)
+      jsonpath
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
     jsonapi-parser (0.1.1.beta3)
     jsonapi-renderer (0.1.1.beta1)
+    jsonpath (0.8.11)
+      multi_json
+      to_regexp (~> 0.2.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -125,6 +130,11 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (4.2.3)
       actionpack (= 4.2.3)
       activesupport (= 4.2.3)
@@ -168,6 +178,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.4)
     thread_safe (0.3.5)
+    to_regexp (0.2.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -189,10 +200,12 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   json-schema
+  json-schema-generator
   pg
   pry-rails
   rack-cors
   rails (= 4.2.3)
+  rails_12factor
   rspec-collection_matchers
   rspec-rails
   sdoc (~> 0.4.0)
@@ -204,4 +217,4 @@ RUBY VERSION
    ruby 2.3.4p301
 
 BUNDLED WITH
-   1.14.6
+   1.16.1

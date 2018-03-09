@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Document from '../models/Document'
+import Schema from '../models/Schema'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
@@ -14,26 +15,28 @@ export default class DocumentPage extends Component {
     originalContents: '',
     originalSchema: '',
     contents: null,
+    schema: null,
     editable: false,
     isLoading: true,
     isSaving: false,
     isEditingTitle: false,
     errorMessage: '',
     schemaErrors: [],
+    savedOriginalContents: '',
+    savedOriginalSchema: '',
   }
 
   sandboxedIframe: null
 
   loadDocument(token) {
     this.setState({ isLoading: true })
-    // TODO(azirbel):
-    // need to set contents now too, and generally keep them in sync?
-    // maybe do that as a CP instead?
+
     Document.get(token).then((response) => {
       this.setState({
         title: response.data.title,
         contents: response.data.contents,
         originalContents: response.data.original_contents,
+        savedOriginalContents: response.data.original_contents,
         editable: response.data.editable,
         isLoading: false
       })
@@ -73,21 +76,6 @@ export default class DocumentPage extends Component {
         return;
       }
     }
-
-
-    this.setState({
-      contents: json,
-      isSaving: true,
-      errorMessage: ''
-    })
-    Document.update(this.props.params.documentToken, {
-      original_contents: newOriginalContents,
-      contents: JSON.stringify(json),
-    }).then(() => {
-      this.setState({ isSaving: false })
-    }, () => {
-      this.setState({ isSaving: false, errorMessage: 'Server error, could not save' })
-    })
   }
 
   async updateSchema(newOriginalSchema) {
@@ -115,7 +103,7 @@ export default class DocumentPage extends Component {
       }
     }
 
-    Document.validateSchema({
+    Schema.validate({
       schema: JSON.stringify(json),
       contents: JSON.stringify(this.state.contents)
     }).then(({ data }) => {
@@ -125,11 +113,38 @@ export default class DocumentPage extends Component {
     });
   }
 
-  saveNewTitle() {
+  generateSchema = async () => {
+    Schema.generate({
+      contents: JSON.stringify(this.state.contents)
+    }).then(({ data }) => {
+      console.log('generated!');
+      console.log('data:', data);
+      this.setState({
+        schema: data.schema,
+        originalSchema: data.original_schema,
+      });
+    });
+  }
+
+  saveNewTitle = () => {
     Document.update(this.props.params.documentToken, {
       title: this.state.title,
     }).then(() => {
       this.setState({ isEditingTitle: false });
+    })
+  }
+
+  saveDocument = () => {
+    let saveState = _.cloneDeep(this.state);
+
+    Document.update(this.props.params.documentToken, {
+      contents: JSON.stringify(saveState.contents),
+      original_contents: saveState.originalContents,
+    }).then(() => {
+      this.setState({
+        savedOriginalContents: saveState.originalContents,
+        savedOriginalSchema: saveState.originalSchema,
+      });
     })
   }
 
@@ -141,6 +156,7 @@ export default class DocumentPage extends Component {
 
   render() {
     let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
+    let hasSaved = this.state.originalContents === this.state.savedOriginalContents;
 
     return (
       <div className='document-page'>
@@ -164,6 +180,16 @@ export default class DocumentPage extends Component {
           </div>
         )}
         <div className="section container">
+          <div className="button-group">
+            {hasSaved ? (
+              <button disabled className="button primary disabled">Saved</button>
+            ) : (
+              <button className="button primary" onClick={this.saveDocument}>Save</button>
+            )}
+            <button className="button secondary" onClick={this.generateSchema}>Generate schema</button>
+          </div>
+        </div>
+        <div className="section container">
           <div className="row">
             <div className="col-xs-12 col-sm-6">
               <JsonEditor
@@ -171,13 +197,6 @@ export default class DocumentPage extends Component {
                 onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
                 readOnly={!this.state.editable}
               />
-              <p className='text-right'>
-                {
-                  (this.state.isSaving && 'Saving...') ||
-                  this.state.errorMessage ||
-                  'Saved'
-                }
-              </p>
             </div>
             <div className="col-xs-12 col-sm-6">
               <JsonEditor
@@ -215,7 +234,7 @@ export default class DocumentPage extends Component {
         />
         <button
           className='button link square edit-title-button'
-          onClick={() => this.saveNewTitle()}
+          onClick={this.saveNewTitle}
         >
           <MdDone/>
         </button>

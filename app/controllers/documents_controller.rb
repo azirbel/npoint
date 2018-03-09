@@ -1,8 +1,7 @@
 class DocumentsController < ApplicationController
   SERIALIZER = DocumentSerializer
 
-  # TODO(azirbel): Remove this when moving validations to new controller
-  before_action :authenticate_user!, :except => [:show, :create, :update, :validate_schema]
+  before_action :authenticate_user!, :except => [:show, :create, :update]
 
   def index
     render json: current_user.documents, each_serializer: SERIALIZER
@@ -42,18 +41,6 @@ class DocumentsController < ApplicationController
   def destroy
     document.destroy!
     head :ok
-  end
-
-  # TODO(azirbel): Move to another controller
-  def validate_schema
-    contents = JSON.parse(params.require(:contents))
-    schema = JSON.parse(params.require(:schema))
-
-    errors = JSON::Validator.fully_validate(schema, contents)
-    render json: {
-      valid: errors.blank?,
-      errors: errors
-    }
   end
 
   private

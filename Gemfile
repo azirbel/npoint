@@ -15,6 +15,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt'
 gem 'faker'
 gem 'json-schema'
+gem 'json-schema-generator'
+
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'pry-rails'
