@@ -1,3 +1,5 @@
+import { readableEvalError, readableParseError } from './readableJsonError'
+
 // Following https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
 
 // Important to use via srcdoc, and not src: see
@@ -7,8 +9,7 @@ export const IFRAME_SRC_DOC = `
   <!DOCTYPE html>
   <html>
    <head>
-     <title>Evalbox's Frame</title>
-     <h1>Herro</h1>
+     <title>npoint eval iframe</title>
      <script>
        window.addEventListener('message', function(e) {
          var mainWindow = e.source;
@@ -33,11 +34,19 @@ export const IFRAME_SRC_DOC = `
 // "{ a: 3 }"
 //
 // Example resolved output:
-// {a: 3}
+// { json: {a: 3}, errorMessage: null }
+//
+// Resolved json will be valid if `errorMessage` is null. Example:
+// { json: null, errorMessage: null } // valid
+// { json: null, errorMessage: 'Bad' } // invalid
 export function evalParseObject(objStr, iframe) {
   return new Promise((resolve, reject) => {
-    if (!iframe) {
+    if (objStr === '') {
       resolve({ json: null, errorMessage: null });
+    }
+
+    if (!iframe) {
+      resolve(naiveParseJson(objStr))
     }
 
     let handleIframeMessage = (event) => {
@@ -48,13 +57,30 @@ export function evalParseObject(objStr, iframe) {
       // have to be careful about accepting data via the messaging API you
       // create. Check that source, and validate those inputs!
       if (event.origin === "null" && event.source === iframe.contentWindow) {
-        resolve({ json: event.data.data, errorMessage: event.data.errorMessage });
+        resolve({
+          json: event.data.data,
+          errorMessage: readableEvalError(event.data.errorMessage),
+        });
       } else {
-        resolve({ json: null, errorMessage: null });
+        resolve(naiveParseJson(objStr))
       }
     }
 
     window.addEventListener('message', handleIframeMessage);
     iframe.contentWindow.postMessage(`(${objStr})`, '*');
   });
+}
+
+function naiveParseJson(jsonStr) {
+  // Fallback to naive JSON parse - old browsers can still use this
+  let json = null;
+  let errorMessage = null;
+
+  try {
+    json = JSON.parse(jsonStr)
+  } catch (e) {
+    errorMessage = readableParseError(jsonStr, e)
+  }
+
+  return { json, errorMessage }
 }

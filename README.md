@@ -3,19 +3,25 @@
 ## Setup
 
 ```
-npm install
+yarn
 ```
 
 ## Development
 
 ```
 rails s -p 3001
-npm start
+yarn start
+```
+
+## Testing
+
+```
+yarn test
 ```
 
 ## Production build
 
-1. Build files
+1. Build files (use yarn instead?)
 
 ```
 npm run build

@@ -51,6 +51,10 @@ export function readableParseError(jsonStr, e) {
 }
 
 export function readableEvalError(evalErrorMessage) {
+  if (_.isEmpty(evalErrorMessage)) {
+    return null;
+  }
+
   let match_token = evalErrorMessage.match(MATCH_EVAL_UNEXPECTED_TOKEN)
   if (match_token) {
     let badToken = match_token[1]

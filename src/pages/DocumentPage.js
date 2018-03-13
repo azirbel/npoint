@@ -4,7 +4,6 @@ import Schema from '../models/Schema'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
-import { readableEvalError, readableParseError } from '../helpers/readableJsonError'
 import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css';
 import _ from 'lodash';
@@ -18,12 +17,12 @@ export default class DocumentPage extends Component {
     schema: null,
     editable: false,
     isLoading: true,
-    isSaving: false,
     isEditingTitle: false,
-    errorMessage: '',
-    schemaErrors: [],
     savedOriginalContents: '',
     savedOriginalSchema: '',
+    contentsErrorMessage: '',
+    schemaErrorMessage: '',
+    serverErrors: [],
   }
 
   sandboxedIframe: null
@@ -37,6 +36,9 @@ export default class DocumentPage extends Component {
         contents: response.data.contents,
         originalContents: response.data.original_contents,
         savedOriginalContents: response.data.original_contents,
+        schema: response.data.schema,
+        originalSchema: response.data.original_schema,
+        savedOriginalSchema: response.data.original_schema,
         editable: response.data.editable,
         isLoading: false
       })
@@ -53,63 +55,60 @@ export default class DocumentPage extends Component {
     }
   }
 
+  autoformatData = () => {
+    this.setState({
+      originalContents: JSON.stringify(this.state.contents, null, 2),
+    })
+  }
+
+  autoformatSchema = () => {
+    this.setState({
+      originalSchema: JSON.stringify(this.state.schema, null, 2),
+    })
+  }
+
   async updateJson(newOriginalContents) {
     this.setState({ originalContents: newOriginalContents })
 
     let { json, errorMessage } =
       await evalParseObject(newOriginalContents, this.sandboxedIframe)
 
-    if (!json) {
-      // TODO(azirbel): Log this to some logging service
-      // TODO(azirbel): Test in older browsers
+    this.setState({
+      contents: json,
+      contentsErrorMessage: errorMessage,
+    });
 
-      // Fallback to naive JSON parse - old browsers can still use this
-      try {
-        json = JSON.parse(newOriginalContents)
-      } catch (e) {
-        this.setState({
-          isSaving: false,
-          errorMessage: errorMessage ?
-            readableEvalError(errorMessage) :
-            readableParseError(newOriginalContents, e)
-        })
-        return;
-      }
+    // TODO(azirbel): Probably relies on whether schema is valid too. Refactor out
+    if (_.isEmpty(errorMessage)) {
+      this.validateSchema(json, this.state.schema)
     }
   }
 
   async updateSchema(newOriginalSchema) {
     this.setState({ originalSchema: newOriginalSchema })
-    console.log(newOriginalSchema)
 
     let { json, errorMessage } =
       await evalParseObject(newOriginalSchema, this.sandboxedIframe)
 
-    if (!json) {
-      // TODO(azirbel): Log this to some logging service
-      // TODO(azirbel): Test in older browsers
+    console.log('j', json, errorMessage)
+    this.setState({
+      schema: json,
+      schemaErrorMessage: errorMessage,
+    });
 
-      // Fallback to naive JSON parse - old browsers can still use this
-      try {
-        json = JSON.parse(newOriginalSchema)
-      } catch (e) {
-        this.setState({
-          isSaving: false,
-          errorMessage: errorMessage ?
-            readableEvalError(errorMessage) :
-            readableParseError(newOriginalSchema, e)
-        })
-        return;
-      }
+    // TODO(azirbel): Probably relies on whether contents is valid too. Refactor out
+    if (_.isEmpty(errorMessage)) {
+      this.validateSchema(this.state.contents, json)
     }
+  }
 
+  async validateSchema(json, schema) {
     Schema.validate({
       schema: JSON.stringify(json),
-      contents: JSON.stringify(this.state.contents)
+      contents: JSON.stringify(schema)
     }).then(({ data }) => {
       let { errors } = data;
-      console.log('errs:', errors);
-      this.setState({ schemaErrors: errors });
+      this.setState({ serverErrors: errors });
     });
   }
 
@@ -117,12 +116,17 @@ export default class DocumentPage extends Component {
     Schema.generate({
       contents: JSON.stringify(this.state.contents)
     }).then(({ data }) => {
-      console.log('generated!');
-      console.log('data:', data);
       this.setState({
         schema: data.schema,
         originalSchema: data.original_schema,
       });
+    });
+  }
+
+  removeSchema = () => {
+    this.setState({
+      schema: null,
+      originalSchema: '',
     });
   }
 
@@ -138,8 +142,10 @@ export default class DocumentPage extends Component {
     let saveState = _.cloneDeep(this.state);
 
     Document.update(this.props.params.documentToken, {
-      contents: JSON.stringify(saveState.contents),
+      contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
       original_contents: saveState.originalContents,
+      schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
+      original_schema: saveState.originalSchema,
     }).then(() => {
       this.setState({
         savedOriginalContents: saveState.originalContents,
@@ -156,7 +162,8 @@ export default class DocumentPage extends Component {
 
   render() {
     let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
-    let hasSaved = this.state.originalContents === this.state.savedOriginalContents;
+    let hasSaved = (this.state.originalContents === this.state.savedOriginalContents)
+      && (this.state.originalSchema === this.state.savedOriginalSchema);
 
     return (
       <div className='document-page'>
@@ -168,7 +175,7 @@ export default class DocumentPage extends Component {
           ) : (
             <button className="button primary" onClick={this.saveDocument}>Save</button>
           )}
-          <button className="button secondary" onClick={this.generateSchema}>Generate schema</button>
+          <button className="button link">Share</button>
         </Header>
         <iframe
           className='hidden-iframe'
@@ -191,7 +198,7 @@ export default class DocumentPage extends Component {
             <div className="col-xs-12 col-sm-6">
               <h5>JSON Data</h5>
               <div className='button-group data-control-buttons'>
-                <button className='button small'>Autoformat</button>
+                <button className='button small' onClick={this.autoformatData}>Autoformat</button>
                 <button className='button small'>Lockdown...</button>
               </div>
               <JsonEditor
@@ -199,26 +206,45 @@ export default class DocumentPage extends Component {
                 onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
                 readOnly={!this.state.editable}
               />
+              <div className='text-right'>
+                {this.state.contentsErrorMessage}
+              </div>
             </div>
             <div className="col-xs-12 col-sm-6">
               <h5>Schema</h5>
-              <div className='button-group data-control-buttons'>
-                <button className='button small'>Autoformat</button>
-                <button className='button small'>Remove schema</button>
-                <button className='button small'>Lockdown...</button>
-              </div>
-              <JsonEditor
-                value={this.state.originalSchema}
-                onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
-                readOnly={!this.state.editable}
-              />
-              <div className='text-right'>
-                {this.state.schemaErrors.map((se, idx) => (
-                  <p key={idx}>{se}</p>
-                ))}
-              </div>
+              {!_.isEmpty(this.state.originalSchema) ? (
+                <div>
+                  <div className='button-group data-control-buttons'>
+                    <button className='button small' onClick={this.autoformatSchema}>Autoformat</button>
+                    <button className='button small' onClick={this.removeSchema}>Remove schema</button>
+                    <button className='button small'>Lockdown...</button>
+                  </div>
+                  <JsonEditor
+                    value={this.state.originalSchema}
+                    onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
+                    readOnly={!this.state.editable}
+                  />
+                  <div className='text-right'>
+                    {this.state.schemaErrorMessage}
+                    {this.state.serverErrors.map((se, idx) => (
+                      <p key={idx}>{se}</p>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className='button-group data-control-buttons'>
+                  <button
+                    className="button small"
+                    onClick={this.generateSchema}
+                  >
+                    Generate schema
+                  </button>
+                </div>
+              )}
             </div>
           </div>
+        </div>
+        <div className="section dark-white">
           <p className='text-center'>
             This document is available at&nbsp;
             <a target='_blank'

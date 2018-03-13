@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227182340) do
+ActiveRecord::Schema.define(version: 20180313210558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20180227182340) do
     t.integer  "user_id"
     t.string   "token",             null: false
     t.string   "original_contents"
+    t.jsonb    "schema"
+    t.string   "original_schema"
   end
 
   add_index "documents", ["token"], name: "index_documents_on_token", using: :btree

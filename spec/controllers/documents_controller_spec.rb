@@ -96,6 +96,42 @@ RSpec.describe DocumentsController do
   end
 
   describe '#update' do
+    it 'allows setting contents to nil' do
+      expect {
+        post :update, token: unowned_document.token, contents: nil
+      }.to change { unowned_document.reload.contents }.to(nil)
+
+      expect(response).to have_http_status(200)
+      expect(parsed_response).to include(contents: nil)
+    end
+
+    it 'allows setting contents to {}' do
+      expect {
+        post :update, token: unowned_document.token, contents: '{}'
+      }.to change { unowned_document.reload.contents }.to({})
+
+      expect(response).to have_http_status(200)
+      expect(parsed_response).to include(contents: {})
+    end
+
+    it 'allows setting schema to nil' do
+      expect {
+        post :update, token: unowned_document.token, schema: nil
+      }.to change { unowned_document.reload.schema }.to(nil)
+
+      expect(response).to have_http_status(200)
+      expect(parsed_response).to include(schema: nil)
+    end
+
+    it 'allows setting schema to {}' do
+      expect {
+        post :update, token: unowned_document.token, schema: '{}'
+      }.to change { unowned_document.reload.schema }.to({})
+
+      expect(response).to have_http_status(200)
+      expect(parsed_response).to include(schema: {})
+    end
+
     context 'with no logged in user' do
       it 'allows editing an unowned document' do
         expect {

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {} from 'brace';
 import AceEditor from 'react-ace';
 import {} from './JsonEditor.css';
@@ -29,11 +30,11 @@ export default class JsonEditor extends Component {
           width='100%'
           showPrintMargin={false}
           tabSize={2}
-          maxLines={this.props.rows}
+          maxLines={Infinity}
           readOnly={this.props.readOnly}
           annotations={[]}
           markers={[]}
-          setOptions={{useWorker: false}}
+          setOptions={{useWorker: false, wrap: true}}
         />
       </div>
     );
