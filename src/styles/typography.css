@@ -24,6 +24,10 @@ a:hover {
   text-decoration: underline;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 h1 {
   font-size: 36px;
   font-weight: bold;
@@ -36,6 +40,14 @@ h2 {
   font-weight: bold;
   font-family: var(--sansFontFamily);
   color: var(--textColor);
+}
+
+h5 {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--sansFontFamily);
+  color: var(--gray);
+  text-transform: uppercase;
 }
 
 .page-title {

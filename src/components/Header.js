@@ -5,36 +5,34 @@ import Logo from './Logo'
 import { Link } from 'react-router'
 import LoginDropdown from './header/LoginDropdown'
 import AccountDropdown from './header/AccountDropdown'
-import Document from '../models/Document'
-import { push } from 'react-router-redux'
 
 class Header extends Component {
-  createDocument() {
-    let { dispatch } = this.props
-    Document.create({ generate_contents: true }).then((response) => {
-      dispatch(push(`/docs/${response.data.token}`))
-    })
-  }
-
   render() {
+    let { session, children, fullWidth, fullLogo } = this.props;
+
+    let headerClass = 'header-container'
+      + (fullWidth ? ' header-gutter' : ' container')
+      + (children ? ' small-logo' : '')
+
     return (
       <div>
         <header className='header'>
-          <div className={'container header-container' + (this.props.children ? ' small-logo' : '')}>
-            {this.renderTitle()}
-            <div className='flex header-spaced-out'>
-              <button
-                className='button primary'
-                onClick={() => this.createDocument()}
-              >
-                + New
-              </button>
-              {this.props.session.loggedIn ? (
-                <AccountDropdown />
-              ) : (
-                <LoginDropdown />
-              )}
-            </div>
+          <div className={headerClass}>
+            {fullLogo ? (
+              <Logo />
+            ) : (
+              <Link href='/' className='unstyled'>
+                <div className='small-logo-container'>
+                  <Logo small={true} />
+                </div>
+              </Link>
+            )}
+            {children}
+            {session.loggedIn ? (
+              <AccountDropdown />
+            ) : (
+              <LoginDropdown />
+            )}
           </div>
         </header>
         <div className='header-spacer'></div>
@@ -45,18 +43,6 @@ class Header extends Component {
   renderTitle() {
     return (
       <div>
-        {this.props.children ? (
-          <div className='flex align-center'>
-            <Link href='/' className='unstyled'>
-              <div className='small-logo-container'>
-                <Logo small={true} />
-              </div>
-            </Link>
-            {this.props.children}
-          </div>
-        ) : (
-          <Logo />
-        )}
       </div>
     )
   }

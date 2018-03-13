@@ -25,10 +25,16 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    width: 100%;
 
-    @media(min-width: 700px) {
-      max-width: calc(var(--containerWidth) + 72px); /* 2x gutter_size */
+    & > * + * {
+      margin-left: 10px;
     }
+  }
+
+  & .header-gutter {
+    padding-left: var(--mediumGutter);
+    padding-right: var(--mediumGutter);
   }
 
   & .small-logo-container {

@@ -1,6 +1,10 @@
 @import '../styles/variables.css';
 
 .document-page {
+  & .main {
+    padding: var(--largeGutter) var(--mediumGutter);
+  }
+
   & .edit-title-input {
     padding: 0 8px;
     border: 1px solid var(--lightGray);
@@ -23,5 +27,10 @@
 
   & .hidden-iframe {
     display: none;
+  }
+
+  & .data-control-buttons {
+    margin-top: var(--smallGutter);
+    margin-bottom: var(--mediumGutter);
   }
 }

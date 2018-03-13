@@ -17,7 +17,7 @@ export default class IndexPage extends Component {
     }, null, 2)
   }
 
-  createNewDocument() {
+  createNewDocument = () => {
     Document.create({
       title: 'Untitled',
       contents: this.state.newDocumentContents,
@@ -29,7 +29,15 @@ export default class IndexPage extends Component {
   render() {
     return (
       <div className='index-page'>
-        <Header />
+        <Header fullLogo={true}>
+          <div className='flex-spring'/>
+          <button
+            className='button primary'
+            onClick={this.createNewDocument}
+          >
+            + New
+          </button>
+        </Header>
         <div className="section dark-white index-splash">
           <div className="container">
             <h1 className="title text-center index-title">

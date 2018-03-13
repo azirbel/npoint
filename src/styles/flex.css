@@ -19,3 +19,7 @@
     justify-content: flex-start;
   }
 }
+
+.flex-spring {
+  flex-grow: 1;
+}

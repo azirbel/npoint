@@ -160,8 +160,15 @@ export default class DocumentPage extends Component {
 
     return (
       <div className='document-page'>
-        <Header>
+        <Header fullWidth={true}>
           {this.renderEditableTitle()}
+          <div className='flex-spring'/>
+          {hasSaved ? (
+            <button disabled className="button primary disabled">Saved</button>
+          ) : (
+            <button className="button primary" onClick={this.saveDocument}>Save</button>
+          )}
+          <button className="button secondary" onClick={this.generateSchema}>Generate schema</button>
         </Header>
         <iframe
           className='hidden-iframe'
@@ -179,19 +186,14 @@ export default class DocumentPage extends Component {
             </div>
           </div>
         )}
-        <div className="section container">
-          <div className="button-group">
-            {hasSaved ? (
-              <button disabled className="button primary disabled">Saved</button>
-            ) : (
-              <button className="button primary" onClick={this.saveDocument}>Save</button>
-            )}
-            <button className="button secondary" onClick={this.generateSchema}>Generate schema</button>
-          </div>
-        </div>
-        <div className="section container">
+        <div className="main">
           <div className="row">
             <div className="col-xs-12 col-sm-6">
+              <h5>JSON Data</h5>
+              <div className='button-group data-control-buttons'>
+                <button className='button small'>Autoformat</button>
+                <button className='button small'>Lockdown...</button>
+              </div>
               <JsonEditor
                 value={this.state.originalContents}
                 onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
@@ -199,6 +201,12 @@ export default class DocumentPage extends Component {
               />
             </div>
             <div className="col-xs-12 col-sm-6">
+              <h5>Schema</h5>
+              <div className='button-group data-control-buttons'>
+                <button className='button small'>Autoformat</button>
+                <button className='button small'>Remove schema</button>
+                <button className='button small'>Lockdown...</button>
+              </div>
               <JsonEditor
                 value={this.state.originalSchema}
                 onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}

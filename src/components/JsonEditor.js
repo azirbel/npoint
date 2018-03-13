@@ -6,7 +6,7 @@ import {} from './JsonEditor.css';
 import 'brace/mode/javascript';
 import 'brace/snippets/javascript';
 import 'brace/ext/language_tools';
-import 'brace/theme/github';
+import '../helpers/npoint-ace-theme';
 
 export default class JsonEditor extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class JsonEditor extends Component {
       <div className="json-editor">
         <AceEditor
           mode="javascript"
-          theme="github"
+          theme="npoint"
           className='json-ace-editor'
           value={this.props.value}
           onChange={(newValue) => this.props.onChange(newValue)}

@@ -62,14 +62,27 @@ export default class StyleguidePage extends Component {
             <h1>Headers</h1>
             <h2>Header 2</h2>
             <h3>Header 3</h3>
+            <h5>Header 5</h5>
             <p>Paragraph text</p>
           </div>
         </div>
         <div className='section'>
           <div className='container'>
             <h1>Buttons</h1>
-            <button className='button'>Button</button>
-            <button className='button primary'>Button primary</button>
+            <div className='button-group'>
+              <button className='button'>.button</button>
+              <button className='button primary'>.button.primary</button>
+            </div>
+            <br />
+            <div className='button-group'>
+              <button className='button small'>.button.small</button>
+              <button className='button small primary'>.button.small.primary</button>
+            </div>
+            <br />
+            <div className='button-group'>
+              <button className='button large'>.button.large</button>
+              <button className='button large primary'>.button.large.primary</button>
+            </div>
           </div>
         </div>
       </div>

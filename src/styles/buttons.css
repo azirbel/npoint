@@ -47,6 +47,11 @@ button {
     padding: 12px 24px;
   }
 
+  &.small {
+    padding: 3px 8px;
+    font-size: 14px;
+  }
+
   &.link {
     border: none;
     outline: none;
