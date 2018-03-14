@@ -222,65 +222,67 @@ export default class DocumentPage extends Component {
             </div>
           </div>
         )}
-        <div className="main">
-          <div className="row">
-            <div className="col-xs-12 col-sm-6">
-              <h5>JSON Data</h5>
-              <div className='button-group data-control-buttons'>
-                <button className='button small' onClick={this.autoformatData}>Autoformat</button>
-                <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
-              </div>
-              <JsonEditor
-                value={this.state.originalContents}
-                onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
-                readOnly={!this.state.editable}
-              />
-              <div className='text-right'>
-                {this.state.contentsErrorMessage}
-              </div>
-            </div>
-            <div className="col-xs-12 col-sm-6">
-              <h5>Schema</h5>
-              {!_.isEmpty(this.state.originalSchema) ? (
-                <div>
-                  <div className='button-group data-control-buttons'>
-                    <button className='button small' onClick={this.autoformatSchema}>Autoformat</button>
-                    <button className='button small' onClick={this.removeSchema}>Remove schema</button>
-                    <button className='button small'>Lockdown...</button>
-                  </div>
-                  <JsonEditor
-                    value={this.state.originalSchema}
-                    onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
-                    readOnly={!this.state.editable}
-                  />
-                  <div className='text-right'>
-                    {this.state.schemaErrorMessage}
-                    {this.state.serverErrors.map((se, idx) => (
-                      <p key={idx}>{se}</p>
-                    ))}
-                  </div>
-                </div>
-              ) : (
+        <div className="main-container">
+          <div className="main">
+            <div className="row">
+              <div className="col-xs-12 col-sm-6">
+                <h5>JSON Data</h5>
                 <div className='button-group data-control-buttons'>
-                  <button
-                    className="button small"
-                    onClick={this.generateSchema}
-                  >
-                    Generate schema
-                  </button>
+                  <button className='button small' onClick={this.autoformatData}>Autoformat</button>
+                  <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
                 </div>
-              )}
+                <JsonEditor
+                  value={this.state.originalContents}
+                  onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
+                  readOnly={!this.state.editable}
+                />
+                <div className='text-right'>
+                  {this.state.contentsErrorMessage}
+                </div>
+              </div>
+              <div className="col-xs-12 col-sm-6">
+                <h5>Schema</h5>
+                {!_.isEmpty(this.state.originalSchema) ? (
+                  <div>
+                    <div className='button-group data-control-buttons'>
+                      <button className='button small' onClick={this.autoformatSchema}>Autoformat</button>
+                      <button className='button small' onClick={this.removeSchema}>Remove schema</button>
+                      <button className='button small'>Lockdown...</button>
+                    </div>
+                    <JsonEditor
+                      value={this.state.originalSchema}
+                      onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
+                      readOnly={!this.state.editable}
+                    />
+                    <div className='text-right'>
+                      {this.state.schemaErrorMessage}
+                      {this.state.serverErrors.map((se, idx) => (
+                        <p key={idx}>{se}</p>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className='button-group data-control-buttons'>
+                    <button
+                      className="button small"
+                      onClick={this.generateSchema}
+                    >
+                      Generate schema
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="section dark-white">
-          <p className='text-center'>
-            This document is available at&nbsp;
-            <a target='_blank'
-              href={liveUrl}>
-              {liveUrl}
-            </a>
-          </p>
+          <div className="section dark-white">
+            <p className='text-center'>
+              This document is available at&nbsp;
+              <a target='_blank'
+                href={liveUrl}>
+                {liveUrl}
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     );

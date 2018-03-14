@@ -46,6 +46,7 @@ class AccountDropdown extends Component {
           target={ props => findDOMNode(this.refs.accountDropdownTarget) }
           rootClose={true}
           onHide={() => this.setState({ show: false })}
+          className='thing'
         >
           <Tooltip>
             <div className='account-dropdown-menu'>

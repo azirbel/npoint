@@ -14,7 +14,7 @@ import React from 'react'
 const TooltipStyle = {
   position: 'absolute',
   padding: '0 5px',
-  zIndex: 5,
+  zIndex: 8,
 };
 
 const TooltipInnerStyle = {

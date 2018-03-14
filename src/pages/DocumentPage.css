@@ -1,6 +1,13 @@
 @import '../styles/variables.css';
 
 .document-page {
+  & .main-container {
+    min-height: calc(100vh - var(--headerHeight));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   & .main {
     padding: var(--largeGutter) var(--mediumGutter);
   }

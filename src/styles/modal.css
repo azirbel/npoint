@@ -6,6 +6,9 @@
   outline: none;
   box-shadow: 0 1px 4px 0 var(--shadowColor);
   margin-bottom: 40%; /* push the modal up above vertical center */
+
+  transform: translateY(-6px);
+  transition: all 100ms ease-in-out;
 }
 
 .modal-overlay {
@@ -32,4 +35,26 @@
   padding: var(--mediumGutter);
   border: 1px solid var(--gray);
   border-top: none;
+}
+
+.ReactModalPortal {
+  & > div {
+    opacity: 0;
+  }
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  background-color: rgba(255, 255, 255, 0.5);
+
+  &--after-open {
+    opacity: 1;
+
+    & .modal {
+      transform: translateY(0);
+    }
+  }
+
+  &--before-close {
+      opacity: 0;
+  }
 }
