@@ -104,8 +104,8 @@ export default class DocumentPage extends Component {
 
   async validateSchema(json, schema) {
     Schema.validate({
-      schema: JSON.stringify(json),
-      contents: JSON.stringify(schema)
+      schema: JSON.stringify(schema),
+      contents: JSON.stringify(json)
     }).then(({ data }) => {
       let { errors } = data;
       this.setState({ serverErrors: errors });
