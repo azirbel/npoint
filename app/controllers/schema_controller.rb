@@ -6,7 +6,7 @@ class SchemaController < ApplicationController
     errors = JSON::Validator.fully_validate(schema, contents)
     render json: {
       valid: errors.blank?,
-      errors: errors
+      errors: errors.map { |e| strip_schema_id(e) }
     }
   end
 
@@ -27,4 +27,9 @@ class SchemaController < ApplicationController
     }
   end
 
+  private
+
+  def strip_schema_id(error_message)
+    error_message.gsub(/ in schema [a-z0-9-]*$/, '')
+  end
 end

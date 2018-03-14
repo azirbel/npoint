@@ -49,22 +49,25 @@ class DocumentsController < ApplicationController
     @document ||= Document.find_by!(token: params[:token])
   end
 
-  # TODO(azirbel): Huge hackery
-  # TODO(azirbel): Remove `params.require(:document)`, just access directly
   def document_params
-    if params[:contents]
-      params
-        .permit(:title, :original_contents, :original_schema)
-        .merge(contents: fetch_json_or_nil(:contents))
-        .merge(schema: fetch_json_or_nil(:schema))
-    else
-      params.permit(:title)
+    p = params.permit(:title, :original_contents, :original_schema)
+
+    if params.key?(:contents)
+      p = p.merge(contents: fetch_json_or_nil(:contents))
     end
+
+    if params.key?(:schema)
+      p = p.merge(schema: fetch_json_or_nil(:schema))
+    end
+
+    p
   end
 
   def fetch_json_or_nil(param)
     begin
       JSON.parse(params.try(:[], param))
+    rescue TypeError
+      nil
     end
   end
 

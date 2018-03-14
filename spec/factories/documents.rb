@@ -11,5 +11,14 @@ FactoryGirl.define do
         ]
       }.to_json
     end
+    schema do
+      {
+        properties: {
+          subject: {
+            type: 'String'
+          }
+        }
+      }.to_json
+    end
   end
 end
