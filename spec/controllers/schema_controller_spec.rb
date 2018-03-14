@@ -21,5 +21,33 @@ RSpec.describe SchemaController do
         ]
       })
     end
+
+    context 'a schema that requires param "a"' do
+      let(:schema) {
+        '{ "required": ["a"] }'
+      }
+
+      it 'is invalid for a missing param' do
+        post :validate, contents: '{}', schema: schema
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq({
+          "valid" => false,
+          "errors" => [
+            "The property '#/' did not contain a required property of 'a'"
+          ]
+        })
+      end
+
+      it 'is valid when the param is provided' do
+        post :validate, contents: '{ "a": 3 }', schema: schema
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq({
+          "valid" => true,
+          "errors" => []
+        })
+      end
+    end
   end
 end
