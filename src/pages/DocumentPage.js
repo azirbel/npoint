@@ -3,6 +3,7 @@ import Document from '../models/Document'
 import Schema from '../models/Schema'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
+import ReactModal from 'react-modal';
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
 import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css';
@@ -23,6 +24,9 @@ export default class DocumentPage extends Component {
     contentsErrorMessage: '',
     schemaErrorMessage: '',
     serverErrors: [],
+    lockdownContentsModalVisible: false,
+    lockdownSchemaModalVisible: false,
+    shareModalVisible: false,
   }
 
   sandboxedIframe: null
@@ -161,6 +165,14 @@ export default class DocumentPage extends Component {
     }
   }
 
+  handleOpenLockdownContentsModal = () => {
+    this.setState({ lockdownContentsModalVisible: true });
+  }
+
+  handleCloseLockdownContentsModal = () => {
+    this.setState({ lockdownContentsModalVisible: false });
+  }
+
   render() {
     let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
     let hasSaved = (this.state.originalContents === this.state.savedOriginalContents)
@@ -168,6 +180,22 @@ export default class DocumentPage extends Component {
 
     return (
       <div className='document-page'>
+        <ReactModal
+          isOpen={this.state.lockdownContentsModalVisible}
+          onRequestClose={this.handleCloseLockdownContentsModal}
+          contentLabel="Lockdown JSON Data"
+          className="modal"
+          overlayClassName="modal-overlay"
+        >
+          <div className="modal-header">
+            Stuff
+          </div>
+          <div className="modal-body">
+            <button onClick={this.handleCloseLockdownContentsModal}>
+              Close Modal
+            </button>
+          </div>
+        </ReactModal>
         <Header fullWidth={true}>
           {this.renderEditableTitle()}
           <div className='flex-spring'/>
@@ -200,7 +228,7 @@ export default class DocumentPage extends Component {
               <h5>JSON Data</h5>
               <div className='button-group data-control-buttons'>
                 <button className='button small' onClick={this.autoformatData}>Autoformat</button>
-                <button className='button small'>Lockdown...</button>
+                <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
               </div>
               <JsonEditor
                 value={this.state.originalContents}
