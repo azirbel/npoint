@@ -1,0 +1,9 @@
+@import './variables.css';
+
+ul.bullet-list {
+  list-style-type: disc;
+
+  & li {
+    margin-left: 28px;
+  }
+}

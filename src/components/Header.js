@@ -10,8 +10,8 @@ class Header extends Component {
   render() {
     let { session, children, fullWidth, fullLogo } = this.props;
 
-    let headerClass = 'header-container'
-      + (fullWidth ? ' header-gutter' : ' container')
+    let headerClass = 'header-container container'
+      + (fullWidth ? ' full-width' : '')
       + (children ? ' small-logo' : '')
 
     return (

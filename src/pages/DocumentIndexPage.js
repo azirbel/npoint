@@ -37,6 +37,7 @@ export default class DocumentIndexPage extends Component {
       <div>
         <Header>
           <h1 className='page-title'>All Documents</h1>
+          <div className='flex-spring'/>
         </Header>
         <div className="container">
           {!this.state.isLoading && isEmpty(this.state.documents) && (

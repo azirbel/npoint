@@ -24,7 +24,7 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, h2, h3, h4, h5, h6 {
+p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
@@ -56,4 +56,14 @@ h5 {
   font-weight: bold;
   color: var(--textColor);
   font-family: var(--sansFontFamily);
+}
+
+p + p,
+p + ul,
+ul + p,
+p + .button-group,
+.button-group + p,
+ul + .button-group,
+.button-group + ul {
+  margin-top: 1em;
 }

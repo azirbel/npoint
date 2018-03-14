@@ -1,0 +1,32 @@
+@import './variables.css';
+
+.badge {
+  font-size: 14px;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--darkGray);
+
+  color: var(--white);
+  background-color: var(--darkGray);
+
+  display: inline-flex;
+  align-items: center;
+
+  &.full-width {
+    display: flex;
+  }
+
+  &.warning {
+    color: var(--textColor);
+    background-color: #FFCB32;
+  }
+}
+
+.badge-group {
+  display: flex;
+
+  & .badge {
+    margin-right: 8px;
+  }
+}

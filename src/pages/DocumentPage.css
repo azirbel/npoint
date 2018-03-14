@@ -37,7 +37,40 @@
   }
 
   & .data-control-buttons {
-    margin-top: var(--smallGutter);
-    margin-bottom: var(--mediumGutter);
   }
+
+  & .data-header {
+    margin-bottom: var(--smallGutter);
+  }
+}
+
+.animated-button-container {
+  position: relative;
+  overflow: hidden;
+  margin-top: var(--smallGutter);
+  margin-bottom: var(--mediumGutter);
+}
+
+.example-enter {
+  transform: translateY(-100%);
+}
+
+.example-enter.example-enter-active {
+  transform: translateY(0);
+  transition: all 200ms ease-in;
+  transition-delay: 200ms;
+}
+
+.example-leave {
+  transform: translateY(0);
+}
+
+.example-leave.example-leave-active {
+  transform: translateY(100%);
+  transition: all 200ms ease-in;
+  transition-delay: 100ms;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

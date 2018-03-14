@@ -10,6 +10,7 @@
   box-shadow: 0 0 4px 0 var(--shadowColor);
   width: 100%;
   z-index: 6;
+  transition: all 500ms ease-in-out;
 
   /* Space between adjacent items in the header */
   & .header-spaced-out > * {
@@ -32,9 +33,8 @@
     }
   }
 
-  & .header-gutter {
-    padding-left: var(--mediumGutter);
-    padding-right: var(--mediumGutter);
+  & .full-width {
+    max-width: 100% !important;
   }
 
   & .small-logo-container {

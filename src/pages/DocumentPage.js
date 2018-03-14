@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import ReactModal from 'react-modal';
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
 import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
+import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css';
 import _ from 'lodash';
 
@@ -27,6 +28,8 @@ export default class DocumentPage extends Component {
     lockdownContentsModalVisible: false,
     lockdownSchemaModalVisible: false,
     shareModalVisible: false,
+    contentsLockedDown: false,
+    schemaLockedDown: false,
   }
 
   sandboxedIframe: null
@@ -173,6 +176,33 @@ export default class DocumentPage extends Component {
     this.setState({ lockdownContentsModalVisible: false });
   }
 
+  handleLockdownContents = () => {
+    this.setState({
+      lockdownContentsModalVisible: false,
+      contentsLockedDown: true,
+      editable: false,
+    });
+
+    console.log('do the lockdown!');
+  }
+
+  handleOpenLockdownSchemaModal = () => {
+    this.setState({ lockdownSchemaModalVisible: true });
+  }
+
+  handleCloseLockdownSchemaModal = () => {
+    this.setState({ lockdownSchemaModalVisible: false });
+  }
+
+  handleLockDownSchema = () => {
+    this.setState({
+      lockdownSchemaModalVisible: false,
+      schemaLockedDown: true,
+    });
+
+    console.log('do the lockdown!');
+  }
+
   render() {
     let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
     let hasSaved = (this.state.originalContents === this.state.savedOriginalContents)
@@ -183,26 +213,78 @@ export default class DocumentPage extends Component {
         <ReactModal
           isOpen={this.state.lockdownContentsModalVisible}
           onRequestClose={this.handleCloseLockdownContentsModal}
-          contentLabel="Lockdown JSON Data"
+          contentLabel="Lockdown JSON document"
           className="modal"
           overlayClassName="modal-overlay"
         >
           <div className="modal-header">
-            Stuff
+            Lockdown JSON document
           </div>
           <div className="modal-body">
-            <button onClick={this.handleCloseLockdownContentsModal}>
-              Close Modal
-            </button>
+            <p>
+              Once a document is locked, it cannot be deleted and none of its data
+              (except the title) can be changed.
+            </p>
+            <p>
+              You can always clone the document later to keep editing under a different ID.
+            </p>
+            <p>
+              <strong>
+                This action cannot be undone.
+              </strong>
+            </p>
+            <div className='button-group'>
+              <button className='button primary danger' onClick={this.handleLockdownContents}>
+                Lockdown JSON data
+              </button>
+              <button className='button' onClick={this.handleCloseLockdownContentsModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </ReactModal>
+        <ReactModal
+          isOpen={this.state.lockdownSchemaModalVisible}
+          onRequestClose={this.handleCloseLockdownSchemaModal}
+          contentLabel="Lock schema"
+          className="modal"
+          overlayClassName="modal-overlay"
+        >
+          <div className="modal-header">
+            Lock schema
+          </div>
+          <div className="modal-body">
+            <p>
+              Once a schema is locked, it cannot be changed again. The JSON data can still
+              be edited, but must always conform to the schema.
+            </p>
+            <p>
+              You can always clone the document later to change the schema under a different ID.
+            </p>
+            <p>
+              <strong>
+                This action cannot be undone.
+              </strong>
+            </p>
+            <div className='button-group'>
+              <button className='button primary danger' onClick={this.handleLockDownSchema}>
+                Lock schema
+              </button>
+              <button className='button' onClick={this.handleCloseLockdownSchemaModal}>
+                Cancel
+              </button>
+            </div>
           </div>
         </ReactModal>
         <Header fullWidth={true}>
           {this.renderEditableTitle()}
           <div className='flex-spring'/>
-          {hasSaved ? (
-            <button disabled className="button primary disabled">Saved</button>
-          ) : (
-            <button className="button primary" onClick={this.saveDocument}>Save</button>
+          {this.state.editable && (
+            hasSaved ? (
+              <button disabled className="button primary disabled">Saved</button>
+            ) : (
+              <button className="button primary" onClick={this.saveDocument}>Save</button>
+            )
           )}
           <button className="button link">Share</button>
         </Header>
@@ -214,23 +296,29 @@ export default class DocumentPage extends Component {
           key={this.props.params.documentToken}
         >
         </iframe>
-        {!this.state.isLoading && !this.state.editable && (
-          <div className="banner dark-gray">
-            <div className="container flex align-center justify-center">
-              <MdLock className='locked-icon'/>
-              This document belongs to another user. Log in to make changes, or make a copy.
-            </div>
-          </div>
-        )}
         <div className="main-container">
+          {!this.state.isLoading && !this.state.editable && (
+            <div className="banner dark-gray">
+              <div className="container flex align-center justify-center">
+                <MdLock className='locked-icon'/>
+                {this.state.contentsLockedDown ? (
+                  'This document is locked, but you can make a copy.'
+                ) : (
+                  'This document belongs to another user. Log in to make changes, or make a copy.'
+                )}
+              </div>
+            </div>
+          )}
           <div className="main">
             <div className="row">
               <div className="col-xs-12 col-sm-6">
-                <h5>JSON Data</h5>
-                <div className='button-group data-control-buttons'>
-                  <button className='button small' onClick={this.autoformatData}>Autoformat</button>
-                  <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
-                </div>
+                <h5 className='data-header'>JSON Data</h5>
+                {this.state.editable && (
+                  <div className='button-group animated-button-container'>
+                    <button className='button small' onClick={this.autoformatData}>Autoformat</button>
+                    <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
+                  </div>
+                )}
                 <JsonEditor
                   value={this.state.originalContents}
                   onChange={_.debounce((newValue) => this.updateJson(newValue), 1000)}
@@ -241,18 +329,35 @@ export default class DocumentPage extends Component {
                 </div>
               </div>
               <div className="col-xs-12 col-sm-6">
-                <h5>Schema</h5>
+                <h5 className='data-header'>Schema</h5>
                 {!_.isEmpty(this.state.originalSchema) ? (
                   <div>
-                    <div className='button-group data-control-buttons'>
-                      <button className='button small' onClick={this.autoformatSchema}>Autoformat</button>
-                      <button className='button small' onClick={this.removeSchema}>Remove schema</button>
-                      <button className='button small'>Lockdown...</button>
-                    </div>
+                    {this.state.editable && (
+                      <div className='animated-button-container'>
+                        <CSSTransitionGroup
+                          transitionName="example"
+                          transitionEnterTimeout={400}
+                          transitionLeaveTimeout={300}
+                        >
+                          {this.state.schemaLockedDown ? (
+                            <div key='a' className='badge full-width'>
+                              <MdLock className='locked-icon'/>
+                              Locked
+                            </div>
+                          ) : (
+                            <div key='b' className='button-group'>
+                              <button className='button small' onClick={this.autoformatSchema}>Autoformat</button>
+                              <button className='button small' onClick={this.removeSchema}>Remove schema</button>
+                              <button className='button small' onClick={this.handleOpenLockdownSchemaModal}>Lock schema...</button>
+                            </div>
+                          )}
+                        </CSSTransitionGroup>
+                      </div>
+                    )}
                     <JsonEditor
                       value={this.state.originalSchema}
                       onChange={_.debounce((newValue) => this.updateSchema(newValue), 1000)}
-                      readOnly={!this.state.editable}
+                      readOnly={!this.state.editable || this.state.schemaLockedDown}
                     />
                     <div className='text-right'>
                       {this.state.schemaErrorMessage}
@@ -262,7 +367,7 @@ export default class DocumentPage extends Component {
                     </div>
                   </div>
                 ) : (
-                  <div className='button-group data-control-buttons'>
+                  <div className='button-group animated-button-container'>
                     <button
                       className="button small"
                       onClick={this.generateSchema}
@@ -274,6 +379,7 @@ export default class DocumentPage extends Component {
               </div>
             </div>
           </div>
+          <div className='flex-spring'/>
           <div className="section dark-white">
             <p className='text-center'>
               This document is available at&nbsp;
@@ -307,7 +413,7 @@ export default class DocumentPage extends Component {
     ) : (
       <div className='flex align-center'>
         <h1 className='page-title'>{this.state.title}</h1>
-        {this.state.editable && (
+        {(this.state.editable || this.state.contentsLockedDown) && (
           <button
             className='button link square edit-title-button'
             onClick={() => this.setState({ isEditingTitle: true })}
