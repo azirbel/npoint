@@ -120,6 +120,7 @@ export default class DocumentPage extends Component {
         schema: data.schema,
         originalSchema: data.original_schema,
       });
+      this.validateSchema(this.state.contents, data.schema);
     });
   }
 

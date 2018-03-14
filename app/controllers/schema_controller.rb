@@ -13,14 +13,18 @@ class SchemaController < ApplicationController
   def generate
     contents = JSON.parse(params.require(:contents))
 
-    # TODO(azirbel): Naming?
     schema = JSON.parse(
       JSON::SchemaGenerator.generate(
-        'TODO',
+        'npoint',
         contents.to_json,
         {:schema_version => 'draft4'}
       )
     )
+
+    # Mostly just confusing information
+    schema.delete('$schema')
+    schema.delete('description')
+
     render json: {
       schema: schema,
       original_schema: JSON.pretty_generate(schema),
