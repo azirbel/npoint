@@ -61,7 +61,7 @@ button {
     outline: none;
 
     /* duplicated from <a> */
-    color: var(--blue);
+    color: var(--textColor);
     text-decoration: none;
   }
 

@@ -9,6 +9,8 @@
 
   transform: translateY(-6px);
   transition: all 100ms ease-in-out;
+
+  border-radius: var(--borderRadius);
 }
 
 .modal-overlay {
@@ -29,12 +31,16 @@
   background-color: var(--primaryColor);
   color: var(--white);
   padding: var(--mediumGutter);
+  border-top-left-radius: var(--borderRadius);
+  border-top-right-radius: var(--borderRadius);
 }
 
 .modal-body {
   padding: var(--mediumGutter);
   border: 1px solid var(--gray);
   border-top: none;
+  border-bottom-left-radius: var(--borderRadius);
+  border-bottom-right-radius: var(--borderRadius);
 }
 
 .ReactModalPortal {

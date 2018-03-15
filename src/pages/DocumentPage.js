@@ -235,6 +235,14 @@ export default class DocumentPage extends Component {
     })
   }
 
+  handleOpenShareModal = () => {
+    this.setState({ shareModalVisible: true });
+  }
+
+  handleCloseShareModal = () => {
+    this.setState({ shareModalVisible: false });
+  }
+
   render() {
     let liveUrl = `api.npoint.io/${this.props.params.documentToken}`;
     let hasSaved = (this.state.originalContents === this.state.savedOriginalContents)
@@ -249,12 +257,12 @@ export default class DocumentPage extends Component {
         <ReactModal
           isOpen={this.state.lockdownContentsModalVisible}
           onRequestClose={this.handleCloseLockdownContentsModal}
-          contentLabel="Lockdown JSON document"
+          contentLabel="Lock JSON document"
           className="modal"
           overlayClassName="modal-overlay"
         >
           <div className="modal-header">
-            Lockdown JSON document
+            Lock JSON document
           </div>
           <div className="modal-body">
             <p>
@@ -271,7 +279,7 @@ export default class DocumentPage extends Component {
             </p>
             <div className='button-group'>
               <button className='button primary danger' onClick={this.handleLockdownContents}>
-                Lockdown JSON data
+                Lock JSON data
               </button>
               <button className='button' onClick={this.handleCloseLockdownContentsModal}>
                 Cancel
@@ -313,6 +321,36 @@ export default class DocumentPage extends Component {
             </div>
           </div>
         </ReactModal>
+        <ReactModal
+          isOpen={this.state.shareModalVisible}
+          onRequestClose={this.handleCloseShareModal}
+          contentLabel="Share"
+          className="modal"
+          overlayClassName="modal-overlay"
+        >
+          <div className="modal-header">
+            Share
+          </div>
+          <div className="modal-body">
+            <p>Access this document via the API at:</p>
+            <p>
+              <a target='_blank'
+                href={liveUrl}>
+                {liveUrl}
+              </a>
+            </p>
+            <p>
+              Anyone who has the URL (or API URL) is able to view the data and title of
+              this document. If the document was created anonymously, anyone will be able
+              to edit it; if it was created with your account, only you can edit it.
+            </p>
+            <div className='button-group'>
+              <button className='button primary' onClick={this.handleCloseShareModal}>
+                Done
+              </button>
+            </div>
+          </div>
+        </ReactModal>
         <Header fullWidth={true}>
           {this.renderEditableTitle()}
           <div className='flex-spring'/>
@@ -323,7 +361,7 @@ export default class DocumentPage extends Component {
               <button className="button primary" onClick={this.saveDocument}>Save</button>
             )
           )}
-          <button className="button link">Share</button>
+          <button className="button link" onClick={this.handleOpenShareModal}>Share</button>
         </Header>
         <iframe
           className='hidden-iframe'
@@ -353,7 +391,7 @@ export default class DocumentPage extends Component {
                 {jsonEditable && (
                   <div className='button-group animated-button-container'>
                     <button className='button small' onClick={this.autoformatData}>Autoformat</button>
-                    <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lockdown...</button>
+                    <button className='button small' onClick={this.handleOpenLockdownContentsModal}>Lock data...</button>
                   </div>
                 )}
                 <JsonEditor
@@ -369,7 +407,7 @@ export default class DocumentPage extends Component {
                 <h5 className='data-header'>Schema</h5>
                 {!_.isEmpty(this.state.originalSchema) ? (
                   <div>
-                    {schemaEditable && (
+                    {jsonEditable && (
                       <div className='animated-button-container'>
                         <CSSTransitionGroup
                           transitionName="example"
@@ -403,7 +441,7 @@ export default class DocumentPage extends Component {
                       ))}
                     </div>
                   </div>
-                ) : (
+                ) : schemaEditable && (
                   <div className='button-group animated-button-container'>
                     <button
                       className="button small"
