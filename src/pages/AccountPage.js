@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import User from '../models/User'
 import Header from '../components/Header'
+import Input from '../components/Input'
+import { MdDone, MdEdit } from 'react-icons/lib/md'
 import {} from './AccountPage.css'
 
 export default class AccountPage extends Component {
@@ -8,6 +10,8 @@ export default class AccountPage extends Component {
     name: '',
     email: '',
     avatarUrl: '',
+    isEditingName: false,
+    resetPasswordEmailSent: false,
   }
 
   componentDidMount() {
@@ -20,39 +24,101 @@ export default class AccountPage extends Component {
     })
   }
 
+  saveNewName = () => {
+    User.update({
+      name: this.state.name,
+    }).then(() => {
+      this.setState({ isEditingName: false });
+    })
+  }
+
+  sendPasswordResetEmail = () => {
+    User.sendResetPasswordEmail().then(() => {
+      this.setState({ resetPasswordEmailSent: true });
+
+      setTimeout(() => {
+        this.setState({ resetPasswordEmailSent: false });
+      }, 2000);
+    });
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.saveNewName()
+    }
+  }
+
   render() {
     return (
       <div className='account-page'>
         <Header>
           <h1 className='page-title'>Account</h1>
+          <div className='flex-spring'></div>
         </Header>
         <div className='container'>
           <div className='account-info'>
-            <p>
-              Name: {this.state.name}
-              <br/>
-              Email: {this.state.email}
-            </p>
-            <div className='flex align-center'>
+            <div className='account-info-section'>
+              <h5>Name</h5>
+              {this.renderEditableName()}
+            </div>
+            <div className='account-info-section'>
+              <h5>Email</h5>
+              {this.state.email}
+            </div>
+            <div className='account-info-section'>
+              <h5>Avatar</h5>
               <img className='avatar'
                 alt={this.state.name}
                 src={this.state.avatarUrl}
               />
               <div>
-                &nbsp;&nbsp;Image is from&nbsp;
+                Image is from&nbsp;
                 <a href='http://en.gravatar.com/'>Gravatar</a>.
               </div>
             </div>
-            <p>
-              Sorry, you can't edit your profile or reset your password yet.
-              For support, please contact&nbsp;
-              <a href='mailto:alexzirbel+npoint@gmail.com'>
-                alexzirbel+npoint@gmail.com
-              </a>.
-            </p>
+            <div className='account-info-section'>
+              <h5>Password</h5>
+              <button
+                className='button'
+                onClick={this.sendPasswordResetEmail}
+              >
+                Send a password reset email
+              </button>
+              {this.state.resetPasswordEmailSent && (
+                <div className='text-green'>Sent! Check your email to set a new password.</div>
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  renderEditableName() {
+    return this.state.isEditingName ? (
+      <div className='flex align-center'>
+        <Input
+          value={this.state.name}
+          onKeyPress={(e) => this.handleKeyPress(e)}
+          onChange={(e) => this.setState({ name: e.target.value })}
+        />
+        <button
+          className='button link square edit-name-button'
+          onClick={this.saveNewName}
+        >
+          <MdDone/>
+        </button>
+      </div>
+    ) : (
+      <div className='flex align-center'>
+        <span>{this.state.name}&nbsp;</span>
+        <button
+          className='button link square edit-name-button'
+          onClick={() => this.setState({ isEditingName: true })}
+        >
+          <MdEdit/>
+        </button>
+      </div>
+    )
   }
 }

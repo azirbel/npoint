@@ -15,6 +15,26 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def update
+    if user_signed_in?
+      current_user.update!(name: params[:name]) if params[:name].present?
+      render json: current_user, serializer: UserSerializer
+    else
+      head :unauthorized
+    end
+  end
+
+  def send_reset_password_email
+    token = set_reset_password_token(current_user)
+    email_sent = Npointmail.reset_password(current_user, token)
+    if email_sent
+      head :ok
+    else
+      # TODO(azirbel): Test this
+      head :service_unavailable
+    end
+  end
+
   # Render a goblin if the user is signed in, or an ogre if they are signed out.
   # This is just for CSRF testing. It bothers me that lack of CSRF checking for
   # GET requests leaks information about whether the user is signed in.
@@ -58,5 +78,16 @@ class SessionsController < Devise::SessionsController
   # Override devise default so we don't redirect
   def respond_to_on_destroy
     head :ok
+  end
+
+  # From
+  # https://github.com/plataformatec/devise/blob/f39c6fd92774cb66f96f546d8d5e8281542b4e78/lib/devise/models/recoverable.rb
+  def set_reset_password_token(user)
+    raw, enc = Devise.token_generator.generate(User, :reset_password_token)
+
+    user.reset_password_token = enc
+    user.reset_password_sent_at = Time.now.utc
+    user.save(validate: false)
+    raw
   end
 end

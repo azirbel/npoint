@@ -6,10 +6,11 @@ import {} from './Input.css'
 export default class Input extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
+    className: PropTypes.string,
   };
 
   handleChange = (e) => {
@@ -17,11 +18,14 @@ export default class Input extends Component {
   }
 
   render() {
+    let inputClassName = `input-field ${this.props.label ? 'with-label' : ''}`
     return (
-      <label className='input'>
-        {this.props.label}&nbsp;
+      <label className={`input ${this.props.className}`}>
+        {this.props.label && (
+          this.props.label + "&nbsp;"
+        )}
         <input
-          className='input-field'
+          className={inputClassName}
           type={this.props.type || 'text'}
           value={this.props.value}
           onChange={this.handleChange}

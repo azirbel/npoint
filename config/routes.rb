@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'users/me' => 'sessions#info'
+    patch 'users/me' => 'sessions#update'
+    post 'users/send_reset_password_email' => 'sessions#send_reset_password_email'
     get 'users/me/image' => 'sessions#image'
   end
 

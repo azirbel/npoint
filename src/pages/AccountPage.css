@@ -4,4 +4,12 @@
   & .account-info {
     margin-top: 30px;
   }
+
+  & .account-info-section {
+    margin-top: 10px;
+  }
+
+  & .edit-name-button {
+    display: flex;
+  }
 }

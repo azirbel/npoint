@@ -15,6 +15,11 @@
   color: var(--white);
 }
 
+.text-green {
+  /* TODO(azirbel): Use proper green */
+  color: green;
+}
+
 a {
   color: var(--blue);
   text-decoration: none;

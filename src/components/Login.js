@@ -60,7 +60,7 @@ class Login extends Component {
           <Tab value='sign-up'>Sign up</Tab>
         </Tabs>
         {this.state.tab === 'log-in' ? (
-          <form className='form padded' onSubmit={(e) => this.handleLogin(e)}>
+          <form className='form padded vertical-input-group' onSubmit={(e) => this.handleLogin(e)}>
             <Input
               label='Email'
               type='email'
@@ -78,7 +78,7 @@ class Login extends Component {
             </div>
           </form>
         ) : (
-          <form className='form padded' onSubmit={(e) => this.handleSignup(e)}>
+          <form className='form padded vertical-input-group' onSubmit={(e) => this.handleSignup(e)}>
             <Input
               label='First name'
               value={this.state.name}

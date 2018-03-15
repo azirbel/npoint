@@ -3,12 +3,9 @@
 .input {
   display: flex;
   flex-direction: column;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
 
   & .input-field {
     max-width: 300px;
-    margin-top: 6px;
     padding: 6px 8px;
     color: var(--textColor);
     border: 1px solid var(--lightGray);
@@ -16,8 +13,19 @@
     font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
     font-size: 16px;
 
+    & .with-label {
+      margin-top: 6px;
+    }
+
     &:active, &:focus {
       border-color: var(--primaryColor);
     }
+  }
+}
+
+.vertical-input-group {
+  .input {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 }

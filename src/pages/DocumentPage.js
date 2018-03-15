@@ -472,6 +472,7 @@ export default class DocumentPage extends Component {
   renderEditableTitle() {
     let titleEditable = this.state.editable;
 
+    // TODO(azirbel): Use <Input> component
     return this.state.isEditingTitle ? (
       <div className='flex align-center'>
         <input
