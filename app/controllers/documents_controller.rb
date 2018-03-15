@@ -23,11 +23,17 @@ class DocumentsController < ApplicationController
 
     @document.save!
     render json: @document, serializer: SERIALIZER
+  rescue ActiveRecord::RecordInvalid
+    # TODO(azirbel): test this
+    head :bad_request
   end
 
   def update
     document.update!(document_params)
     render json: document, serializer: SERIALIZER
+  rescue ActiveRecord::RecordInvalid
+    # TODO(azirbel): test this
+    head :bad_request
   end
 
   def destroy
