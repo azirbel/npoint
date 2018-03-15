@@ -1,11 +1,13 @@
 class DocumentSerializer < ActiveModel::Serializer
   attributes :token,
-    :title,
-    :editable,
     :contents,
+    :contents_locked,
+    :editable,
     :original_contents,
+    :original_schema,
     :schema,
-    :original_schema
+    :schema_locked,
+    :title
 
   def editable
     object.editable_by_user?(scope)

@@ -44,10 +44,8 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
-  # For now, use :info level so I can see what's going on.
-  # TODO(azirbel): Later ->
   # Use :warn log level to prevent tokens from being leaked into logs
-  config.log_level = (ENV['LOG_LEVEL'] || :info).to_sym
+  config.log_level = (ENV['LOG_LEVEL'] || :warn).to_sym
   config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
   # Prepend all log lines with the following tags.

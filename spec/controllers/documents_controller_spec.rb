@@ -215,6 +215,78 @@ RSpec.describe DocumentsController do
   end
 
   describe '#destroy' do
-    it 'works'
+    context 'with no logged in user' do
+      it 'allows deleting an unowned document' do
+        expect {
+          delete :destroy, token: unowned_document.token
+        }.to change(Document, :count).by(-1)
+
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns a 401 for an owned document' do
+        expect {
+          delete :destroy, token: owned_document1.token
+        }.not_to change(Document, :count)
+
+        expect(response).to have_http_status(401)
+      end
+    end
+
+    context 'with a logged in user' do
+      before { sign_in user }
+
+      it 'allows deleting an unowned document' do
+        expect {
+          delete :destroy, token: unowned_document.token
+        }.to change(Document, :count).by(-1)
+
+        expect(response).to have_http_status(200)
+      end
+
+      it 'allows deleting an owned document' do
+        expect {
+          delete :destroy, token: owned_document1.token
+        }.to change(Document, :count).by(-1)
+
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns a 401 for a document owned by a different user' do
+        expect {
+          delete :destroy, token: user2_document.token
+        }.not_to change(Document, :count)
+
+        expect(response).to have_http_status(401)
+      end
+
+      context 'with a document with locked contents' do
+        before do
+          owned_document1.update!(contents_locked: true)
+        end
+
+        it 'returns a 400' do
+          expect {
+            delete :destroy, token: owned_document1.token
+          }.not_to change(Document, :count)
+
+          expect(response).to have_http_status(400)
+        end
+      end
+
+      context 'with a document with locked schema' do
+        before do
+          owned_document1.update!(schema_locked: true)
+        end
+
+        it 'returns a 400' do
+          expect {
+            delete :destroy, token: owned_document1.token
+          }.not_to change(Document, :count)
+
+          expect(response).to have_http_status(400)
+        end
+      end
+    end
   end
 end

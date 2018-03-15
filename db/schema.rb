@@ -11,21 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314181706) do
+ActiveRecord::Schema.define(version: 20180314230618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "documents", force: :cascade do |t|
-    t.string   "title",                          null: false
+    t.string   "title",                             null: false
     t.jsonb    "contents"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "user_id"
-    t.string   "token",                          null: false
-    t.string   "original_contents", default: "", null: false
+    t.string   "token",                             null: false
+    t.string   "original_contents", default: "",    null: false
     t.jsonb    "schema"
-    t.string   "original_schema",   default: "", null: false
+    t.string   "original_schema",   default: "",    null: false
+    t.boolean  "contents_locked",   default: false, null: false
+    t.boolean  "schema_locked",     default: false, null: false
   end
 
   add_index "documents", ["token"], name: "index_documents_on_token", using: :btree

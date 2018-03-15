@@ -1,7 +1,8 @@
 class DocumentsController < ApplicationController
   SERIALIZER = DocumentSerializer
 
-  before_action :authenticate_user!, :except => [:show, :create, :update]
+  before_action :authenticate_user!, :only => [:index]
+  before_action :check_document_edit_rights!, :only => [:update, :destroy]
 
   def index
     render json: current_user.documents, each_serializer: SERIALIZER
@@ -25,22 +26,17 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    if document.user.present?
-      if user_signed_in? && current_user == document.user
-        document.update!(document_params)
-        render json: document, serializer: SERIALIZER
-      else
-        head :unauthorized
-      end
-    else
-      document.update!(document_params)
-      render json: document, serializer: SERIALIZER
-    end
+    document.update!(document_params)
+    render json: document, serializer: SERIALIZER
   end
 
   def destroy
-    document.destroy!
-    head :ok
+    if document.contents_locked || document.schema_locked
+      head :bad_request
+    else
+      document.destroy!
+      head :ok
+    end
   end
 
   private
@@ -49,15 +45,37 @@ class DocumentsController < ApplicationController
     @document ||= Document.find_by!(token: params[:token])
   end
 
-  def document_params
-    p = params.permit(:title, :original_contents, :original_schema)
+  def user_can_edit_document
+    # Anonymous doc
+    return true unless document.user.present?
 
-    if params.key?(:contents)
-      p = p.merge(contents: fetch_json_or_nil(:contents))
+    # User-owned doc
+    user_signed_in? && current_user == document.user
+  end
+
+  def check_document_edit_rights!
+    unless user_can_edit_document
+      head :unauthorized
     end
+  end
 
-    if params.key?(:schema)
-      p = p.merge(schema: fetch_json_or_nil(:schema))
+  def document_params
+    p = params.permit(:title)
+
+    unless document.contents_locked
+      p = p.merge(params.permit(:original_contents, :contents_locked))
+
+      if params.key?(:contents)
+        p = p.merge(contents: fetch_json_or_nil(:contents))
+      end
+
+      unless document.schema_locked
+        p = p.merge(params.permit(:original_schema, :schema_locked))
+
+        if params.key?(:schema)
+          p = p.merge(schema: fetch_json_or_nil(:schema))
+        end
+      end
     end
 
     p

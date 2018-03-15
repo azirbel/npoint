@@ -1,6 +1,8 @@
 class Document < ActiveRecord::Base
   before_create :create_unique_identifier
 
+  validate :contents_must_match_schema
+
   # TODO(azirbel): Allow storing ECMA-404-valid JSON here, not just
   # arrays and objects
 
@@ -24,5 +26,15 @@ class Document < ActiveRecord::Base
   def editable_by_user?(u)
     return true unless user.present?
     u == user
+  end
+
+  private
+
+  def contents_must_match_schema
+    if schema.present? &&
+        schema != [] &&
+        !JSON::Validator.validate(schema, contents)
+      errors.add(:contents, "does not match schema")
+    end
   end
 end
