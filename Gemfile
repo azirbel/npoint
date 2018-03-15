@@ -19,6 +19,8 @@ gem 'json-schema-generator'
 
 gem 'rails_12factor', group: :production
 
+gem 'letter_opener', :group => :development
+
 group :development, :test do
   gem 'pry-rails'
   gem 'rspec-collection_matchers'

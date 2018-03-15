@@ -80,7 +80,7 @@ class Login extends Component {
         ) : (
           <form className='form padded' onSubmit={(e) => this.handleSignup(e)}>
             <Input
-              label='Name'
+              label='First name'
               value={this.state.name}
               onChange={(name) => this.setState({ name })}
             />
@@ -91,7 +91,7 @@ class Login extends Component {
               onChange={(email) => this.setState({ email })}
             />
             <Input
-              label='Password'
+              label='Choose a password'
               type='password'
               value={this.state.password}
               onChange={(password) => this.setState({ password })}

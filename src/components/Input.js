@@ -9,6 +9,7 @@ export default class Input extends Component {
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
   };
 
   handleChange = (e) => {
@@ -24,6 +25,7 @@ export default class Input extends Component {
           type={this.props.type || 'text'}
           value={this.props.value}
           onChange={this.handleChange}
+          placeholder={this.props.placeholder}
         />
       </label>
     );

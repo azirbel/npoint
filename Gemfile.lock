@@ -85,6 +85,10 @@ GEM
     jsonpath (0.8.11)
       multi_json
       to_regexp (~> 0.2.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.6.0)
+      launchy (~> 2.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -201,6 +205,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   json-schema
   json-schema-generator
+  letter_opener
   pg
   pry-rails
   rack-cors
