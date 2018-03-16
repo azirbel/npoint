@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import User from '../models/User'
 import Header from '../components/Header'
 import Input from '../components/Input'
+import { push } from 'react-router-redux'
 import { MdDone, MdEdit } from 'react-icons/lib/md'
 import {} from './AccountPage.css'
 
-export default class AccountPage extends Component {
+class AccountPage extends Component {
   state = {
     name: '',
     email: '',
@@ -16,6 +18,11 @@ export default class AccountPage extends Component {
 
   componentDidMount() {
     User.me().then((response) => {
+      if (!response.data.email) {
+        this.props.dispatch(push('/'))
+        return;
+      }
+
       this.setState({
         name: response.data.name,
         email: response.data.email,
@@ -33,12 +40,12 @@ export default class AccountPage extends Component {
   }
 
   sendPasswordResetEmail = () => {
-    User.sendResetPasswordEmail().then(() => {
+    User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
       this.setState({ resetPasswordEmailSent: true });
 
       setTimeout(() => {
         this.setState({ resetPasswordEmailSent: false });
-      }, 2000);
+      }, 20000);
     });
   }
 
@@ -122,3 +129,5 @@ export default class AccountPage extends Component {
     )
   }
 }
+
+export default connect()(AccountPage)

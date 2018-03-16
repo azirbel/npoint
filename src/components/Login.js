@@ -18,6 +18,9 @@ class Login extends Component {
     name: '',
     email: '',
     password: '',
+    isResettingPassword: false,
+    resetPasswordEmailSent: false,
+    resetPasswordSentToEmail: '',
   }
 
   handleSignup(e) {
@@ -48,6 +51,24 @@ class Login extends Component {
     e.preventDefault();
   }
 
+  handleForgotPassword = () => {
+    this.setState({ isResettingPassword: true })
+  }
+
+  cancelForgotPassword = () => {
+    this.setState({ isResettingPassword: false })
+  }
+
+  sendResetLink = () => {
+    this.setState({
+      resetPasswordSentToEmail: this.state.email,
+    })
+
+    User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
+      this.setState({ resetPasswordEmailSent: true });
+    });
+  }
+
   render() {
     return (
       <div className='login-component'>
@@ -60,47 +81,93 @@ class Login extends Component {
           <Tab value='sign-up'>Sign up</Tab>
         </Tabs>
         {this.state.tab === 'log-in' ? (
-          <form className='form padded vertical-input-group' onSubmit={(e) => this.handleLogin(e)}>
-            <Input
-              label='Email'
-              type='email'
-              value={this.state.email}
-              onChange={(email) => this.setState({ email })}
-            />
-            <Input
-              label='Password'
-              type='password'
-              value={this.state.password}
-              onChange={(password) => this.setState({ password })}
-            />
-            <div className='flex justify-end'>
-              <button className='button primary' type='submit'>Log in</button>
-            </div>
-          </form>
+          this.state.isResettingPassword ? (
+            this.renderForgotPasswordForm()
+          ) : (
+            this.renderLogInForm()
+          )
         ) : (
-          <form className='form padded vertical-input-group' onSubmit={(e) => this.handleSignup(e)}>
-            <Input
-              label='First name'
-              value={this.state.name}
-              onChange={(name) => this.setState({ name })}
-            />
-            <Input
-              label='Email'
-              type='email'
-              value={this.state.email}
-              onChange={(email) => this.setState({ email })}
-            />
-            <Input
-              label='Choose a password'
-              type='password'
-              value={this.state.password}
-              onChange={(password) => this.setState({ password })}
-            />
-            <div className='flex justify-end'>
-              <button className='button primary' type='submit'>Sign up</button>
-            </div>
-          </form>
+          this.renderSignInForm()
         )}
+        {this.state.resetPasswordEmailSent && (
+          <div className='text-green'>
+            Sent password reset email to
+            {this.state.resetPasswordSentToEmail}. Check your inbox!
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  renderLogInForm() {
+    return (
+      <div className='form padded vertical-input-group'>
+        <Input
+          label='Email'
+          type='email'
+          value={this.state.email}
+          onChange={(email) => this.setState({ email })}
+        />
+        <Input
+          label='Password'
+          type='password'
+          value={this.state.password}
+          onChange={(password) => this.setState({ password })}
+        />
+        <div className='flex justify-end'>
+          <button className='button link' onClick={this.handleForgotPassword}>
+            (Forgot?)
+          </button>
+          <button className='button primary' onClick={this.handleLogin}>Log in</button>
+        </div>
+      </div>
+    )
+  }
+
+  renderSignInForm() {
+    return (
+      <div className='form padded vertical-input-group'>
+        <Input
+          label='First name'
+          value={this.state.name}
+          onChange={(name) => this.setState({ name })}
+        />
+        <Input
+          label='Email'
+          type='email'
+          value={this.state.email}
+          onChange={(email) => this.setState({ email })}
+        />
+        <Input
+          label='Choose a password'
+          type='password'
+          value={this.state.password}
+          onChange={(password) => this.setState({ password })}
+        />
+        <div className='flex justify-end'>
+          <button className='button primary' onClick={this.handleSignup}>Sign up</button>
+        </div>
+      </div>
+    )
+  }
+
+  renderForgotPasswordForm() {
+    return (
+      <div className='form padded vertical-input-group'>
+        <Input
+          label='Email'
+          type='email'
+          value={this.state.email}
+          onChange={(email) => this.setState({ email })}
+        />
+        <p>
+          No worries, just fill in your email and hit "reset" - we'll send you
+          a link to set a new password.
+        </p>
+        <div className='flex justify-end'>
+          <button className='button link' onClick={this.cancelForgotPassword}>Back</button>
+          <button className='button primary' onClick={this.sendResetLink}>Reset</button>
+        </div>
       </div>
     )
   }

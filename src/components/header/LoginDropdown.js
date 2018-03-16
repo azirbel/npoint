@@ -10,6 +10,10 @@ export default class LoginDropdown extends Component {
     show: false,
   }
 
+  onHide = () => {
+    this.setState({ show: false })
+  }
+
   render() {
     return (
       <div>
@@ -26,7 +30,7 @@ export default class LoginDropdown extends Component {
           placement={'bottom'}
           target={ props => findDOMNode(this.refs.target) }
           rootClose={true}
-          onHide={() => this.setState({ show: false })}
+          onHide={this.onHide}
         >
           <Tooltip>
             <Login onLogin={() => {}}/>

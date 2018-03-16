@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, with: :internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActionController::ParameterMissing, with: :missing_param
 
   protected
 
@@ -14,5 +15,9 @@ class ApplicationController < ActionController::Base
 
   def internal_server_error
     head :internal_server_error
+  end
+
+  def missing_param
+    head :bad_request
   end
 end

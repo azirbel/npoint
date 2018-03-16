@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import User from '../models/User'
 import Header from '../components/Header'
 import Input from '../components/Input'
+import { logIn } from '../actions'
 import { push } from 'react-router-redux'
 import {} from './ResetPasswordPage.css'
 import _ from 'lodash';
@@ -23,10 +24,13 @@ class ResetPasswordPage extends Component {
     }
 
     let resetToken = _.get(this.props, ['location', 'query', 'token'])
-    User.update({
+    User.resetPassword({
       password: this.state.password,
       reset_token: resetToken,
-    }).then(() => {
+    }).then((response) => {
+      let { name, email, avatar_url } = response
+      debugger;
+      dispatch(logIn({ name, email, avatar_url }))
       dispatch(push('/docs'))
     });
   }

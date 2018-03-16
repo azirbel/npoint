@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Document from '../models/Document'
 import Schema from '../models/Schema'
 import JsonEditor from '../components/JsonEditor'
@@ -10,7 +11,7 @@ import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css';
 import _ from 'lodash';
 
-export default class DocumentPage extends Component {
+class DocumentPage extends Component {
   state = {
     title: '',
     originalContents: '',
@@ -99,7 +100,6 @@ export default class DocumentPage extends Component {
     let { json, errorMessage } =
       await evalParseObject(newOriginalSchema, this.sandboxedIframe)
 
-    console.log('j', json, errorMessage)
     this.setState({
       schema: json,
       schemaErrorMessage: errorMessage,
@@ -503,3 +503,5 @@ export default class DocumentPage extends Component {
     )
   }
 }
+
+export default connect()(DocumentPage)

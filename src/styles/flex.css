@@ -18,6 +18,10 @@
   &.justify-start {
     justify-content: flex-start;
   }
+
+  &.justify-space-between {
+    justify-content: space-between;
+  }
 }
 
 .flex-spring {
