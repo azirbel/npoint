@@ -16,9 +16,33 @@ class SessionsController < Devise::SessionsController
   end
 
   def update
-    if user_signed_in?
-      current_user.update!(name: params[:name]) if params[:name].present?
+    if user_signed_in? and params[:name].present?
+      current_user.update!(name: params[:name])
       render json: current_user, serializer: UserSerializer
+    elsif params[:password].present?
+      # TODO(azirbel): Move to a different route
+      # Taken and modified from
+      # https://github.com/plataformatec/devise/blob/f39c6fd92774cb66f96f546d8d5e8281542b4e78/lib/devise/models/recoverable.rb
+
+      original_token = params[:reset_token]
+      reset_password_token = Devise.token_generator.digest(
+        User,
+        :reset_password_token,
+        original_token
+      )
+      user = User.find_by!(reset_password_token: reset_password_token)
+
+      if user.persisted?
+        if user.reset_password_period_valid?
+          user.reset_password(params[:password], params[:password])
+          user.update!(reset_password_token: nil)
+          sign_in(:user, user)
+        else
+          user.errors.add(:reset_password_token, :expired)
+        end
+      end
+
+      render json: user, serializer: UserSerializer
     else
       head :unauthorized
     end
