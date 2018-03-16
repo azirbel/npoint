@@ -19,7 +19,7 @@
 
   &.warning {
     color: var(--textColor);
-    background-color: #FFCB32;
+    background-color: #ffcb32;
   }
 }
 

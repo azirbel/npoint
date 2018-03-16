@@ -10,7 +10,8 @@
   cursor: default;
 }
 
-a.logo, a .logo {
+a.logo,
+a .logo {
   cursor: pointer;
 
   &:hover {

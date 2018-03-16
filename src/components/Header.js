@@ -8,49 +8,43 @@ import AccountDropdown from './header/AccountDropdown'
 
 class Header extends Component {
   render() {
-    let { session, children, fullWidth, fullLogo } = this.props;
+    let { session, children, fullWidth, fullLogo } = this.props
 
-    let headerClass = 'header-container container'
-      + (fullWidth ? ' full-width' : '')
-      + (children ? ' small-logo' : '')
+    let headerClass =
+      'header-container container' +
+      (fullWidth ? ' full-width' : '') +
+      (children ? ' small-logo' : '')
 
     return (
       <div>
-        <header className='header'>
+        <header className="header">
           <div className={headerClass}>
             {fullLogo ? (
               <Logo />
             ) : (
-              <Link href='/' className='unstyled'>
-                <div className='small-logo-container'>
+              <Link href="/" className="unstyled">
+                <div className="small-logo-container">
                   <Logo small={true} />
                 </div>
               </Link>
             )}
             {children}
-            {session.loggedIn ? (
-              <AccountDropdown />
-            ) : (
-              <LoginDropdown />
-            )}
+            {session.loggedIn ? <AccountDropdown /> : <LoginDropdown />}
           </div>
         </header>
-        <div className='header-spacer'></div>
-      </div>
-    );
-  }
-
-  renderTitle() {
-    return (
-      <div>
+        <div className="header-spacer" />
       </div>
     )
   }
+
+  renderTitle() {
+    return <div />
+  }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

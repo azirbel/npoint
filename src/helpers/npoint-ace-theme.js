@@ -2,13 +2,15 @@
 
 /* Copied from brace/theme/github.js and modified */
 
-ace.define("ace/theme/npoint",
-  ["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
+ace.define(
+  'ace/theme/npoint',
+  ['require', 'exports', 'module', 'ace/lib/dom'],
+  function(acequire, exports, module) {
+    exports.isDark = false
+    exports.cssClass = 'ace-npoint'
+    exports.cssText = require('./npoint-ace-theme.css')
 
-exports.isDark = false;
-exports.cssClass = "ace-npoint";
-exports.cssText = require('./npoint-ace-theme.css');
-
-    var dom = acequire("../lib/dom");
-    dom.importCssString(exports.cssText, exports.cssClass);
-});
+    var dom = acequire('../lib/dom')
+    dom.importCssString(exports.cssText, exports.cssClass)
+  }
+)

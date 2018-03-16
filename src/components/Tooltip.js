@@ -15,7 +15,7 @@ const TooltipStyle = {
   position: 'absolute',
   padding: '0 5px',
   zIndex: 8,
-};
+}
 
 const TooltipInnerStyle = {
   borderRadius: 3,
@@ -23,7 +23,7 @@ const TooltipInnerStyle = {
   borderStyle: 'solid',
   borderWidth: 1,
   borderColor: '#D7D8DE', // light gray
-};
+}
 
 const PlacementStyles = {
   left: {
@@ -37,22 +37,17 @@ const PlacementStyles = {
   },
   bottom: {
     tooltip: { marginBottom: 3, padding: '5px 0' },
-  }
-};
+  },
+}
 
 export default props => {
-  let placementStyle = PlacementStyles[props.placement];
+  let placementStyle = PlacementStyles[props.placement]
 
-  let {
-    style,
-    children
-  } = props;
+  let { style, children } = props
 
   return (
-    <div style={{...TooltipStyle, ...placementStyle.tooltip, ...style}}>
-      <div style={TooltipInnerStyle}>
-        {children}
-      </div>
+    <div style={{ ...TooltipStyle, ...placementStyle.tooltip, ...style }}>
+      <div style={TooltipInnerStyle}>{children}</div>
     </div>
-  );
-};
+  )
+}

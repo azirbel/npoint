@@ -42,39 +42,39 @@ export const IFRAME_SRC_DOC = `
 export function evalParseObject(objStr, iframe) {
   return new Promise((resolve, reject) => {
     if (objStr === '') {
-      resolve({ json: null, errorMessage: null });
+      resolve({ json: null, errorMessage: null })
     }
 
     if (!iframe) {
       resolve(naiveParseJson(objStr))
     }
 
-    let handleIframeMessage = (event) => {
+    let handleIframeMessage = event => {
       // Again from https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes:
       //
       // Sandboxed iframes which lack the 'allow-same-origin'
       // header have "null" rather than a valid origin. This means you still
       // have to be careful about accepting data via the messaging API you
       // create. Check that source, and validate those inputs!
-      if (event.origin === "null" && event.source === iframe.contentWindow) {
+      if (event.origin === 'null' && event.source === iframe.contentWindow) {
         resolve({
           json: event.data.data,
           errorMessage: readableEvalError(event.data.errorMessage),
-        });
+        })
       } else {
         resolve(naiveParseJson(objStr))
       }
     }
 
-    window.addEventListener('message', handleIframeMessage);
-    iframe.contentWindow.postMessage(`(${objStr})`, '*');
-  });
+    window.addEventListener('message', handleIframeMessage)
+    iframe.contentWindow.postMessage(`(${objStr})`, '*')
+  })
 }
 
 function naiveParseJson(jsonStr) {
   // Fallback to naive JSON parse - old browsers can still use this
-  let json = null;
-  let errorMessage = null;
+  let json = null
+  let errorMessage = null
 
   try {
     json = JSON.parse(jsonStr)

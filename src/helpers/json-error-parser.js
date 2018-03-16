@@ -1,14 +1,12 @@
 import _ from 'lodash'
 
-const MATCH_UNEXPECTED_TOKEN =
-  /^Unexpected token (.*) in JSON at position (.*)$/
-const MATCH_MISC_AT_POSITION =
-  /^(.*) in JSON at position (.*)$/
+const MATCH_UNEXPECTED_TOKEN = /^Unexpected token (.*) in JSON at position (.*)$/
+const MATCH_MISC_AT_POSITION = /^(.*) in JSON at position (.*)$/
 
 let getLineAndColumn = (jsonStr, position) => {
   let partialJsonStr = jsonStr.slice(0, position)
   // Split into newlines, preserving character count
-  let partialLines = partialJsonStr.split('\n').map((line) => line.concat(' '))
+  let partialLines = partialJsonStr.split('\n').map(line => line.concat(' '))
   return {
     line: partialLines.length,
     column: _.last(partialLines).length,
