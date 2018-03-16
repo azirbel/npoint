@@ -2,12 +2,12 @@
   /* NEW colors -------------------------------------- */
 
   /* raw colors */
-  --white: #FFF;
-  --darkWhite: #EFF0F5;
-  --blue: #6574A6;
-  --lightBlue: #95A6DC;
+  --white: #fff;
+  --darkWhite: #eff0f5;
+  --blue: #6574a6;
+  --lightBlue: #95a6dc;
   --darkBlue: #415082;
-  --lightBlack: #3D3F45;
+  --lightBlack: #3d3f45;
   --black: #000;
 
   --primaryColor: var(--blue);
@@ -17,27 +17,25 @@
 
   --shadowColor: rgba(0, 0, 0, 0.2);
 
-
   /* OLD colors -------------------------------------- */
 
   /* raw colors */
   /* palette (temporary): http://paletton.com/palette.php?uid=73g0u0kiCFn8GVde7NVmtwSqXtg */
-  --darkWhite: #F6F6F8;
-  --lightGray: #D7D8DE;
-  --gray: #A6A8B1;
-  --darkGray: #54565D;
+  --darkWhite: #f6f6f8;
+  --lightGray: #d7d8de;
+  --gray: #a6a8b1;
+  --darkGray: #54565d;
 
-  --turquoise: #4FBDB5;
-  --lightTurquoise: #ADEDE8;
-  --darkTurquoise: #178F86;
-  --yellow: #FFCC6B;
-  --orange: #FFAB6B;
+  --turquoise: #4fbdb5;
+  --lightTurquoise: #adede8;
+  --darkTurquoise: #178f86;
+  --yellow: #ffcc6b;
+  --orange: #ffab6b;
 
   /* semantic colors */
   --secondaryColor: var(--blue);
   --warningColor: var(--orange);
   --errorColor: var(--orange);
-
 
   /* OTHER VARIABLES -------------------------------------- */
 
@@ -45,7 +43,7 @@
   --largeGutter: 24px;
   --mediumGutter: 16px;
 
-  --transitionTiming: 0.20s;
+  --transitionTiming: 0.2s;
   --borderRadius: 3px;
 
   --containerWidth: 800px;

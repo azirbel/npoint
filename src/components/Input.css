@@ -17,7 +17,8 @@
       margin-top: 6px;
     }
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       border-color: var(--primaryColor);
     }
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import {} from './Badge.css'
 
 /* Deprecated */
@@ -7,7 +7,7 @@ import {} from './Badge.css'
 export default class Badge extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
-    classNames: PropTypes.string
+    classNames: PropTypes.string,
   }
 
   render() {
@@ -15,6 +15,6 @@ export default class Badge extends Component {
       <div className={`badge-component ${this.props.classNames}`}>
         {this.props.label}
       </div>
-    );
+    )
   }
 }

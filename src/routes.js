@@ -1,15 +1,15 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import App from './App';
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+import App from './App'
 
-import AccountPage from './pages/AccountPage';
-import ChangelogPage from './pages/ChangelogPage';
-import DocumentIndexPage from './pages/DocumentIndexPage';
-import DocumentPage from './pages/DocumentPage';
-import FaqPage from './pages/FaqPage';
-import IndexPage from './pages/IndexPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import StyleguidePage from './pages/StyleguidePage';
+import AccountPage from './pages/AccountPage'
+import ChangelogPage from './pages/ChangelogPage'
+import DocumentIndexPage from './pages/DocumentIndexPage'
+import DocumentPage from './pages/DocumentPage'
+import FaqPage from './pages/FaqPage'
+import IndexPage from './pages/IndexPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
+import StyleguidePage from './pages/StyleguidePage'
 
 export default (
   <Route path="/" component={App}>
@@ -22,4 +22,4 @@ export default (
     <Route path="/reset-password" component={ResetPasswordPage} />
     <Route path="/style" component={StyleguidePage} />
   </Route>
-);
+)

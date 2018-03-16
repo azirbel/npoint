@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import User from '../models/User'
 import Session from '../models/Session'
@@ -10,8 +10,8 @@ import {} from './Login.css'
 
 class Login extends Component {
   static propTypes = {
-    onLogin: PropTypes.func.isRequired
-  };
+    onLogin: PropTypes.func.isRequired,
+  }
 
   state = {
     tab: 'log-in',
@@ -30,12 +30,12 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password,
-    }).then((response) => {
+    }).then(response => {
       let { name, email, avatar_url } = response.data
       dispatch(logIn({ name, email, avatar_url }))
       this.props.onLogin()
     })
-    e.preventDefault();
+    e.preventDefault()
   }
 
   handleLogin(e) {
@@ -43,12 +43,12 @@ class Login extends Component {
     Session.login({
       email: this.state.email,
       password: this.state.password,
-    }).then((response) => {
+    }).then(response => {
       let { name, email, avatar_url } = response.data
       dispatch(logIn({ name, email, avatar_url }))
       this.props.onLogin()
     })
-    e.preventDefault();
+    e.preventDefault()
   }
 
   handleForgotPassword = () => {
@@ -65,32 +65,28 @@ class Login extends Component {
     })
 
     User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({ resetPasswordEmailSent: true });
-    });
+      this.setState({ resetPasswordEmailSent: true })
+    })
   }
 
   render() {
     return (
-      <div className='login-component'>
+      <div className="login-component">
         <Tabs
           fullWidth={true}
           onChange={tab => this.setState({ tab })}
-          initialValue='log-in'
+          initialValue="log-in"
         >
-          <Tab value='log-in'>Log in</Tab>
-          <Tab value='sign-up'>Sign up</Tab>
+          <Tab value="log-in">Log in</Tab>
+          <Tab value="sign-up">Sign up</Tab>
         </Tabs>
-        {this.state.tab === 'log-in' ? (
-          this.state.isResettingPassword ? (
-            this.renderForgotPasswordForm()
-          ) : (
-            this.renderLogInForm()
-          )
-        ) : (
-          this.renderSignInForm()
-        )}
+        {this.state.tab === 'log-in'
+          ? this.state.isResettingPassword
+            ? this.renderForgotPasswordForm()
+            : this.renderLogInForm()
+          : this.renderSignInForm()}
         {this.state.resetPasswordEmailSent && (
-          <div className='text-green'>
+          <div className="text-green">
             Sent password reset email to
             {this.state.resetPasswordSentToEmail}. Check your inbox!
           </div>
@@ -101,24 +97,26 @@ class Login extends Component {
 
   renderLogInForm() {
     return (
-      <div className='form padded vertical-input-group'>
+      <div className="form padded vertical-input-group">
         <Input
-          label='Email'
-          type='email'
+          label="Email"
+          type="email"
           value={this.state.email}
-          onChange={(email) => this.setState({ email })}
+          onChange={email => this.setState({ email })}
         />
         <Input
-          label='Password'
-          type='password'
+          label="Password"
+          type="password"
           value={this.state.password}
-          onChange={(password) => this.setState({ password })}
+          onChange={password => this.setState({ password })}
         />
-        <div className='flex justify-end'>
-          <button className='button link' onClick={this.handleForgotPassword}>
+        <div className="flex justify-end">
+          <button className="button link" onClick={this.handleForgotPassword}>
             (Forgot?)
           </button>
-          <button className='button primary' onClick={this.handleLogin}>Log in</button>
+          <button className="button primary" onClick={this.handleLogin}>
+            Log in
+          </button>
         </div>
       </div>
     )
@@ -126,26 +124,28 @@ class Login extends Component {
 
   renderSignInForm() {
     return (
-      <div className='form padded vertical-input-group'>
+      <div className="form padded vertical-input-group">
         <Input
-          label='First name'
+          label="First name"
           value={this.state.name}
-          onChange={(name) => this.setState({ name })}
+          onChange={name => this.setState({ name })}
         />
         <Input
-          label='Email'
-          type='email'
+          label="Email"
+          type="email"
           value={this.state.email}
-          onChange={(email) => this.setState({ email })}
+          onChange={email => this.setState({ email })}
         />
         <Input
-          label='Choose a password'
-          type='password'
+          label="Choose a password"
+          type="password"
           value={this.state.password}
-          onChange={(password) => this.setState({ password })}
+          onChange={password => this.setState({ password })}
         />
-        <div className='flex justify-end'>
-          <button className='button primary' onClick={this.handleSignup}>Sign up</button>
+        <div className="flex justify-end">
+          <button className="button primary" onClick={this.handleSignup}>
+            Sign up
+          </button>
         </div>
       </div>
     )
@@ -153,29 +153,33 @@ class Login extends Component {
 
   renderForgotPasswordForm() {
     return (
-      <div className='form padded vertical-input-group'>
+      <div className="form padded vertical-input-group">
         <Input
-          label='Email'
-          type='email'
+          label="Email"
+          type="email"
           value={this.state.email}
-          onChange={(email) => this.setState({ email })}
+          onChange={email => this.setState({ email })}
         />
         <p>
-          No worries, just fill in your email and hit "reset" - we'll send you
-          a link to set a new password.
+          No worries, just fill in your email and hit "reset" - we'll send you a
+          link to set a new password.
         </p>
-        <div className='flex justify-end'>
-          <button className='button link' onClick={this.cancelForgotPassword}>Back</button>
-          <button className='button primary' onClick={this.sendResetLink}>Reset</button>
+        <div className="flex justify-end">
+          <button className="button link" onClick={this.cancelForgotPassword}>
+            Back
+          </button>
+          <button className="button primary" onClick={this.sendResetLink}>
+            Reset
+          </button>
         </div>
       </div>
     )
   }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

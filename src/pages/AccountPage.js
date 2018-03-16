@@ -17,10 +17,10 @@ class AccountPage extends Component {
   }
 
   componentDidMount() {
-    User.me().then((response) => {
+    User.me().then(response => {
       if (!response.data.email) {
         this.props.dispatch(push('/'))
-        return;
+        return
       }
 
       this.setState({
@@ -35,18 +35,18 @@ class AccountPage extends Component {
     User.update({
       name: this.state.name,
     }).then(() => {
-      this.setState({ isEditingName: false });
+      this.setState({ isEditingName: false })
     })
   }
 
   sendPasswordResetEmail = () => {
     User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({ resetPasswordEmailSent: true });
+      this.setState({ resetPasswordEmailSent: true })
 
       setTimeout(() => {
-        this.setState({ resetPasswordEmailSent: false });
-      }, 20000);
-    });
+        this.setState({ resetPasswordEmailSent: false })
+      }, 20000)
+    })
   }
 
   handleKeyPress(e) {
@@ -57,73 +57,73 @@ class AccountPage extends Component {
 
   render() {
     return (
-      <div className='account-page'>
+      <div className="account-page">
         <Header>
-          <h1 className='page-title'>Account</h1>
-          <div className='flex-spring'></div>
+          <h1 className="page-title">Account</h1>
+          <div className="flex-spring" />
         </Header>
-        <div className='container'>
-          <div className='account-info'>
-            <div className='account-info-section'>
+        <div className="container">
+          <div className="account-info">
+            <div className="account-info-section">
               <h5>Name</h5>
               {this.renderEditableName()}
             </div>
-            <div className='account-info-section'>
+            <div className="account-info-section">
               <h5>Email</h5>
               {this.state.email}
             </div>
-            <div className='account-info-section'>
+            <div className="account-info-section">
               <h5>Avatar</h5>
-              <img className='avatar'
+              <img
+                className="avatar"
                 alt={this.state.name}
                 src={this.state.avatarUrl}
               />
               <div>
                 Image is from&nbsp;
-                <a href='http://en.gravatar.com/'>Gravatar</a>.
+                <a href="http://en.gravatar.com/">Gravatar</a>.
               </div>
             </div>
-            <div className='account-info-section'>
+            <div className="account-info-section">
               <h5>Password</h5>
-              <button
-                className='button'
-                onClick={this.sendPasswordResetEmail}
-              >
+              <button className="button" onClick={this.sendPasswordResetEmail}>
                 Send a password reset email
               </button>
               {this.state.resetPasswordEmailSent && (
-                <div className='text-green'>Sent! Check your email to set a new password.</div>
+                <div className="text-green">
+                  Sent! Check your email to set a new password.
+                </div>
               )}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   renderEditableName() {
     return this.state.isEditingName ? (
-      <div className='flex align-center'>
+      <div className="flex align-center">
         <Input
           value={this.state.name}
-          onKeyPress={(e) => this.handleKeyPress(e)}
-          onChange={(e) => this.setState({ name: e.target.value })}
+          onKeyPress={e => this.handleKeyPress(e)}
+          onChange={e => this.setState({ name: e.target.value })}
         />
         <button
-          className='button link square edit-name-button'
+          className="button link square edit-name-button"
           onClick={this.saveNewName}
         >
-          <MdDone/>
+          <MdDone />
         </button>
       </div>
     ) : (
-      <div className='flex align-center'>
+      <div className="flex align-center">
         <span>{this.state.name}&nbsp;</span>
         <button
-          className='button link square edit-name-button'
+          className="button link square edit-name-button"
           onClick={() => this.setState({ isEditingName: true })}
         >
-          <MdEdit/>
+          <MdEdit />
         </button>
       </div>
     )

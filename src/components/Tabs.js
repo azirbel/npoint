@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {} from './Tabs.css'
 
 export class Tab extends Component {
@@ -7,7 +7,7 @@ export class Tab extends Component {
     value: PropTypes.string.isRequired,
     onClick: PropTypes.func,
     activeTabValue: PropTypes.string,
-  };
+  }
 
   render() {
     let isActive = this.props.value === this.props.activeTabValue
@@ -23,7 +23,7 @@ export class Tab extends Component {
       >
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 
@@ -45,9 +45,9 @@ export class Tabs extends Component {
   }
 
   render() {
-    let childrenWithProps = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, {
-        onClick: (tabValue) => this.onClick(tabValue),
+    let childrenWithProps = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, {
+        onClick: tabValue => this.onClick(tabValue),
         activeTabValue: this.state.activeTabValue,
       })
     )
@@ -55,6 +55,6 @@ export class Tabs extends Component {
       <div className={`tabs ${this.props.fullWidth ? 'full-width' : ''}`}>
         {childrenWithProps}
       </div>
-    );
+    )
   }
 }

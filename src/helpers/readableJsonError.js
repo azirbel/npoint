@@ -1,18 +1,14 @@
 import _ from 'lodash'
 
-const MATCH_UNEXPECTED_TOKEN =
-  /^Unexpected token (.*) in JSON at position (.*)$/
-const MATCH_MISC_AT_POSITION =
-  /^(.*) in JSON at position (.*)$/
-const MATCH_EVAL_UNEXPECTED_TOKEN =
-  /^Unexpected token (.*)$/
-const MATCH_EVAL_UNDEFINED =
-  /^(.*) is not defined$/
+const MATCH_UNEXPECTED_TOKEN = /^Unexpected token (.*) in JSON at position (.*)$/
+const MATCH_MISC_AT_POSITION = /^(.*) in JSON at position (.*)$/
+const MATCH_EVAL_UNEXPECTED_TOKEN = /^Unexpected token (.*)$/
+const MATCH_EVAL_UNDEFINED = /^(.*) is not defined$/
 
 let getLineAndColumn = (jsonStr, position) => {
   let partialJsonStr = jsonStr.slice(0, position)
   // Split into newlines, preserving character count
-  let partialLines = partialJsonStr.split('\n').map((line) => line.concat(' '))
+  let partialLines = partialJsonStr.split('\n').map(line => line.concat(' '))
   return {
     line: partialLines.length,
     column: _.last(partialLines).length,
@@ -52,7 +48,7 @@ export function readableParseError(jsonStr, e) {
 
 export function readableEvalError(evalErrorMessage) {
   if (_.isEmpty(evalErrorMessage)) {
-    return null;
+    return null
   }
 
   let match_token = evalErrorMessage.match(MATCH_EVAL_UNEXPECTED_TOKEN)
