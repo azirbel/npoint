@@ -1,3 +1,5 @@
+// @format
+
 /* global axios */
 
 const BASE_URL = '/documents'

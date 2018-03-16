@@ -1,3 +1,5 @@
+// @format
+
 import { readableEvalError, readableParseError } from './readableJsonError'
 
 // Following https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/

@@ -1,3 +1,5 @@
+// @format
+
 ace.define(
   'ace/theme/npoint',
   ['require', 'exports', 'module', 'ace/lib/dom'],

@@ -1,3 +1,5 @@
+// @format
+
 import React, { Component } from 'react'
 import {} from './Footer.css'
 

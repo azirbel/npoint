@@ -1,3 +1,5 @@
+// @format
+
 import React from 'react'
 import { IFRAME_SRC_DOC, evalParseObject } from './sandboxedEval'
 import { mount } from 'enzyme'

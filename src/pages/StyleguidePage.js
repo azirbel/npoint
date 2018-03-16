@@ -1,3 +1,5 @@
+// @format
+
 import React, { Component } from 'react'
 import Logo from '../components/Logo'
 import Input from '../components/Input'

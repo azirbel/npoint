@@ -1,3 +1,5 @@
+// @format
+
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { browserHistory } from 'react-router'

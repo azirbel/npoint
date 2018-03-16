@@ -1,7 +1,13 @@
+/* @format */
+
 .account-dropdown-component {
   & .account-dropdown-avatar {
     height: 30px;
     width: 30px;
+  }
+
+  & .thign {
+    padding: 3px;
   }
 
   & .account-dropdown-button {

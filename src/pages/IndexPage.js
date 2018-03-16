@@ -1,3 +1,5 @@
+// @format
+
 import React, { Component } from 'react'
 import JsonEditor from '../components/JsonEditor'
 import Document from '../models/Document'
