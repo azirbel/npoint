@@ -37,6 +37,7 @@
     "postcss-cssnext": "^2.9.0",
     "postcss-import": "^9.1.0",
     "postcss-loader": "1.0.0",
+    "prettier": "1.11.1",
     "promise": "7.1.1",
     "prop-types": "^15.6.1",
     "react-dev-utils": "^0.4.2",
