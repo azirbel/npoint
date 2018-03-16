@@ -10,6 +10,6 @@ export function logIn(user) {
 
 export function logOut() {
   return {
-    type: LOG_OUT
+    type: LOG_OUT,
   }
 }

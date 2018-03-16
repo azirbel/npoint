@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import { routerReducer as routing } from 'react-router-redux'
-import {
-  LOG_IN,
-  LOG_OUT,
-} from '../actions'
+import { LOG_IN, LOG_OUT } from '../actions'
 
-function session(state = {
-  loggedIn: false,
-  user: null,
-}, action) {
+function session(
+  state = {
+    loggedIn: false,
+    user: null,
+  },
+  action
+) {
   switch (action.type) {
     case LOG_IN:
       return {
@@ -32,6 +32,6 @@ function session(state = {
 let rootReducer = combineReducers({
   routing,
   session,
-});
+})
 
-export default rootReducer;
+export default rootReducer

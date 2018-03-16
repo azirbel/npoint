@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdArrowDropDown } from 'react-icons/lib/md'
-import { findDOMNode } from 'react-dom';
+import { findDOMNode } from 'react-dom'
 import Overlay from 'react-overlays/lib/Overlay'
 import { Link } from 'react-router'
 import Session from '../../models/Session'
@@ -26,14 +26,15 @@ class AccountDropdown extends Component {
 
   render() {
     return (
-      <div className='account-dropdown-component'>
+      <div className="account-dropdown-component">
         <button
-          className='button link account-dropdown-button'
-          ref='accountDropdownTarget'
+          className="button link account-dropdown-button"
+          ref="accountDropdownTarget"
           onClick={() => this.setState({ show: !this.state.show })}
         >
-          <div className='flex align-center'>
-            <img className='avatar account-dropdown-avatar'
+          <div className="flex align-center">
+            <img
+              className="avatar account-dropdown-avatar"
               alt={this.props.session.user.name}
               src={this.props.session.user.avatarUrl}
             />
@@ -43,27 +44,21 @@ class AccountDropdown extends Component {
         <Overlay
           show={this.state.show}
           placement={'bottom'}
-          target={ props => findDOMNode(this.refs.accountDropdownTarget) }
+          target={props => findDOMNode(this.refs.accountDropdownTarget)}
           rootClose={true}
           onHide={() => this.setState({ show: false })}
-          className='thing'
+          className="thing"
         >
           <Tooltip>
-            <div className='account-dropdown-menu'>
-              <Link
-                className='button link full-width text-left'
-                to='/docs'
-              >
+            <div className="account-dropdown-menu">
+              <Link className="button link full-width text-left" to="/docs">
                 My Documents
               </Link>
-              <Link
-                className='button link full-width text-left'
-                to='/account'
-              >
+              <Link className="button link full-width text-left" to="/account">
                 Account
               </Link>
               <button
-                className='button link full-width text-left'
+                className="button link full-width text-left"
                 onClick={() => this.logOut()}
               >
                 Log out
@@ -72,13 +67,13 @@ class AccountDropdown extends Component {
           </Tooltip>
         </Overlay>
       </div>
-    );
+    )
   }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

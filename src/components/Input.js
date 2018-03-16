@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import {} from './Input.css'
 
 // TODO(azirbel): Proptypes value, label, onChange
@@ -11,9 +11,9 @@ export default class Input extends Component {
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
     className: PropTypes.string,
-  };
+  }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.props.onChange(e.target.value)
   }
 
@@ -21,9 +21,7 @@ export default class Input extends Component {
     let inputClassName = `input-field ${this.props.label ? 'with-label' : ''}`
     return (
       <label className={`input ${this.props.className}`}>
-        {this.props.label && (
-          this.props.label
-        )}
+        {this.props.label && this.props.label}
         &nbsp;
         <input
           className={inputClassName}
@@ -33,6 +31,6 @@ export default class Input extends Component {
           placeholder={this.props.placeholder}
         />
       </label>
-    );
+    )
   }
 }

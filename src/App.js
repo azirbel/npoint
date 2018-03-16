@@ -1,36 +1,34 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logIn } from './actions'
 import User from './models/User'
 
 class App extends Component {
   static propTypes = {
-    children: PropTypes.element.isRequired
-  };
+    children: PropTypes.element.isRequired,
+  }
 
   componentDidMount() {
     let { dispatch } = this.props
-    User.me().then((response) => {
-      if (response.data && response.data.name) {
-        dispatch(logIn(response.data))
-      }
-    }, error => {})
-
+    User.me().then(
+      response => {
+        if (response.data && response.data.name) {
+          dispatch(logIn(response.data))
+        }
+      },
+      error => {}
+    )
   }
 
   render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
+    return <div>{this.props.children}</div>
   }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
   }
 }
 

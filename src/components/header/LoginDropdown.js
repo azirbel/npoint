@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { MdArrowDropDown } from 'react-icons/lib/md'
-import { findDOMNode } from 'react-dom';
+import { findDOMNode } from 'react-dom'
 import Overlay from 'react-overlays/lib/Overlay'
 import Tooltip from '../Tooltip'
 import Login from '../Login'
@@ -18,8 +18,8 @@ export default class LoginDropdown extends Component {
     return (
       <div>
         <button
-          className='button link'
-          ref='target'
+          className="button link"
+          ref="target"
           onClick={() => this.setState({ show: !this.state.show })}
         >
           Log in
@@ -28,15 +28,15 @@ export default class LoginDropdown extends Component {
         <Overlay
           show={this.state.show}
           placement={'bottom'}
-          target={ props => findDOMNode(this.refs.target) }
+          target={props => findDOMNode(this.refs.target)}
           rootClose={true}
           onHide={this.onHide}
         >
           <Tooltip>
-            <Login onLogin={() => {}}/>
+            <Login onLogin={() => {}} />
           </Tooltip>
         </Overlay>
       </div>
-    );
+    )
   }
 }

@@ -17,7 +17,8 @@
     border: 1px solid var(--lightGray);
     outline: none;
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
       border-color: var(--primaryColor);
     }
   }
