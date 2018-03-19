@@ -32,6 +32,7 @@ export default class JsonEditor extends Component {
           width="100%"
           showPrintMargin={false}
           tabSize={2}
+          fontSize={14}
           maxLines={Infinity}
           readOnly={this.props.readOnly}
           annotations={[]}

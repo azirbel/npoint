@@ -6,6 +6,9 @@
   & .index-editor-container {
     position: relative;
     margin-bottom: 20px; /* compensate for hanging button */
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--borderRadius);
   }
 
   & .index-editor-buttons {
@@ -14,6 +17,7 @@
     width: 100%;
     transform: translateY(50%);
     padding-bottom: 10px; /* HACK: make it vertically aligned */
+    z-index: 10;
   }
 
   & .index-splash {
@@ -28,10 +32,6 @@
 
   & .index-title {
     margin-bottom: 60px;
-  }
-
-  & .product-description {
-    margin-top: 44px;
   }
 
   & .diagram-placeholder {

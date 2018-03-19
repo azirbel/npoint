@@ -52,20 +52,13 @@ export default class IndexPage extends Component {
               />
               <div className="index-editor-buttons flex justify-center">
                 <button
-                  className="button primary large"
+                  className="button cta large"
                   onClick={() => this.createNewDocument()}
                 >
                   Save
                 </button>
               </div>
             </div>
-            <p className="text-center product-description">
-              Save your JSON data, then access it via the API. For
-              example,&nbsp;
-              <a target="_blank" href="api.lvh.me:3001/sample">
-                api.npoint.io/sample
-              </a>.
-            </p>
           </div>
         </div>
         <div className="section text-center">

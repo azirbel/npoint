@@ -9,6 +9,9 @@
     color: var(--textColor);
     background-color: white;
     font-family: 'Source Code Pro', monospace;
-    font-size: 14px;
   }
+}
+
+.ace_editor {
+  line-height: 20px;
 }

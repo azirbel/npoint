@@ -18,17 +18,20 @@
   --green: #43D0AE;
   --darkGreen: #2AA588;
   --red: #B83A60;
-  --redDark: #7D1C39;
+  --darkRed: #7D1C39;
+  --pink: #CA43CF;
+  --darkPink: #A324A8;
 
   --primaryColor: var(--blue);
   --primaryColorLight: var(--lightBlue);
   --primaryColorDark: var(--darkBlue);
   --textColor: var(--lightBlack);
 
-  --ctaColor: var(--green);
-  --ctaColorDark: var(--darkGreen);
+  --ctaColor: var(--pink);
+  --ctaColorDark: var(--darkPink);
   --errorColor: var(--red);
-  --errorColorDark: var(--redDark);
+  --errorColorDark: var(--darkRed);
+  --successColor: var(--green);
 
   --shadowColor: rgba(0, 0, 0, 0.2);
 

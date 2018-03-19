@@ -58,7 +58,7 @@
   background: var(--darkWhite);
 }
 .ace-npoint .ace_marker-layer .ace_active-line {
-  background: rgb(245, 245, 245);
+  background: transparent;
 }
 .ace-npoint .ace_marker-layer .ace_selection {
   background: rgb(181, 213, 255);
@@ -80,7 +80,7 @@
   border: 1px solid rgb(192, 192, 192);
 }
 .ace-npoint .ace_gutter-active-line {
-  background-color: rgba(0, 0, 0, 0.07);
+  background-color: transparent;
 }
 .ace-npoint .ace_marker-layer .ace_selected-word {
   background: rgb(250, 250, 255);
