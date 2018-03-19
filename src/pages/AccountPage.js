@@ -92,7 +92,7 @@ class AccountPage extends Component {
                 Send a password reset email
               </button>
               {this.state.resetPasswordEmailSent && (
-                <div className="text-green">
+                <div className="text-success">
                   Sent! Check your email to set a new password.
                 </div>
               )}

@@ -22,17 +22,6 @@ body {
   max-width: var(--containerWidth);
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 .overlay {
   z-index: 4;
-}
-
-.ul {
-  list-style-type: disc;
-  padding-left: 24px;
 }

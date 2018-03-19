@@ -44,13 +44,29 @@ button {
     }
   }
 
-  &.danger:hover {
+  &.cta {
+    background-color: var(--ctaColor);
+    font-weight: bold;
+    border: 1px solid transparent;
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--ctaColorDark);
+    }
+  }
+
+  &.danger {
     background-color: var(--errorColor);
-    border-color: var(--gray);
+    border: 1px solid transparent;
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--errorColorDark);
+    }
   }
 
   &.large {
-    padding: 12px 24px;
+    padding: 16px 32px;
   }
 
   &.small {
@@ -58,11 +74,9 @@ button {
     font-size: 14px;
   }
 
-  &.link {
+  &.subtle {
     border: none;
     outline: none;
-
-    /* duplicated from <a> */
     color: var(--textColor);
     text-decoration: none;
   }
@@ -81,19 +95,26 @@ button {
   }
 }
 
-a.button {
-  padding: 8px 14px;
+a,
+.button.link {
+  padding: 0;
+  color: var(--primaryColor);
+  text-decoration: none;
   border: none;
-}
+  cursor: pointer;
+  align-self: center;
 
-a.button:hover {
-  background-color: var(--darkWhite);
+  &:hover {
+    text-decoration: underline;
+    background: none;
+  }
 }
 
 .button-group {
   display: flex;
 
-  & .button {
+  & .button,
+  & a {
     margin-right: 8px;
   }
 }

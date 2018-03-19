@@ -2,10 +2,16 @@
 
 @import './variables.css';
 
-ul.bullet-list {
-  list-style-type: disc;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
-  & li {
-    margin-left: 28px;
+  &.bullet-list {
+    list-style-type: disc;
+
+    & li {
+      margin-left: 28px;
+    }
   }
 }

@@ -88,7 +88,7 @@ class Login extends Component {
             : this.renderLogInForm()
           : this.renderSignInForm()}
         {this.state.resetPasswordEmailSent && (
-          <div className="text-green">
+          <div className="text-success">
             Sent password reset email to
             {this.state.resetPasswordSentToEmail}. Check your inbox!
           </div>

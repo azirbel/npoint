@@ -12,9 +12,11 @@
 .text-center {
   text-align: center;
 }
+
 .text-left {
   text-align: left;
 }
+
 .text-right {
   text-align: right;
 }
@@ -23,22 +25,12 @@
   color: var(--white);
 }
 
-.text-green {
-  /* TODO(azirbel): Use proper green */
-  color: green;
+.text-success {
+  color: var(--successColor);
 }
 
 .text-error {
   color: var(--errorColor);
-}
-
-a {
-  color: var(--blue);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 p,
@@ -81,12 +73,24 @@ h5 {
   font-family: var(--sansFontFamily);
 }
 
-p + p,
-p + ul,
-ul + p,
-p + .button-group,
-.button-group + p,
-ul + .button-group,
-.button-group + ul {
-  margin-top: 1em;
+.prose h1, h1.prose,
+.prose h2, h2.prose,
+.prose h3, h3.prose,
+.prose h4, h4.prose,
+.prose h5, h5.prose,
+.prose h6, h6.prose,
+.prose p, p.prose {
+  margin-bottom: 0.5em;
+}
+
+.prose {
+  p + p,
+  p + ul,
+  ul + p,
+  p + .button-group,
+  .button-group + p,
+  ul + .button-group,
+  .button-group + ul {
+    margin-top: 1em;
+  }
 }
