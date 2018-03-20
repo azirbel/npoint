@@ -53,7 +53,7 @@ class AccountPage extends Component {
     User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
       this.setState({
         isResettingPassword: false,
-        resetPasswordEmailSent: true
+        resetPasswordEmailSent: true,
       })
     })
   }
@@ -93,7 +93,10 @@ class AccountPage extends Component {
             </div>
             <div className="account-info-section prose">
               <h5>Password</h5>
-              <Button isLoading={this.state.isResettingPassword} onClick={this.sendPasswordResetEmail}>
+              <Button
+                isLoading={this.state.isResettingPassword}
+                onClick={this.sendPasswordResetEmail}
+              >
                 Send a password reset email
               </Button>
               {this.state.resetPasswordEmailSent && (
