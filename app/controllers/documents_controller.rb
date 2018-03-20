@@ -13,7 +13,7 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    @document = Document.new(document_params.merge(user_id: current_user&.id))
+    @document = Document.new(create_params.merge(user_id: current_user&.id))
 
     if params[:generate_contents]
       @document.contents = random_contents
@@ -29,7 +29,7 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    document.update!(document_params)
+    document.update!(update_params)
     render json: document, serializer: SERIALIZER
   rescue ActiveRecord::RecordInvalid
     # TODO(azirbel): test this
@@ -65,7 +65,7 @@ class DocumentsController < ApplicationController
     end
   end
 
-  def document_params
+  def update_params
     p = params.permit(:title)
 
     unless document.contents_locked
@@ -82,6 +82,24 @@ class DocumentsController < ApplicationController
           p = p.merge(schema: fetch_json_or_nil(:schema))
         end
       end
+    end
+
+    p
+  end
+
+  def create_params
+    p = params.permit(:title,
+                      :original_contents,
+                      :contents_locked,
+                      :original_schema,
+                      :schema_locked)
+
+    if params.key?(:contents)
+      p = p.merge(contents: fetch_json_or_nil(:contents))
+    end
+
+    if params.key?(:schema)
+      p = p.merge(schema: fetch_json_or_nil(:schema))
     end
 
     p

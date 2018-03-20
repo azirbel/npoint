@@ -19,7 +19,7 @@ body {
   padding-left: var(--mediumGutter);
   padding-right: var(--mediumGutter);
   width: var(--containerWidth);
-  max-width: 95%;
+  max-width: 100%;
 }
 
 .overlay {

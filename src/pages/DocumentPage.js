@@ -378,7 +378,7 @@ class DocumentPage extends Component {
                 Save
               </button>
             ))}
-          <button className="button link" onClick={this.handleOpenShareModal}>
+          <button className="button subtle" onClick={this.handleOpenShareModal}>
             Share
           </button>
         </Header>

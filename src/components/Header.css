@@ -34,7 +34,7 @@
   }
 
   & .full-width {
-    max-width: 100% !important;
+    width: 100% !important;
   }
 
   & .small-logo-container {
