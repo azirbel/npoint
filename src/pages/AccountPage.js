@@ -19,6 +19,7 @@ class AccountPage extends Component {
     resetPasswordEmailSent: false,
   }
 
+  // TODO(azirbel): Use data from the redux store
   componentDidMount() {
     User.me().then(({ data }) => {
       if (!data.email) {
@@ -34,7 +35,7 @@ class AccountPage extends Component {
     this.setState({
       name: userData.name,
       email: userData.email,
-      avatarUrl: userData.avatar_url,
+      avatarUrl: userData.avatarUrl,
     })
   }
 

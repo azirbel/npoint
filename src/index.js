@@ -1,7 +1,5 @@
 // @format
 
-/* global axios */
-
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -9,6 +7,7 @@ import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import routes from './routes'
 import configureStore from './store/configureStore'
+import configureAxios from './helpers/configure-axios'
 import ReactModal from 'react-modal'
 import './styles/avatar.css'
 import './styles/badge.css'
@@ -25,22 +24,7 @@ import './styles/sections.css'
 import './styles/typography.css'
 import './styles/variables.css'
 
-axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['X-CSRF-Token'] = (
-  document.head.querySelector('meta[name=csrf-token]') || {}
-).content
-
-axios.interceptors.response.use(response => {
-  let newToken = response.headers['x-csrf-token']
-  if (newToken) {
-    axios.defaults.headers.common['X-CSRF-Token'] = newToken
-    let csrfMeta = document.querySelector('meta[name=csrf-token]')
-    if (csrfMeta) {
-      csrfMeta.setAttribute('content', newToken)
-    }
-  }
-  return response
-})
+configureAxios()
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)

@@ -3,6 +3,9 @@
 @import '../styles/variables.css';
 
 .loading-spinner {
+  height: 100%;
+  width: 100%;
+
   & svg {
     max-height: 100%;
     max-width: 100%;

@@ -15,11 +15,7 @@ function session(
     case LOG_IN:
       return {
         loggedIn: true,
-        user: {
-          name: action.user.name,
-          email: action.user.email,
-          avatarUrl: action.user.avatar_url,
-        },
+        user: action.user,
       }
     case LOG_OUT:
       return {
