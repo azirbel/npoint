@@ -8,7 +8,9 @@ import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
 import ClickToEdit from '../components/ClickToEdit'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
-import ReactModal from 'react-modal'
+import LockContentsModal from './DocumentPage/LockContentsModal'
+import LockSchemaModal from './DocumentPage/LockSchemaModal'
+import ShareModal from './DocumentPage/ShareModal'
 import { MdLock } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css'
@@ -31,7 +33,8 @@ class DocumentPage extends Component {
     schema: null,
     schemaErrorMessage: '',
     serverErrors: [],
-    shareModalVisible: false,
+    openModalName: null,
+    modalActionInProgress: false,
   }
 
   loadDocument(token) {
@@ -142,15 +145,16 @@ class DocumentPage extends Component {
     })
   }
 
-  saveDocument = () => {
+  saveDocument = (extraParams) => {
     let saveState = _.cloneDeep(this.state)
 
-    Document.update(this.props.params.documentToken, {
+    return Document.update(this.props.params.documentToken, _.merge({
       contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
-      original_contents: saveState.originalContents,
+      originalContents: saveState.originalContents,
       schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
-      original_schema: saveState.originalSchema,
-    }).then(() => {
+      originalSchema: saveState.originalSchema,
+    }, extraParams)).then(({ data }) => {
+      this.onLoadDocument(data)
       this.setState({
         savedOriginalContents: saveState.originalContents,
         savedOriginalSchema: saveState.originalSchema,
@@ -158,77 +162,26 @@ class DocumentPage extends Component {
     })
   }
 
-  handleOpenLockdownContentsModal = () => {
-    this.setState({ lockdownContentsModalVisible: true })
-  }
+  handleLockContents = () => {
+    this.setState({ modalActionInProgress: true })
 
-  handleCloseLockdownContentsModal = () => {
-    this.setState({ lockdownContentsModalVisible: false })
-  }
-
-  handleLockdownContents = () => {
-    this.setState({
-      lockdownContentsModalVisible: false,
-    })
-
-    let saveState = _.cloneDeep(this.state)
-
-    // TODO(azirbel): Probably want to refactor these update calls
-    Document.update(this.props.params.documentToken, {
-      contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
-      original_contents: saveState.originalContents,
-      schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
-      original_schema: saveState.originalSchema,
-      contents_locked: true,
-    }).then(() => {
-      this.setState({
-        savedOriginalContents: saveState.originalContents,
-        savedOriginalSchema: saveState.originalSchema,
-        contentsLocked: true,
-        editable: false,
-      })
-      // TODO(azirbel): Use document data returned to reload state from document
+    this.saveDocument({ contentsLocked: true }).then(() => {
+      this.setOpenModal(null)
+      this.setState({ modalActionInProgress: false })
     })
   }
 
-  handleOpenLockdownSchemaModal = () => {
-    this.setState({ lockdownSchemaModalVisible: true })
-  }
+  handleLockSchema = () => {
+    this.setState({ modalActionInProgress: true })
 
-  handleCloseLockdownSchemaModal = () => {
-    this.setState({ lockdownSchemaModalVisible: false })
-  }
-
-  handleLockDownSchema = () => {
-    this.setState({
-      lockdownSchemaModalVisible: false,
-    })
-
-    let saveState = _.cloneDeep(this.state)
-
-    // TODO(azirbel): Probably want to refactor these update calls
-    Document.update(this.props.params.documentToken, {
-      contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
-      original_contents: saveState.originalContents,
-      schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
-      original_schema: saveState.originalSchema,
-      schema_locked: true,
-    }).then(() => {
-      this.setState({
-        savedOriginalContents: saveState.originalContents,
-        savedOriginalSchema: saveState.originalSchema,
-        schemaLocked: true,
-      })
-      // TODO(azirbel): Use document data returned to reload state from document
+    this.saveDocument({ schemaLocked: true }).then(() => {
+      this.setOpenModal(null)
+      this.setState({ modalActionInProgress: false })
     })
   }
 
-  handleOpenShareModal = () => {
-    this.setState({ shareModalVisible: true })
-  }
-
-  handleCloseShareModal = () => {
-    this.setState({ shareModalVisible: false })
+  setOpenModal = (openModalName) => {
+    this.setState({ openModalName })
   }
 
   render() {
@@ -241,110 +194,23 @@ class DocumentPage extends Component {
 
     return (
       <div className="document-page">
-        <ReactModal
-          isOpen={this.state.lockdownContentsModalVisible}
-          onRequestClose={this.handleCloseLockdownContentsModal}
-          contentLabel="Lock JSON document"
-          className="modal"
-          overlayClassName="modal-overlay"
-        >
-          <div className="modal-header">Lock JSON document</div>
-          <div className="modal-body">
-            <p>
-              Once a document is locked, it cannot be deleted and none of its
-              data (except the title) can be changed.
-            </p>
-            <p>
-              You can always clone the document later to keep editing under a
-              different ID.
-            </p>
-            <p>
-              <strong>This action cannot be undone.</strong>
-            </p>
-            <div className="button-group">
-              <button
-                className="button primary danger"
-                onClick={this.handleLockdownContents}
-              >
-                Lock JSON data
-              </button>
-              <button
-                className="button"
-                onClick={this.handleCloseLockdownContentsModal}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </ReactModal>
-        <ReactModal
-          isOpen={this.state.lockdownSchemaModalVisible}
-          onRequestClose={this.handleCloseLockdownSchemaModal}
-          contentLabel="Lock schema"
-          className="modal"
-          overlayClassName="modal-overlay"
-        >
-          <div className="modal-header">Lock schema</div>
-          <div className="modal-body">
-            <p>
-              Once a schema is locked, the document cannot be deleted and the
-              schema cannot be changed again. The JSON data can still be edited,
-              but must always conform to the schema.
-            </p>
-            <p>
-              You can always clone the document later to change the schema under
-              a different ID.
-            </p>
-            <p>
-              <strong>This action cannot be undone.</strong>
-            </p>
-            <div className="button-group">
-              <button
-                className="button primary danger"
-                onClick={this.handleLockDownSchema}
-              >
-                Lock schema
-              </button>
-              <button
-                className="button"
-                onClick={this.handleCloseLockdownSchemaModal}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </ReactModal>
-        <ReactModal
-          isOpen={this.state.shareModalVisible}
-          onRequestClose={this.handleCloseShareModal}
-          contentLabel="Share"
-          className="modal"
-          overlayClassName="modal-overlay"
-        >
-          <div className="modal-header">Share</div>
-          <div className="modal-body">
-            <p>Access this document via the API at:</p>
-            <p>
-              <a target="_blank" href={this.state.document.apiUrl}>
-                {this.state.document.apiUrl}
-              </a>
-            </p>
-            <p>
-              Anyone who has the URL (or API URL) is able to view the data and
-              title of this document. If the document was created anonymously,
-              anyone will be able to edit it; if it was created with your
-              account, only you can edit it.
-            </p>
-            <div className="button-group">
-              <button
-                className="button primary"
-                onClick={this.handleCloseShareModal}
-              >
-                Done
-              </button>
-            </div>
-          </div>
-        </ReactModal>
+        <LockContentsModal
+          isLoading={this.state.modalActionInProgress}
+          isOpen={this.state.openModalName === 'lockContents'}
+          onClose={() => this.setOpenModal(null)}
+          onLockContents={this.handleLockContents}
+        />
+        <LockSchemaModal
+          isLoading={this.state.modalActionInProgress}
+          isOpen={this.state.openModalName === 'lockSchema'}
+          onClose={() => this.setOpenModal(null)}
+          onLockSchema={this.handleLockSchema}
+        />
+        <ShareModal
+          document={this.state.document}
+          isOpen={this.state.openModalName === 'share'}
+          onClose={() => this.setOpenModal(null)}
+        />
         <Header fullWidth={true}>
           <ClickToEdit
             value={this.state.document.title || ''}
@@ -365,7 +231,7 @@ class DocumentPage extends Component {
                 Save
               </button>
             ))}
-          <button className="button subtle" onClick={this.handleOpenShareModal}>
+          <button className="button subtle" onClick={() => this.setOpenModal('share')}>
             Share
           </button>
         </Header>
@@ -409,7 +275,7 @@ class DocumentPage extends Component {
                   </button>
                   <button
                     className="button small"
-                    onClick={this.handleOpenLockdownContentsModal}
+                    onClick={() => this.setOpenModal('lockContents')}
                   >
                     Lock data...
                   </button>
@@ -456,7 +322,7 @@ class DocumentPage extends Component {
                             </button>
                             <button
                               className="button small"
-                              onClick={this.handleOpenLockdownSchemaModal}
+                              onClick={() => this.setOpenModal('lockSchema')}
                             >
                               Lock schema...
                             </button>

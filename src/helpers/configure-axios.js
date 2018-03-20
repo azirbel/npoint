@@ -25,10 +25,7 @@ export default function () {
   // Rails gets snake_case, JS gets camelCase
   axios.defaults.transformRequest = [].concat(
     (data, headers) => {
-
-      //debugger;
-      //return _.mapKeys(data, (value, key) => _.snakeCase(key))
-      return data
+      return _.mapKeys(data, (value, key) => _.snakeCase(key))
     },
     axios.defaults.transformRequest,
   )
