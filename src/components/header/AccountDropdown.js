@@ -56,7 +56,10 @@ class AccountDropdown extends Component {
               <Link className="button subtle full-width text-left" to="/docs">
                 My Documents
               </Link>
-              <Link className="button subtle full-width text-left" to="/account">
+              <Link
+                className="button subtle full-width text-left"
+                to="/account"
+              >
                 Account
               </Link>
               <button

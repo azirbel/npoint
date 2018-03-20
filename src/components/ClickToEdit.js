@@ -45,11 +45,11 @@ export default class ClickToEdit extends Component {
   }
 
   render() {
-    let showInput = this.state.isEditing || this.props.isLoading;
+    let showInput = this.state.isEditing || this.props.isLoading
     let textClassName = `display-text ${this.props.textClassName}`
 
     return (
-      <div className='click-to-edit'>
+      <div className="click-to-edit">
         {showInput ? (
           <div className="flex align-stretch">
             <Input

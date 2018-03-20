@@ -21,12 +21,12 @@ export default class Input extends Component {
   }
 
   render() {
-    let inputClassName = `input-field ${this.props.inputClassName} ${this.props.label ? 'with-label' : ''}`
+    let inputClassName = `input-field ${this.props.inputClassName} ${
+      this.props.label ? 'with-label' : ''
+    }`
     return (
       <label className={`input ${this.props.className}`}>
-        {this.props.label && (
-          <span>{this.props.label}&nbsp;</span>
-        )}
+        {this.props.label && <span>{this.props.label}&nbsp;</span>}
         <input
           className={inputClassName}
           type={this.props.type || 'text'}

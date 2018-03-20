@@ -22,7 +22,7 @@ export default class JsonEditor extends Component {
 
   sandboxedIframe = null
 
-  handleChange = async (newValue) => {
+  handleChange = async newValue => {
     // TODO(azirbel): Debounce the parse and fire more onChange?
     let { json, errorMessage } = await evalParseObject(
       newValue,

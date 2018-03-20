@@ -28,7 +28,7 @@ class AccountPage extends Component {
     })
   }
 
-  onFetchUser = (userData) => {
+  onFetchUser = userData => {
     this.setState({
       name: userData.name,
       email: userData.email,
@@ -36,7 +36,7 @@ class AccountPage extends Component {
     })
   }
 
-  saveNewName = (newName) => {
+  saveNewName = newName => {
     this.setState({ isSavingName: true })
     User.update({
       name: newName,
@@ -67,11 +67,11 @@ class AccountPage extends Component {
           <div className="account-info">
             <div className="account-info-section">
               <h5>Name</h5>
-          <ClickToEdit
-      value={this.state.name}
-      onChange={this.saveNewName}
-      isLoading={this.state.isSavingName}
-      />
+              <ClickToEdit
+                value={this.state.name}
+                onChange={this.saveNewName}
+                isLoading={this.state.isSavingName}
+              />
             </div>
             <div className="account-info-section prose">
               <h5>Email</h5>

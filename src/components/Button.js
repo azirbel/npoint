@@ -13,7 +13,7 @@ export default class Button extends Component {
 
   handleClick = () => {
     if (!this.props.isLoading && this.props.onClick) {
-      this.props.onClick();
+      this.props.onClick()
     }
   }
 
@@ -22,10 +22,7 @@ export default class Button extends Component {
     let loadingName = `button-loading ${this.props.isLoading ? 'visible' : ''}`
 
     return (
-      <button
-        className={className}
-        onClick={this.handleClick}
-      >
+      <button className={className} onClick={this.handleClick}>
         {this.props.children}
         <LoadingSpinner className={loadingName} />
       </button>

@@ -18,7 +18,7 @@ export default class StyleguidePage extends Component {
     this.setState({ isLoading: !this.state.isLoading })
   }
 
-  onInputChange = (newVal) => {
+  onInputChange = newVal => {
     this.setState({ inputVal: newVal })
   }
 
@@ -40,7 +40,11 @@ export default class StyleguidePage extends Component {
         <div className="section">
           <div className="container">
             <h1 className="prose">Input</h1>
-            <Input label="Name" value={this.state.inputVal} onChange={this.onInputChange} />
+            <Input
+              label="Name"
+              value={this.state.inputVal}
+              onChange={this.onInputChange}
+            />
           </div>
         </div>
         <div className="section">
@@ -81,29 +85,47 @@ export default class StyleguidePage extends Component {
             <br />
             <div className="button-group">
               <Button isLoading={this.state.isLoading}>Default</Button>
-              <Button isLoading={this.state.isLoading} className="primary">.primary</Button>
-              <Button isLoading={this.state.isLoading} className="danger">.danger</Button>
+              <Button isLoading={this.state.isLoading} className="primary">
+                .primary
+              </Button>
+              <Button isLoading={this.state.isLoading} className="danger">
+                .danger
+              </Button>
             </div>
             <br />
             <div className="button-group">
-              <Button isLoading={this.state.isLoading} className="small">.small</Button>
-              <Button isLoading={this.state.isLoading} className="small primary">
+              <Button isLoading={this.state.isLoading} className="small">
+                .small
+              </Button>
+              <Button
+                isLoading={this.state.isLoading}
+                className="small primary"
+              >
                 .small.primary
               </Button>
             </div>
             <br />
             <div className="button-group">
-              <Button isLoading={this.state.isLoading} className="large">.large</Button>
-              <Button isLoading={this.state.isLoading} className="large primary">
+              <Button isLoading={this.state.isLoading} className="large">
+                .large
+              </Button>
+              <Button
+                isLoading={this.state.isLoading}
+                className="large primary"
+              >
                 .large.primary
               </Button>
-              <Button isLoading={this.state.isLoading} className="large cta">.large.cta</Button>
+              <Button isLoading={this.state.isLoading} className="large cta">
+                .large.cta
+              </Button>
             </div>
             <br />
             <div className="button-group">
               <a>real link</a>
               <Button className="link">.link</Button>
-              <Button isLoading={this.state.isLoading} className="subtle">.subtle</Button>
+              <Button isLoading={this.state.isLoading} className="subtle">
+                .subtle
+              </Button>
             </div>
           </div>
         </div>

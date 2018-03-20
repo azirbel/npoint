@@ -132,7 +132,7 @@ class DocumentPage extends Component {
     })
   }
 
-  saveNewTitle = (newTitle) => {
+  saveNewTitle = newTitle => {
     this.setState({ isSavingTitle: true })
 
     return Document.update(this.props.params.documentToken, {
@@ -359,13 +359,13 @@ class DocumentPage extends Component {
         </ReactModal>
         <Header fullWidth={true}>
           <ClickToEdit
-      value={this.state.title}
-      readOnly={!this.state.editable}
-      onChange={this.saveNewTitle}
-      isLoading={this.state.isSavingTitle}
-      textClassName='page-title'
-      inputClassName='edit-title-input'
-      />
+            value={this.state.title}
+            readOnly={!this.state.editable}
+            onChange={this.saveNewTitle}
+            isLoading={this.state.isSavingTitle}
+            textClassName="page-title"
+            inputClassName="edit-title-input"
+          />
           <div className="flex-spring" />
           {jsonEditable &&
             (hasSaved ? (
