@@ -17,21 +17,39 @@
     width: 100%;
     transform: translateY(50%);
     padding-bottom: 10px; /* HACK: make it vertically aligned */
-    z-index: 10;
+    z-index: 3;
   }
 
   & .index-splash {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 70vh;
-    min-height: 400px;
-    max-height: 700px;
-    padding-top: 0;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
   }
 
   & .index-title {
     margin-bottom: 60px;
+  }
+
+  & .icon-benefit {
+    background-color: var(--primaryColor);
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    color: var(--white);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+
+  & .how-it-works-number {
+    font-family: var(--serifFontFamily);
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--primaryColor);
   }
 
   & .diagram-placeholder {

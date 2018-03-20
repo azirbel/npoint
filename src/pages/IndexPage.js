@@ -5,6 +5,7 @@ import JsonEditor from '../components/JsonEditor'
 import Document from '../models/Document'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { MdFlashOn, MdEdit, MdLock } from 'react-icons/lib/md'
 import {} from './IndexPage.css'
 
 export default class IndexPage extends Component {
@@ -61,76 +62,79 @@ export default class IndexPage extends Component {
             </div>
           </div>
         </div>
-        <div className="section text-center">
-          <div className="container">
-            <h2>A simple interface for your website's static content</h2>
-            <div className="row feature-row">
-              <div className="col-xs-12 col-sm-6">
-                <h4>Edit static parts of your site without code changes</h4>
-                <p>
-                  You should be able to edit static parts of your site (like FAQ
-                  pages or customer reviews) without making code changes or
-                  doing a deploy.
-                </p>
+        <div className="section">
+          <div className="container prose">
+            <h2>Prototype Safely</h2>
+            <p>
+              n:point is a lightweight data store for your app or prototype.
+            </p>
+            <p>
+              Save FAQ answers, customer stories, configuration data, or
+              anything else that will fit in a JSON blob. Then access your data
+              directly via API.
+            </p>
+            <p>
+              Once your app is live, come back later to edit your saved JSON
+              without having to redeploy. Or share edit permissions with a
+              friend so they can help you experiment! Features like [lockdown]
+              and [schemas] mean you can make these changes confidently, without
+              breaking your app.
+            </p>
+          </div>
+        </div>
+        <div className="section">
+          <div className="container prose">
+            <div className="row">
+              <div className="col-xs-4">
+                <div className="flex column align-center text-center">
+                  <div className="icon-benefit">
+                    <MdFlashOn />
+                  </div>
+                  <h3>Set up fast</h3>
+                  <p>
+                    Quickly set up JSON data to power your app. Don't even worry
+                    about formal JSON syntax - n:point can infer missing quotes
+                    and more.
+                  </p>
+                </div>
               </div>
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
+              <div className="col-xs-4">
+                <div className="flex column align-center text-center">
+                  <div className="icon-benefit">
+                    <MdEdit />
+                  </div>
+                  <h3>Edit anytime</h3>
+                  <p>
+                    Come back later to edit your data. If you've saved your data
+                    under your n:point account, others can use it via API but
+                    only you can edit it.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="row feature-row">
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
-              </div>
-              <div className="col-xs-12 col-sm-6">
-                <h4>
-                  Get set up fast, then log in to edit your content later.
-                </h4>
-                <p>Something something something something.</p>
+              <div className="col-xs-4">
+                <div className="flex column align-center text-center">
+                  <div className="icon-benefit">
+                    <MdLock />
+                  </div>
+                  <h3>Lock the schema</h3>
+                  <p>
+                    n:point can infer a schema from your existing data. Lock the
+                    schema to make sure the structure of your data never changes
+                    (so your app won't break).
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="section text-center">
-          <div className="container">
-            <h2>Prototype fast, then move to production in 0 steps</h2>
-            <div className="row feature-row">
-              <div className="col-xs-12 col-sm-6">
-                <h4>CORS support</h4>
-                <p>
-                  n:point sets<br />
-                  <code>Access-Control-Allow-Origin: *</code>
-                  <br /> by default (and it can be customized).
-                </p>
-              </div>
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
-              </div>
-            </div>
-            <div className="row feature-row">
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
-              </div>
-              <div className="col-xs-12 col-sm-6">
-                <h4>Cloudfare CDN [premium]</h4>
-                <p>Something something something something.</p>
-              </div>
-            </div>
-            <div className="row feature-row">
-              <div className="col-xs-12 col-sm-6">
-                <h4>Validations</h4>
-                <p>Something something something something.</p>
-              </div>
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
-              </div>
-            </div>
-            <div className="row feature-row">
-              <div className="hidden-xs-down col-sm-6">
-                <div className="diagram-placeholder">(placeholder)</div>
-              </div>
-              <div className="col-xs-12 col-sm-6">
-                <h4>Lockdown</h4>
-                <p>Something something something something.</p>
+        <div className="section">
+          <div className="container prose">
+            <h2>How it Works</h2>
+            <div className="row">
+              <div className="col-xs-1 how-it-works-number">1.</div>
+              <div className="col-xs-11">
+                <h3>Save a JSON blob</h3>
+                <p>Forget the quotes</p>
               </div>
             </div>
           </div>

@@ -65,6 +65,10 @@ h5 {
   text-transform: uppercase;
 }
 
+p {
+  font-size: 18px;
+}
+
 .page-title {
   display: inline;
   font-size: 28px;
@@ -73,24 +77,30 @@ h5 {
   font-family: var(--sansFontFamily);
 }
 
-.prose h1, h1.prose,
-.prose h2, h2.prose,
-.prose h3, h3.prose,
-.prose h4, h4.prose,
-.prose h5, h5.prose,
-.prose h6, h6.prose,
-.prose p, p.prose {
+.prose h1,
+h1.prose,
+.prose h2,
+h2.prose,
+.prose h3,
+h3.prose,
+.prose h4,
+h4.prose,
+.prose h5,
+h5.prose,
+.prose h6,
+h6.prose,
+.prose p,
+p.prose {
   margin-bottom: 0.5em;
 }
 
-.prose {
-  p + p,
-  p + ul,
-  ul + p,
-  p + .button-group,
-  .button-group + p,
-  ul + .button-group,
-  .button-group + ul {
-    margin-top: 1em;
-  }
+.prose p + p,
+.prose h2 + p,
+.prose p + ul,
+.prose ul + p,
+.prose p + .button-group,
+.prose .button-group + p,
+.prose ul + .button-group,
+.prose .button-group + ul {
+  margin-top: 1em;
 }

@@ -18,7 +18,8 @@ body {
   margin-right: auto;
   padding-left: var(--mediumGutter);
   padding-right: var(--mediumGutter);
-  max-width: var(--containerWidth);
+  width: var(--containerWidth);
+  max-width: 95%;
 }
 
 .overlay {
