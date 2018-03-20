@@ -2,19 +2,23 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Document from '../models/Document'
-import Schema from '../models/Schema'
-import JsonEditor from '../components/JsonEditor'
-import Header from '../components/Header'
-import ClickToEdit from '../components/ClickToEdit'
-import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
-import LockContentsModal from './DocumentPage/LockContentsModal'
-import LockSchemaModal from './DocumentPage/LockSchemaModal'
-import ShareModal from './DocumentPage/ShareModal'
 import { MdLock } from 'react-icons/lib/md'
-import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css'
 import _ from 'lodash'
+
+import ClickToEdit from '../components/ClickToEdit'
+import Document from '../models/Document'
+import Header from '../components/Header'
+import JsonEditor from '../components/JsonEditor'
+import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
+import Schema from '../models/Schema'
+
+import ContentsEditor from './DocumentPage/ContentsEditor'
+import LockContentsModal from './DocumentPage/LockContentsModal'
+import LockSchemaModal from './DocumentPage/LockSchemaModal'
+import SchemaEditor from './DocumentPage/SchemaEditor'
+import SchemaPlaceholder from './DocumentPage/SchemaPlaceholder'
+import ShareModal from './DocumentPage/ShareModal'
 
 class DocumentPage extends Component {
   state = {
@@ -119,7 +123,7 @@ class DocumentPage extends Component {
     }).then(({ data }) => {
       this.setState({
         schema: data.schema,
-        originalSchema: data.original_schema,
+        originalSchema: data.originalSchema,
       })
       this.validateSchema(this.state.contents, data.schema)
     })
@@ -227,7 +231,7 @@ class DocumentPage extends Component {
                 Saved
               </button>
             ) : (
-              <button className="button cta" onClick={this.saveDocument}>
+              <button className="button cta" onClick={() => this.saveDocument()}>
                 Save
               </button>
             ))}
@@ -294,47 +298,15 @@ class DocumentPage extends Component {
               <h5 className="data-header">Schema</h5>
               {!_.isEmpty(this.state.originalSchema) ? (
                 <div>
-                  {jsonEditable && (
-                    <div className="animated-button-container">
-                      <CSSTransitionGroup
-                        transitionName="example"
-                        transitionEnterTimeout={400}
-                        transitionLeaveTimeout={300}
-                      >
-                        {this.state.document.schemaLocked ? (
-                          <div key="a" className="badge full-width">
-                            <MdLock className="locked-icon" />
-                            Locked
-                          </div>
-                        ) : (
-                          <div key="b" className="button-group">
-                            <button
-                              className="button small"
-                              onClick={this.autoformatSchema}
-                            >
-                              Autoformat
-                            </button>
-                            <button
-                              className="button small"
-                              onClick={this.removeSchema}
-                            >
-                              Remove schema
-                            </button>
-                            <button
-                              className="button small"
-                              onClick={() => this.setOpenModal('lockSchema')}
-                            >
-                              Lock schema...
-                            </button>
-                          </div>
-                        )}
-                      </CSSTransitionGroup>
-                    </div>
-                  )}
-                  <JsonEditor
-                    value={this.state.originalSchema}
+                  <SchemaEditor
+                    document={this.state.document}
+                    originalSchema={this.state.originalSchema}
                     onChange={this.updateSchema}
+                    onRemoveSchema={this.removeSchema}
+                    onAutoformatSchema={this.autoformatSchema}
+                    onOpenLockModal={() => this.setOpenModal('lockSchema')}
                     readOnly={!schemaEditable}
+                    jsonEditable={jsonEditable}
                   />
                   <div className="text-right">
                     {this.state.schemaErrorMessage}
@@ -345,14 +317,9 @@ class DocumentPage extends Component {
                 </div>
               ) : (
                 schemaEditable && (
-                  <div className="button-group animated-button-container">
-                    <button
-                      className="button small"
-                      onClick={this.generateSchema}
-                    >
-                      Generate schema
-                    </button>
-                  </div>
+                  <SchemaPlaceholder
+                    onGenerate={this.generateSchema}
+                  />
                 )
               )}
             </div>
