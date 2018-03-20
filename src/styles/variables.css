@@ -26,6 +26,8 @@
   --primaryColorLight: var(--lightBlue);
   --primaryColorDark: var(--darkBlue);
   --textColor: var(--lightBlack);
+  --successTextColor: var(--darkGreen);
+  --errorTextColor: var(--red);
 
   --ctaColor: var(--pink);
   --ctaColorDark: var(--darkPink);

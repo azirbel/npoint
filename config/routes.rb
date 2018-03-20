@@ -21,10 +21,12 @@ Rails.application.routes.draw do
   end
 
   root 'app#index'
-  get 'docs', to: 'app#index'
-  get 'faq', to: 'app#index'
+  get 'account', to: 'app#index'
   get 'changelog', to: 'app#index'
+  get 'docs', to: 'app#index'
   get 'docs/:id', to: 'app#index'
+  get 'faq', to: 'app#index'
+  get 'reset-password', to: 'app#index'
 
   resources :documents, param: :token, only: [:index, :create, :show, :update, :destroy]
 
@@ -34,11 +36,4 @@ Rails.application.routes.draw do
       post :generate
     end
   end
-  #post 'schemas/validate', to: 'schemas#validate'
-  #post 'schemas/generate', to: 'schemas#generate'
-
-  # Followed https://collectiveidea.com/blog/archives/2016/01/12/lets-encrypt-with-a-rails-app-on-heroku#comment-56f2af9c524ce84ba3000005
-  # to set up SSL
-  get '/.well-known/acme-challenge/WMR9ZsaN_jU71mT7d4Z59RBrRZa4Nw80Ms61cfmhXWY' => 'pages#letsencrypt'
-  get '/.well-known/acme-challenge/jEd9Iw3Oi37AY-h2GsmmaFvjE8z3MnUSP1CaR_vMOtM' => 'pages#letsencrypt_api'
 end

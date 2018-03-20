@@ -33,6 +33,7 @@ class DocumentPage extends Component {
     contentsLocked: false,
     schemaLocked: false,
     isSavingTitle: false,
+    apiUrl: '',
   }
 
   loadDocument(token) {
@@ -51,6 +52,7 @@ class DocumentPage extends Component {
         isLoading: false,
         schemaLocked: response.data.schema_locked,
         contentsLocked: response.data.contents_locked,
+        apiUrl: response.data.api_url,
       })
     })
   }
@@ -242,7 +244,6 @@ class DocumentPage extends Component {
   }
 
   render() {
-    let liveUrl = `api.npoint.io/${this.props.params.documentToken}`
     let hasSaved =
       this.state.originalContents === this.state.savedOriginalContents &&
       this.state.originalSchema === this.state.savedOriginalSchema
@@ -337,8 +338,8 @@ class DocumentPage extends Component {
           <div className="modal-body">
             <p>Access this document via the API at:</p>
             <p>
-              <a target="_blank" href={liveUrl}>
-                {liveUrl}
+              <a target="_blank" href={this.state.apiUrl}>
+                {this.state.apiUrl}
               </a>
             </p>
             <p>
@@ -494,8 +495,8 @@ class DocumentPage extends Component {
           <div className="section dark-white">
             <p className="text-center">
               This document is available at&nbsp;
-              <a target="_blank" href={liveUrl}>
-                {liveUrl}
+              <a target="_blank" href={this.state.apiUrl}>
+                {this.state.apiUrl}
               </a>
             </p>
           </div>

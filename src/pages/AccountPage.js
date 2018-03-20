@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import User from '../models/User'
 import Header from '../components/Header'
 import ClickToEdit from '../components/ClickToEdit'
+import Button from '../components/Button'
 import { push } from 'react-router-redux'
 import {} from './AccountPage.css'
 
@@ -14,6 +15,7 @@ class AccountPage extends Component {
     email: '',
     avatarUrl: '',
     isSavingName: false,
+    isResettingPassword: false,
     resetPasswordEmailSent: false,
   }
 
@@ -47,12 +49,12 @@ class AccountPage extends Component {
   }
 
   sendPasswordResetEmail = () => {
+    this.setState({ isResettingPassword: true })
     User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({ resetPasswordEmailSent: true })
-
-      setTimeout(() => {
-        this.setState({ resetPasswordEmailSent: false })
-      }, 20000)
+      this.setState({
+        isResettingPassword: false,
+        resetPasswordEmailSent: true
+      })
     })
   }
 
@@ -91,11 +93,11 @@ class AccountPage extends Component {
             </div>
             <div className="account-info-section prose">
               <h5>Password</h5>
-              <button className="button" onClick={this.sendPasswordResetEmail}>
+              <Button isLoading={this.state.isResettingPassword} onClick={this.sendPasswordResetEmail}>
                 Send a password reset email
-              </button>
+              </Button>
               {this.state.resetPasswordEmailSent && (
-                <div className="text-success">
+                <div className="text-success password-reset-confirmation">
                   Sent! Check your email to set a new password.
                 </div>
               )}

@@ -41,7 +41,7 @@ export default class DocumentIndexPage extends Component {
     return (
       <div>
         <Header>
-          <h1 className="page-title">All Documents</h1>
+          <h1 className="page-title">My Documents</h1>
           <div className="flex-spring" />
         </Header>
         <div className="container">

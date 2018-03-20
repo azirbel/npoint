@@ -26,11 +26,11 @@
 }
 
 .text-success {
-  color: var(--successColor);
+  color: var(--successTextColor);
 }
 
 .text-error {
-  color: var(--errorColor);
+  color: var(--errorTextColor);
 }
 
 p,

@@ -10,4 +10,8 @@
   & .account-info-section {
     margin-top: 20px;
   }
+
+  & .password-reset-confirmation {
+    margin-top: 7px;
+  }
 }
