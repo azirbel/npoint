@@ -1,0 +1,26 @@
+/* @format */
+
+@import '../styles/variables.css';
+
+.loading-spinner {
+  & svg {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  & .fill-light-black {
+    fill: var(--lightBlack);
+  }
+
+  & .fill-gray {
+    fill: var(--gray);
+  }
+
+  & .fill-blue {
+    fill: var(--blue);
+  }
+
+  & .fill-white {
+    fill: var(--white);
+  }
+}

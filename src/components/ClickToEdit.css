@@ -1,0 +1,11 @@
+/* @format */
+
+@import '../styles/variables.css';
+
+.click-to-edit {
+  min-height: 34px; /* eyeballed to match standard input without height jump */
+
+  & .display-text {
+    align-self: center;
+  }
+}

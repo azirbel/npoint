@@ -13,6 +13,10 @@
     align-items: center;
   }
 
+  &.align-stretch {
+    align-items: stretch;
+  }
+
   &.justify-center {
     justify-content: center;
   }

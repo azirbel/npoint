@@ -10,8 +10,18 @@
     background-color: white;
     font-family: 'Source Code Pro', monospace;
   }
+
+  & .hidden-iframe {
+    display: none;
+  }
 }
 
+/*
+  Fixes height jitter with the ace editor.
+  Allows ace/brace FontMetrics to get a consistent text height when it calls `$measureNode`:
+
+  https://github.com/ajaxorg/ace/blob/v1.2.3/lib/ace/layer/font_metrics.js#L151
+*/
 .ace_editor {
   line-height: 20px;
 }

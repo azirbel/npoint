@@ -25,7 +25,7 @@ class Login extends Component {
     resetPasswordSentToEmail: '',
   }
 
-  handleSignup(e) {
+  handleSignup = (e) => {
     let { dispatch } = this.props
     User.create({
       name: this.state.name,
@@ -40,7 +40,7 @@ class Login extends Component {
     e.preventDefault()
   }
 
-  handleLogin(e) {
+  handleLogin = (e) => {
     let { dispatch } = this.props
     Session.login({
       email: this.state.email,

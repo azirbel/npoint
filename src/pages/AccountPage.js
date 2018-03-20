@@ -4,9 +4,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import User from '../models/User'
 import Header from '../components/Header'
-import Input from '../components/Input'
+import ClickToEdit from '../components/ClickToEdit'
 import { push } from 'react-router-redux'
-import { MdDone, MdEdit } from 'react-icons/lib/md'
 import {} from './AccountPage.css'
 
 class AccountPage extends Component {
@@ -14,30 +13,36 @@ class AccountPage extends Component {
     name: '',
     email: '',
     avatarUrl: '',
-    isEditingName: false,
+    isSavingName: false,
     resetPasswordEmailSent: false,
   }
 
   componentDidMount() {
-    User.me().then(response => {
-      if (!response.data.email) {
+    User.me().then(({ data }) => {
+      if (!data.email) {
         this.props.dispatch(push('/'))
         return
       }
 
-      this.setState({
-        name: response.data.name,
-        email: response.data.email,
-        avatarUrl: response.data.avatar_url,
-      })
+      this.onFetchUser(data)
     })
   }
 
-  saveNewName = () => {
+  onFetchUser = (userData) => {
+    this.setState({
+      name: userData.name,
+      email: userData.email,
+      avatarUrl: userData.avatar_url,
+    })
+  }
+
+  saveNewName = (newName) => {
+    this.setState({ isSavingName: true })
     User.update({
-      name: this.state.name,
-    }).then(() => {
-      this.setState({ isEditingName: false })
+      name: newName,
+    }).then(({ data }) => {
+      this.onFetchUser(data)
+      this.setState({ isSavingName: false })
     })
   }
 
@@ -51,12 +56,6 @@ class AccountPage extends Component {
     })
   }
 
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.saveNewName()
-    }
-  }
-
   render() {
     return (
       <div className="account-page">
@@ -68,13 +67,17 @@ class AccountPage extends Component {
           <div className="account-info">
             <div className="account-info-section">
               <h5>Name</h5>
-              {this.renderEditableName()}
+          <ClickToEdit
+      value={this.state.name}
+      onChange={this.saveNewName}
+      isLoading={this.state.isSavingName}
+      />
             </div>
-            <div className="account-info-section">
+            <div className="account-info-section prose">
               <h5>Email</h5>
               {this.state.email}
             </div>
-            <div className="account-info-section">
+            <div className="account-info-section prose">
               <h5>Avatar</h5>
               <img
                 className="avatar"
@@ -82,11 +85,11 @@ class AccountPage extends Component {
                 src={this.state.avatarUrl}
               />
               <div>
-                Image is from&nbsp;
+                Change your image on&nbsp;
                 <a href="http://en.gravatar.com/">Gravatar</a>.
               </div>
             </div>
-            <div className="account-info-section">
+            <div className="account-info-section prose">
               <h5>Password</h5>
               <button className="button" onClick={this.sendPasswordResetEmail}>
                 Send a password reset email
@@ -99,34 +102,6 @@ class AccountPage extends Component {
             </div>
           </div>
         </div>
-      </div>
-    )
-  }
-
-  renderEditableName() {
-    return this.state.isEditingName ? (
-      <div className="flex align-center">
-        <Input
-          value={this.state.name}
-          onKeyPress={e => this.handleKeyPress(e)}
-          onChange={e => this.setState({ name: e.target.value })}
-        />
-        <button
-          className="button link square edit-name-button"
-          onClick={this.saveNewName}
-        >
-          <MdDone />
-        </button>
-      </div>
-    ) : (
-      <div className="flex align-center">
-        <span>{this.state.name}&nbsp;</span>
-        <button
-          className="button link square edit-name-button"
-          onClick={() => this.setState({ isEditingName: true })}
-        >
-          <MdEdit />
-        </button>
       </div>
     )
   }

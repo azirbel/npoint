@@ -1,14 +1,13 @@
 // @format
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Document from '../models/Document'
 import Schema from '../models/Schema'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
+import ClickToEdit from '../components/ClickToEdit'
 import ReactModal from 'react-modal'
-import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
-import { MdDone, MdEdit, MdLock } from 'react-icons/lib/md'
+import { MdLock } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css'
 import _ from 'lodash'
@@ -33,9 +32,8 @@ class DocumentPage extends Component {
     shareModalVisible: false,
     contentsLocked: false,
     schemaLocked: false,
+    isSavingTitle: false,
   }
-
-  sandboxedIframe: null
 
   loadDocument(token) {
     this.setState({ isLoading: true })
@@ -79,41 +77,29 @@ class DocumentPage extends Component {
     })
   }
 
-  async updateJson(newOriginalContents) {
-    this.setState({ originalContents: newOriginalContents })
-
-    let { json, errorMessage } = await evalParseObject(
-      newOriginalContents,
-      this.sandboxedIframe
-    )
-
+  updateJson = (newOriginalContents, newJson, errorMessage) => {
     this.setState({
-      contents: json,
+      contents: newJson,
       contentsErrorMessage: errorMessage,
+      originalContents: newOriginalContents,
     })
 
     // TODO(azirbel): Probably relies on whether schema is valid too. Refactor out
     if (_.isEmpty(errorMessage)) {
-      this.validateSchema(json, this.state.schema)
+      this.validateSchema(newJson, this.state.schema)
     }
   }
 
-  async updateSchema(newOriginalSchema) {
-    this.setState({ originalSchema: newOriginalSchema })
-
-    let { json, errorMessage } = await evalParseObject(
-      newOriginalSchema,
-      this.sandboxedIframe
-    )
-
+  updateSchema = (newOriginalSchema, newJson, errorMessage) => {
     this.setState({
-      schema: json,
+      originalSchema: newOriginalSchema,
+      schema: newJson,
       schemaErrorMessage: errorMessage,
     })
 
     // TODO(azirbel): Probably relies on whether contents is valid too. Refactor out
     if (_.isEmpty(errorMessage)) {
-      this.validateSchema(this.state.contents, json)
+      this.validateSchema(this.state.contents, newJson)
     }
   }
 
@@ -146,11 +132,17 @@ class DocumentPage extends Component {
     })
   }
 
-  saveNewTitle = () => {
-    Document.update(this.props.params.documentToken, {
-      title: this.state.title,
+  saveNewTitle = (newTitle) => {
+    this.setState({ isSavingTitle: true })
+
+    return Document.update(this.props.params.documentToken, {
+      title: newTitle,
     }).then(() => {
-      this.setState({ isEditingTitle: false })
+      // TODO(azirbel): Just call "refresh"
+      this.setState({
+        title: newTitle,
+        isSavingTitle: false,
+      })
     })
   }
 
@@ -366,15 +358,22 @@ class DocumentPage extends Component {
           </div>
         </ReactModal>
         <Header fullWidth={true}>
-          {this.renderEditableTitle()}
+          <ClickToEdit
+      value={this.state.title}
+      readOnly={!this.state.editable}
+      onChange={this.saveNewTitle}
+      isLoading={this.state.isSavingTitle}
+      textClassName='page-title'
+      inputClassName='edit-title-input'
+      />
           <div className="flex-spring" />
           {jsonEditable &&
             (hasSaved ? (
-              <button disabled className="button primary disabled">
+              <button disabled className="button cta disabled">
                 Saved
               </button>
             ) : (
-              <button className="button primary" onClick={this.saveDocument}>
+              <button className="button cta" onClick={this.saveDocument}>
                 Save
               </button>
             ))}
@@ -382,13 +381,6 @@ class DocumentPage extends Component {
             Share
           </button>
         </Header>
-        <iframe
-          className="hidden-iframe"
-          sandbox="allow-scripts"
-          srcDoc={IFRAME_SRC_DOC}
-          ref={el => (this.sandboxedIframe = el)}
-          key={this.props.params.documentToken}
-        />
         <div className="main-container">
           {!this.state.isLoading &&
             !jsonEditable && (
@@ -423,10 +415,7 @@ class DocumentPage extends Component {
                 )}
                 <JsonEditor
                   value={this.state.originalContents}
-                  onChange={_.debounce(
-                    newValue => this.updateJson(newValue),
-                    1000
-                  )}
+                  onChange={this.updateJson}
                   readOnly={!jsonEditable}
                 />
                 <div className="text-right">
@@ -476,10 +465,7 @@ class DocumentPage extends Component {
                     )}
                     <JsonEditor
                       value={this.state.originalSchema}
-                      onChange={_.debounce(
-                        newValue => this.updateSchema(newValue),
-                        1000
-                      )}
+                      onChange={this.updateSchema}
                       readOnly={!schemaEditable}
                     />
                     <div className="text-right">
@@ -514,40 +500,6 @@ class DocumentPage extends Component {
             </p>
           </div>
         </div>
-      </div>
-    )
-  }
-
-  renderEditableTitle() {
-    let titleEditable = this.state.editable
-
-    // TODO(azirbel): Use <Input> component
-    return this.state.isEditingTitle ? (
-      <div className="flex align-center">
-        <input
-          className="edit-title-input page-title"
-          value={this.state.title}
-          onKeyPress={e => this.handleKeyPress(e)}
-          onChange={e => this.setState({ title: e.target.value })}
-        />
-        <button
-          className="button link square edit-title-button"
-          onClick={this.saveNewTitle}
-        >
-          <MdDone />
-        </button>
-      </div>
-    ) : (
-      <div className="flex align-center">
-        <h1 className="page-title">{this.state.title}</h1>
-        {titleEditable && (
-          <button
-            className="button link square edit-title-button"
-            onClick={() => this.setState({ isEditingTitle: true })}
-          >
-            <MdEdit />
-          </button>
-        )}
       </div>
     )
   }

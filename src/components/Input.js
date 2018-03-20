@@ -4,15 +4,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {} from './Input.css'
 
-// TODO(azirbel): Proptypes value, label, onChange
 export default class Input extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string,
     type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    onKeyPress: PropTypes.func,
     placeholder: PropTypes.string,
     className: PropTypes.string,
+    inputClassName: PropTypes.string,
   }
 
   handleChange = e => {
@@ -20,16 +21,18 @@ export default class Input extends Component {
   }
 
   render() {
-    let inputClassName = `input-field ${this.props.label ? 'with-label' : ''}`
+    let inputClassName = `input-field ${this.props.inputClassName} ${this.props.label ? 'with-label' : ''}`
     return (
       <label className={`input ${this.props.className}`}>
-        {this.props.label && this.props.label}
-        &nbsp;
+        {this.props.label && (
+          <span>{this.props.label}&nbsp;</span>
+        )}
         <input
           className={inputClassName}
           type={this.props.type || 'text'}
           value={this.props.value}
           onChange={this.handleChange}
+          onKeyPress={this.props.onKeyPress}
           placeholder={this.props.placeholder}
         />
       </label>

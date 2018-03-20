@@ -15,28 +15,15 @@
   }
 
   & .edit-title-input {
-    padding: 0 8px;
-    border: 1px solid var(--lightGray);
-    outline: none;
-
-    &:active,
-    &:focus {
-      border-color: var(--primaryColor);
-    }
-  }
-
-  & .edit-title-button {
-    display: flex;
-    align-items: center;
-    margin-left: 8px;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: -9px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   & .locked-icon {
     margin-right: 6px;
-  }
-
-  & .hidden-iframe {
-    display: none;
   }
 
   & .data-control-buttons {

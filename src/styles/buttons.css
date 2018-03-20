@@ -13,6 +13,7 @@ button {
 }
 
 .button {
+  position: relative;
   font-family: 'Source Sans Pro', Arial, Helvetica, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: var(--textColor);
@@ -22,7 +23,7 @@ button {
   transition: all ease-in-out var(--transitionTiming);
   padding: 8px 14px;
   outline: 0;
-  display: block;
+  display: flex;
   text-align: center;
 
   &:hover {
@@ -42,6 +43,10 @@ button {
     &:hover {
       background-color: var(--primaryColorDark);
     }
+
+    & .button-loading path {
+      fill: var(--white);
+    }
   }
 
   &.cta {
@@ -53,6 +58,10 @@ button {
     &:hover {
       background-color: var(--ctaColorDark);
     }
+
+    & .button-loading path {
+      fill: var(--white);
+    }
   }
 
   &.danger {
@@ -62,6 +71,10 @@ button {
 
     &:hover {
       background-color: var(--errorColorDark);
+    }
+
+    & .button-loading path {
+      fill: var(--white);
     }
   }
 
@@ -92,6 +105,22 @@ button {
   &.disabled {
     background-color: var(--gray) !important;
     cursor: not-allowed;
+  }
+}
+
+.button-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  background-color: inherit;
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+    transition: opacity var(--transitionTiming) ease-in;
   }
 }
 

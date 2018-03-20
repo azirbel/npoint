@@ -8,10 +8,6 @@
   }
 
   & .account-info-section {
-    margin-top: 10px;
-  }
-
-  & .edit-name-button {
-    display: flex;
+    margin-top: 20px;
   }
 }

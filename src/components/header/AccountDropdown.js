@@ -30,7 +30,7 @@ class AccountDropdown extends Component {
     return (
       <div className="account-dropdown-component">
         <button
-          className="button link account-dropdown-button"
+          className="button subtle account-dropdown-button"
           ref="accountDropdownTarget"
           onClick={() => this.setState({ show: !this.state.show })}
         >
@@ -53,14 +53,14 @@ class AccountDropdown extends Component {
         >
           <Tooltip>
             <div className="account-dropdown-menu">
-              <Link className="button link full-width text-left" to="/docs">
+              <Link className="button subtle full-width text-left" to="/docs">
                 My Documents
               </Link>
-              <Link className="button link full-width text-left" to="/account">
+              <Link className="button subtle full-width text-left" to="/account">
                 Account
               </Link>
               <button
-                className="button link full-width text-left"
+                className="button subtle full-width text-left"
                 onClick={() => this.logOut()}
               >
                 Log out
