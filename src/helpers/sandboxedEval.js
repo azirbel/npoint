@@ -17,7 +17,8 @@ export const IFRAME_SRC_DOC = `
          var mainWindow = e.source;
          var result = '';
          try {
-           result = { data: eval(e.data) };
+           var data = Function('"use strict";return (' + e.data + ')')();
+           result = { data: data };
          } catch (e) {
            result = { data: null, errorMessage: e.message };
          }
