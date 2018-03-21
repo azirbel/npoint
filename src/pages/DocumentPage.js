@@ -174,13 +174,15 @@ class DocumentPage extends Component {
     this.setState({ openModalName })
   }
 
+  // TODO(azirbel): Getters?
+  titleEditable = () => this.state.document.editable
+  contentsEditable = () => this.titleEditable() && !this.state.document.contentsLocked
+  schemaEditable = () => this.contentsEditable() && !this.state.document.schemaLocked
+
   render() {
     let hasSaved =
       this.state.originalContents === this.state.savedOriginalContents &&
       this.state.originalSchema === this.state.savedOriginalSchema
-
-    let titleEditable = this.state.document.editable
-    let contentsEditable = titleEditable && !this.state.document.contentsLocked
 
     return (
       <div className="document-page">
@@ -202,7 +204,7 @@ class DocumentPage extends Component {
           onClose={() => this.setOpenModal(null)}
         />
         <DocumentPageHeader
-          contentsEditable={contentsEditable}
+          contentsEditable={this.contentsEditable()}
           document={this.state.document}
           hasSaved={hasSaved}
           isSavingDocument={this.state.isSaving}
@@ -210,7 +212,7 @@ class DocumentPage extends Component {
           onOpenShareModal={() => this.setOpenModal('share')}
           onSaveDocument={() => this.saveDocument()}
           title={this.state.document.title}
-          titleEditable={titleEditable}
+          titleEditable={this.titleEditable()}
         />
         {this.state.isLoading ? (
           <PageLoadingPlaceholder />
@@ -222,13 +224,9 @@ class DocumentPage extends Component {
   }
 
   renderMain() {
-    let titleEditable = this.state.document.editable
-    let contentsEditable = titleEditable && !this.state.document.contentsLocked
-    let schemaEditable = contentsEditable && !this.state.document.schemaLocked
-
     return (
       <div className="main-container">
-        {!contentsEditable && (
+        {!this.contentsEditable() && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
               <MdLock className="locked-icon" />
@@ -242,45 +240,11 @@ class DocumentPage extends Component {
           <div className="row">
             <div className="col-xs-12 col-sm-6">
               <h5 className="data-header">JSON Data</h5>
-              <ContentsEditor
-                onAutoformatContents={this.autoformatContents}
-                onChange={this.updateContents}
-                onOpenLockModal={() => this.setOpenModal('lockContents')}
-                originalContents={this.state.originalContents}
-                readOnly={!contentsEditable}
-              />
-              <div className="text-right">
-                {this.state.contentsErrorMessage}
-              </div>
+              {this.renderContents()}
             </div>
-            <div className="col-xs-12 col-sm-6">
+            <div className="schema-section col-xs-12 col-sm-6">
               <h5 className="data-header">Schema</h5>
-              {!_.isEmpty(this.state.originalSchema) ? (
-                <div>
-                  <SchemaEditor
-                    document={this.state.document}
-                    originalSchema={this.state.originalSchema}
-                    onChange={this.updateSchema}
-                    onRemoveSchema={this.removeSchema}
-                    onAutoformatSchema={this.autoformatSchema}
-                    onOpenLockModal={() => this.setOpenModal('lockSchema')}
-                    readOnly={!schemaEditable}
-                    contentsEditable={contentsEditable}
-                  />
-                  <div className="text-right">
-                    {this.state.schemaErrorMessage}
-                    {this.state.serverErrors.map((se, idx) => (
-                      <p key={idx}>{se}</p>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                schemaEditable && (
-                  <SchemaPlaceholder
-                    onGenerate={this.generateSchema}
-                  />
-                )
-              )}
+              {this.renderSchema()}
             </div>
           </div>
         </div>
@@ -292,6 +256,52 @@ class DocumentPage extends Component {
               {this.state.document.apiUrl}
             </a>
           </p>
+        </div>
+      </div>
+    )
+  }
+
+  renderContents() {
+    return (
+      <div>
+        <ContentsEditor
+          onAutoformatContents={this.autoformatContents}
+          onChange={this.updateContents}
+          onOpenLockModal={() => this.setOpenModal('lockContents')}
+          originalContents={this.state.originalContents}
+          readOnly={!this.contentsEditable()}
+        />
+        <div className="text-right">
+          {this.state.contentsErrorMessage}
+        </div>
+      </div>
+    )
+  }
+
+  renderSchema() {
+    return _.isEmpty(this.state.originalSchema) ? (
+      this.schemaEditable() && (
+        <SchemaPlaceholder
+          onGenerate={this.generateSchema}
+        />
+      )
+    ) : (
+      <div>
+        <SchemaEditor
+          document={this.state.document}
+          originalSchema={this.state.originalSchema}
+          onChange={this.updateSchema}
+          onRemoveSchema={this.removeSchema}
+          onAutoformatSchema={this.autoformatSchema}
+          onOpenLockModal={() => this.setOpenModal('lockSchema')}
+          readOnly={!this.schemaEditable()}
+          contentsEditable={this.contentsEditable()}
+        />
+        <div className="text-right">
+          {this.state.schemaErrorMessage}
+          {this.state.serverErrors.map((se, idx) => (
+            <p key={idx}>{se}</p>
+          ))}
         </div>
       </div>
     )

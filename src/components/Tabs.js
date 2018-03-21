@@ -18,9 +18,11 @@ export class Tab extends Component {
         this.props.onClick(this.props.value)
       }
     }
+    let className=`tab ${isActive ? 'active' : ''}`
+
     return (
       <div
-        className={`tab ${isActive ? 'active' : ''}`}
+        className={className}
         onClick={() => onClickUnlessActive()}
       >
         {this.props.children}
@@ -53,8 +55,10 @@ export class Tabs extends Component {
         activeTabValue: this.state.activeTabValue,
       })
     )
+    let className = `tabs ${this.props.fullWidth ? 'full-width' : ''}`
+
     return (
-      <div className={`tabs ${this.props.fullWidth ? 'full-width' : ''}`}>
+      <div className={className}>
         {childrenWithProps}
       </div>
     )

@@ -52,8 +52,12 @@
   --sansFontFamily: 'Source Sans Pro', sans-serif;
   --serifFontFamily: 'Source Serif Pro', serif;
 
+  @custom-media --screenXxsMax (max-width: 479px);
   @custom-media --screenXsMin (min-width: 480px);
+  @custom-media --screenXsMax (max-width: 767px);
   @custom-media --screenSmMin (min-width: 768px);
+  @custom-media --screenSmMax (max-width: 991px);
   @custom-media --screenMdMin (min-width: 992px);
+  @custom-media --screenMdMax (max-width: 1199px);
   @custom-media --screenLgMin (min-width: 1200px);
 }

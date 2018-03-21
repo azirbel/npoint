@@ -14,6 +14,12 @@
     padding: var(--largeGutter) var(--mediumGutter);
   }
 
+  & .schema-section {
+    @media only screen and (--screenXsMax) {
+      margin-top: 20px;
+    }
+  }
+
   & .locked-icon {
     margin-right: 6px;
   }
