@@ -8,6 +8,7 @@ import _ from 'lodash'
 
 import Button from '../../components/Button'
 import JsonEditor from '../../components/JsonEditor'
+
 import {} from './SchemaEditor.css'
 
 export default class SchemaEditor extends Component {
@@ -62,7 +63,7 @@ export default class SchemaEditor extends Component {
     return (
       <div className='schema-editor'>
         {this.props.contentsEditable && (
-          <div className="animated-button-container">
+          <div className="toolbar-container">
             <CSSTransitionGroup
               transitionName="example"
               transitionEnterTimeout={400}

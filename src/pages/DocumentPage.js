@@ -83,28 +83,34 @@ class DocumentPage extends Component {
   // during the content change handler. (Any tiny slowness causes lag and makes the cursor
   // get misplaced). So we run validations completely separately. I think this may still
   // cause the occasional race condition but is hopefully good enough
+  lastValidatedSchema = null
+  lastValidatedContents = null
   runValidations = () => {
-    console.log('running validations')
-
-    evalParseObject(
-      this.state.originalSchema,
-      this.sandboxedIframe
-    ).then(({ json, errorMessage }) => {
-      this.setState({
-        schema: json,
-        schemaErrorMessage: errorMessage,
+    if (this.lastValidatedSchema !== this.state.originalSchema) {
+      evalParseObject(
+        this.state.originalSchema,
+        this.sandboxedIframe
+      ).then(({ json, errorMessage }) => {
+        this.setState({
+          schema: json,
+          schemaErrorMessage: errorMessage,
+        })
       })
-    })
+      this.lastValidatedSchema = this.state.originalSchema
+    }
 
-    evalParseObject(
-      this.state.originalContents,
-      this.sandboxedIframe
-    ).then(({ json, errorMessage }) => {
-      this.setState({
-        contents: json,
-        contentsErrorMessage: errorMessage,
+    if (this.lastValidatedContents !== this.state.originalContents) {
+      evalParseObject(
+        this.state.originalContents,
+        this.sandboxedIframe
+      ).then(({ json, errorMessage }) => {
+        this.setState({
+          contents: json,
+          contentsErrorMessage: errorMessage,
+        })
       })
-    })
+      this.lastValidatedContents = this.state.originalContents
+    }
   }
 
   autoformatContents = () => {
@@ -309,6 +315,7 @@ class DocumentPage extends Component {
     return (
       <div>
         <ContentsEditor
+          errorMessage={this.state.contentsErrorMessage}
           onAutoformatContents={this.autoformatContents}
           onChange={this.updateContents}
           onGenerateSchema={this.generateSchema}
