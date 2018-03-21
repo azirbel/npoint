@@ -9,7 +9,6 @@ import _ from 'lodash'
 import ClickToEdit from '../components/ClickToEdit'
 import Document from '../models/Document'
 import Header from '../components/Header'
-import JsonEditor from '../components/JsonEditor'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import Schema from '../models/Schema'
 
@@ -69,7 +68,7 @@ class DocumentPage extends Component {
     }
   }
 
-  autoformatData = () => {
+  autoformatContents = () => {
     this.setState({
       originalContents: JSON.stringify(this.state.contents, null, 2),
     })
@@ -81,7 +80,7 @@ class DocumentPage extends Component {
     })
   }
 
-  updateJson = (newOriginalContents, newJson, errorMessage) => {
+  updateContents = (newOriginalContents, newJson, errorMessage) => {
     this.setState({
       contents: newJson,
       contentsErrorMessage: errorMessage,
@@ -269,25 +268,11 @@ class DocumentPage extends Component {
           <div className="row">
             <div className="col-xs-12 col-sm-6">
               <h5 className="data-header">JSON Data</h5>
-              {jsonEditable && (
-                <div className="button-group animated-button-container">
-                  <button
-                    className="button small"
-                    onClick={this.autoformatData}
-                  >
-                    Autoformat
-                  </button>
-                  <button
-                    className="button small"
-                    onClick={() => this.setOpenModal('lockContents')}
-                  >
-                    Lock data...
-                  </button>
-                </div>
-              )}
-              <JsonEditor
-                value={this.state.originalContents}
-                onChange={this.updateJson}
+              <ContentsEditor
+                onAutoformatContents={this.autoformatContents}
+                onChange={this.updateContents}
+                onOpenLockModal={() => this.setOpenModal('lockContents')}
+                originalContents={this.state.originalContents}
                 readOnly={!jsonEditable}
               />
               <div className="text-right">
