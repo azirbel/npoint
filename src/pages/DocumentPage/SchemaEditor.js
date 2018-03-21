@@ -24,7 +24,6 @@ export default class SchemaEditor extends Component {
   }
 
   state = {
-    errorMessage: null,
     showErrorMessage: false,
   }
 
@@ -36,18 +35,16 @@ export default class SchemaEditor extends Component {
     document.removeEventListener("mousemove", this.handleChangeOfFocusEvent);
   }
 
-  handleSchemaChange = (newValue, newJson, errorMessage) => {
-    let newShowError = this.state.showErrorMessage
-    if (!errorMessage) {
-      newShowError = false
+  componentWillReceiveProps(newProps) {
+    if (!newProps.errorMessage) {
+      this.setState({
+        showErrorMessage: false,
+      })
     }
+  }
 
-    this.setState({
-      errorMessage,
-      showErrorMessage: newShowError,
-    })
-    this.props.onChange(newValue, newJson, errorMessage)
-
+  handleSchemaChange = (newValue) => {
+    this.props.onChange(newValue)
     this.debouncedOnChange()
   }
 
@@ -86,8 +83,6 @@ export default class SchemaEditor extends Component {
   }
 
   renderToolbar() {
-    let errorMessage = this.state.errorMessage || this.props.errorMessage
-
     if (this.props.document.schemaLocked) {
       return (
         <div key="toolbar-locked" className="badge dark-gray full-width">
@@ -95,11 +90,11 @@ export default class SchemaEditor extends Component {
           Locked
         </div>
       )
-    } else if (this.state.showErrorMessage && errorMessage) {
+    } else if (this.state.showErrorMessage && this.props.errorMessage) {
       return (
         <div key="toolbar-error" className="badge warning full-width">
           <MdReport className="toolbar-icon" />
-          {errorMessage}
+          {this.props.errorMessage}
         </div>
       )
     } else {

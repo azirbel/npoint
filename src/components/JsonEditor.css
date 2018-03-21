@@ -10,10 +10,6 @@
     background-color: white;
     font-family: 'Source Code Pro', monospace;
   }
-
-  & .hidden-iframe {
-    display: none;
-  }
 }
 
 /*

@@ -33,3 +33,7 @@ body {
 .overlay {
   z-index: 4;
 }
+
+.hidden-iframe {
+  display: none;
+}

@@ -4,9 +4,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
-import {} from './DocumentPage.css'
 import _ from 'lodash'
 
+import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
 import Document from '../models/Document'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import Schema from '../models/Schema'
@@ -17,6 +17,8 @@ import LockContentsModal from './DocumentPage/LockContentsModal'
 import LockSchemaModal from './DocumentPage/LockSchemaModal'
 import SchemaEditor from './DocumentPage/SchemaEditor'
 import ShareModal from './DocumentPage/ShareModal'
+
+import {} from './DocumentPage.css'
 
 class DocumentPage extends Component {
   state = {
@@ -37,6 +39,8 @@ class DocumentPage extends Component {
     openModalName: null,
     modalActionInProgress: false,
   }
+
+  sandboxedIframe = null
 
   loadDocument(token) {
     this.setState({ isLoading: true })
@@ -78,30 +82,38 @@ class DocumentPage extends Component {
     })
   }
 
-  updateContents = (newOriginalContents, newJson, errorMessage) => {
+  updateContents = (newOriginalContents) => {
     this.setState({
-      contents: newJson,
-      contentsErrorMessage: errorMessage,
       originalContents: newOriginalContents,
     })
 
-    // TODO(azirbel): Probably relies on whether schema is valid too. Refactor out
-    if (_.isEmpty(errorMessage)) {
-      this.validateSchema(newJson, this.state.schema)
-    }
+    evalParseObject(
+      newOriginalContents,
+      this.sandboxedIframe
+    ).then(({ json, errorMessage }) => {
+      this.setState({
+        originalContents: newOriginalContents,
+        contents: json,
+        contentsErrorMessage: errorMessage,
+      })
+    })
   }
 
-  updateSchema = (newOriginalSchema, newJson, errorMessage) => {
+  updateSchema = (newOriginalSchema) => {
     this.setState({
       originalSchema: newOriginalSchema,
-      schema: newJson,
-      schemaErrorMessage: errorMessage,
     })
 
-    // TODO(azirbel): Probably relies on whether contents is valid too. Refactor out
-    if (_.isEmpty(errorMessage)) {
-      this.validateSchema(this.state.contents, newJson)
-    }
+    evalParseObject(
+      newOriginalSchema,
+      this.sandboxedIframe
+    ).then(({ json, errorMessage }) => {
+      this.setState({
+        originalSchema: newOriginalSchema,
+        schema: json,
+        schemaErrorMessage: errorMessage,
+      })
+    })
   }
 
   async validateSchema(json, schema) {
@@ -186,6 +198,13 @@ class DocumentPage extends Component {
 
     return (
       <div className="document-page">
+        <iframe
+          className="hidden-iframe"
+          sandbox="allow-scripts"
+          srcDoc={IFRAME_SRC_DOC}
+          ref={el => (this.sandboxedIframe = el)}
+          key={this.props.params.documentToken}
+        />
         <LockContentsModal
           isLoading={this.state.modalActionInProgress}
           isOpen={this.state.openModalName === 'lockContents'}
@@ -295,6 +314,7 @@ class DocumentPage extends Component {
       <div>
         <SchemaEditor
           document={this.state.document}
+          errorMessage={this.state.schemaErrorMessage}
           originalSchema={this.state.originalSchema}
           onChange={this.updateSchema}
           onRemoveSchema={this.removeSchema}
