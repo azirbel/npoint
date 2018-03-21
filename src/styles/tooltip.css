@@ -1,0 +1,29 @@
+/* @format */
+
+@import './variables.css';
+
+.rc-tooltip {
+  background-color: transparent;
+}
+
+/* Very hacky small offset, eyeballed to look good */
+.rc-tooltip-placement-bottom {
+  padding-top: 4px;
+
+  & .rc-tooltip-arrow {
+    margin-top: 4px;
+  }
+}
+
+.rc-tooltip-inner {
+  background-color: var(--lightBlack);
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  padding: 3px 8px;
+  min-height: 0;
+}
+
+.rc-tooltip-arrow {
+  border-bottom-color: var(--lightBlack) !important;
+}

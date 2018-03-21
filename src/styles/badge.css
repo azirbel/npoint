@@ -3,25 +3,35 @@
 @import './variables.css';
 
 .badge {
-  font-size: 14px;
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--darkGray);
-
-  color: var(--white);
-  background-color: var(--darkGray);
-
-  display: inline-flex;
   align-items: center;
+  background-color: var(--white);
+  border-radius: var(--borderRadius);
+  border: 1px solid var(--lightGray);
+  color: var(--textColor);
+  display: inline-flex;
+  font-size: 14px;
+  padding: 3px 8px;
 
   &.full-width {
     display: flex;
   }
 
   &.warning {
-    color: var(--textColor);
-    background-color: #ffcb32;
+    color: var(--white);
+    background-color: var(--errorColor);
+    border-color: var(--errorColor);
+  }
+
+  &.dark-gray {
+    background-color: var(--darkGray);
+    border-color: var(--darkGray);
+    color: var(--white);
+  }
+
+  &.primary {
+    background-color: var(--primaryColor);
+    border-color: var(--primaryColor);
+    color: var(--white);
   }
 }
 

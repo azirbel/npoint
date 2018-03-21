@@ -31,7 +31,7 @@ export default class SchemaEditor extends Component {
               transitionLeaveTimeout={300}
             >
               {this.props.document.schemaLocked ? (
-                <div key="a" className="badge full-width">
+                <div key="a" className="badge dark-gray full-width">
                   <MdLock className="locked-icon" />
                   Locked
                 </div>

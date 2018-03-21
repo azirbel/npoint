@@ -22,6 +22,14 @@ body {
   max-width: 100%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
 .overlay {
   z-index: 4;
 }

@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Tooltip from 'rc-tooltip'
 
 import Button from '../../components/Button'
 import Document from '../../models/Document'
@@ -51,6 +52,23 @@ export default class DocumentPageHeader extends Component {
           textClassName="page-title"
           inputClassName="edit-title-input"
         />
+        {this.props.document.ownedByCurrentUser ? (
+          <Tooltip
+            placement='bottom'
+            trigger={['click', 'hover']}
+            overlay='Only you can edit this document'
+          >
+            <div className='badge primary cursor-default'>Yours</div>
+          </Tooltip>
+        ) : (
+          <Tooltip
+            placement='bottom'
+            trigger={['click', 'hover']}
+            overlay='Anyone can edit this document'
+          >
+            <div className='badge cursor-default'>Public</div>
+          </Tooltip>
+        )}
         <div className="flex-spring" />
         {this.props.contentsEditable &&
           (this.props.hasSaved ? (

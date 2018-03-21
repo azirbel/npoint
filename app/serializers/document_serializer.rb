@@ -22,6 +22,6 @@ class DocumentSerializer < ActiveModel::Serializer
   end
 
   def owned_by_current_user
-    object.user === current_user
+    current_user.present? && object.user === current_user
   end
 end
