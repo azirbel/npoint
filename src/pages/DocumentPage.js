@@ -60,14 +60,51 @@ class DocumentPage extends Component {
     })
   }
 
+  validationsHandlerId = null
+
   componentDidMount() {
     this.loadDocument(this.props.params.documentToken)
+    this.validationsHandlerId = setInterval(this.runValidations, 100)
+  }
+
+  componentWillUnmount() {
+    // TODO(azirbel): Confirm that this stops running on client-side transitions
+    //console.log(this.validationsHandlerId)
+    clearInterval(this.validationsHandlerId)
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.params.documentToken !== this.props.params.documentToken) {
       this.loadDocument(newProps.params.documentToken)
     }
+  }
+
+  // Ace editor is picky and gets upset when we try to kick off a validation job
+  // during the content change handler. (Any tiny slowness causes lag and makes the cursor
+  // get misplaced). So we run validations completely separately. I think this may still
+  // cause the occasional race condition but is hopefully good enough
+  runValidations = () => {
+    console.log('running validations')
+
+    evalParseObject(
+      this.state.originalSchema,
+      this.sandboxedIframe
+    ).then(({ json, errorMessage }) => {
+      this.setState({
+        schema: json,
+        schemaErrorMessage: errorMessage,
+      })
+    })
+
+    evalParseObject(
+      this.state.originalContents,
+      this.sandboxedIframe
+    ).then(({ json, errorMessage }) => {
+      this.setState({
+        contents: json,
+        contentsErrorMessage: errorMessage,
+      })
+    })
   }
 
   autoformatContents = () => {
@@ -86,33 +123,11 @@ class DocumentPage extends Component {
     this.setState({
       originalContents: newOriginalContents,
     })
-
-    evalParseObject(
-      newOriginalContents,
-      this.sandboxedIframe
-    ).then(({ json, errorMessage }) => {
-      this.setState({
-        originalContents: newOriginalContents,
-        contents: json,
-        contentsErrorMessage: errorMessage,
-      })
-    })
   }
 
   updateSchema = (newOriginalSchema) => {
     this.setState({
       originalSchema: newOriginalSchema,
-    })
-
-    evalParseObject(
-      newOriginalSchema,
-      this.sandboxedIframe
-    ).then(({ json, errorMessage }) => {
-      this.setState({
-        originalSchema: newOriginalSchema,
-        schema: json,
-        schemaErrorMessage: errorMessage,
-      })
     })
   }
 
