@@ -29,6 +29,8 @@ class DocumentPage extends Component {
     isSaving: false,
     lockdownContentsModalVisible: false,
     lockdownSchemaModalVisible: false,
+    modalActionInProgress: false,
+    openModalName: null,
     originalContents: '',
     originalSchema: '',
     savedOriginalContents: '',
@@ -36,11 +38,8 @@ class DocumentPage extends Component {
     schema: null,
     schemaErrorMessage: '',
     serverErrors: [],
-    openModalName: null,
-    modalActionInProgress: false,
+    validationErrorMessage: '',
   }
-
-  sandboxedIframe = null
 
   loadDocument(token) {
     this.setState({ isLoading: true })
@@ -69,7 +68,6 @@ class DocumentPage extends Component {
 
   componentWillUnmount() {
     // TODO(azirbel): Confirm that this stops running on client-side transitions
-    //console.log(this.validationsHandlerId)
     clearInterval(this.validationsHandlerId)
   }
 
@@ -83,23 +81,14 @@ class DocumentPage extends Component {
   // during the content change handler. (Any tiny slowness causes lag and makes the cursor
   // get misplaced). So we run validations completely separately. I think this may still
   // cause the occasional race condition but is hopefully good enough
+  sandboxedIframe = null
   lastValidatedSchema = null
   lastValidatedContents = null
   runValidations = () => {
-    if (this.lastValidatedSchema !== this.state.originalSchema) {
-      evalParseObject(
-        this.state.originalSchema,
-        this.sandboxedIframe
-      ).then(({ json, errorMessage }) => {
-        this.setState({
-          schema: json,
-          schemaErrorMessage: errorMessage,
-        })
-      })
-      this.lastValidatedSchema = this.state.originalSchema
-    }
+    let contentsChanged = this.lastValidatedContents !== this.state.originalContents
+    let schemaChanged = this.lastValidatedSchema !== this.state.originalSchema
 
-    if (this.lastValidatedContents !== this.state.originalContents) {
+    if (contentsChanged) {
       evalParseObject(
         this.state.originalContents,
         this.sandboxedIframe
@@ -108,9 +97,38 @@ class DocumentPage extends Component {
           contents: json,
           contentsErrorMessage: errorMessage,
         })
+        this.validateSchemaMatch()
       })
       this.lastValidatedContents = this.state.originalContents
     }
+
+    if (schemaChanged) {
+      evalParseObject(
+        this.state.originalSchema,
+        this.sandboxedIframe
+      ).then(({ json, errorMessage }) => {
+        this.setState({
+          schema: json,
+          schemaErrorMessage: errorMessage,
+        })
+        this.validateSchemaMatch()
+      })
+      this.lastValidatedSchema = this.state.originalSchema
+    }
+  }
+
+  validateSchemaMatch = () => {
+    if (_.isEmpty(this.state.originalSchema)) {
+      this.setState({ validationErrorMessage: null })
+      return;
+    }
+
+    Schema.validate({
+      contents: JSON.stringify(this.state.contents),
+      schema: JSON.stringify(this.state.schema),
+    }).then(({ data }) => {
+      this.setState({ validationErrorMessage: data.errors[0] })
+    })
   }
 
   autoformatContents = () => {
@@ -138,13 +156,6 @@ class DocumentPage extends Component {
   }
 
   async validateSchema(json, schema) {
-    Schema.validate({
-      schema: JSON.stringify(schema),
-      contents: JSON.stringify(json),
-    }).then(({ data }) => {
-      let { errors } = data
-      this.setState({ serverErrors: errors })
-    })
   }
 
   generateSchema = async () => {
@@ -315,7 +326,7 @@ class DocumentPage extends Component {
     return (
       <div>
         <ContentsEditor
-          errorMessage={this.state.contentsErrorMessage}
+          errorMessage={this.state.contentsErrorMessage || this.state.validationErrorMessage}
           onAutoformatContents={this.autoformatContents}
           onChange={this.updateContents}
           onGenerateSchema={this.generateSchema}

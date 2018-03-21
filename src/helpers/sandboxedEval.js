@@ -18,9 +18,9 @@ export const IFRAME_SRC_DOC = `
          var result = '';
          try {
            var data = Function('"use strict";return (' + e.data + ')')();
-           result = { data: data };
+           result = { original: e.data, data: data };
          } catch (e) {
-           result = { data: null, errorMessage: e.message };
+           result = { original: e.data, data: null, errorMessage: e.message };
          }
          mainWindow.postMessage(result, event.origin);
        });
@@ -53,6 +53,10 @@ export function evalParseObject(objStr, iframe) {
     }
 
     let handleIframeMessage = event => {
+      if (event.data.original !== objStr) {
+        return false; // got a postMessage intended for someone else
+      }
+
       // Again from https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes:
       //
       // Sandboxed iframes which lack the 'allow-same-origin'
@@ -70,7 +74,7 @@ export function evalParseObject(objStr, iframe) {
     }
 
     window.addEventListener('message', handleIframeMessage)
-    iframe.contentWindow.postMessage(`(${objStr})`, '*')
+    iframe.contentWindow.postMessage(objStr, '*')
   })
 }
 
