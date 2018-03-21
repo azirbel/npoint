@@ -20,28 +20,18 @@ export default class SchemaEditor extends Component {
     onChange: PropTypes.func.isRequired,
     onOpenLockModal: PropTypes.func.isRequired,
     onRemoveSchema: PropTypes.func.isRequired,
+    onTypingBreakpoint: PropTypes.func.isRequired,
     originalSchema: PropTypes.string.isRequired,
     readOnly: PropTypes.bool,
-  }
-
-  state = {
-    showErrorMessage: false,
+    showErrorMessage: PropTypes.bool,
   }
 
   componentDidMount() {
-    document.addEventListener('mousemove', this.handleChangeOfFocusEvent)
+    document.addEventListener('mousemove', this.props.onTypingBreakpoint)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleChangeOfFocusEvent)
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (!newProps.errorMessage) {
-      this.setState({
-        showErrorMessage: false,
-      })
-    }
+    document.removeEventListener('mousemove', this.props.onTypingBreakpoint)
   }
 
   handleSchemaChange = newValue => {
@@ -51,13 +41,7 @@ export default class SchemaEditor extends Component {
 
   // Call this when some amount of time has passed since the last text change
   // (when the user has stopped typing)
-  debouncedOnChange = _.debounce(() => this.handleChangeOfFocusEvent(), 1000)
-
-  // Call this when we suspect the user has finished their WIP typing, so
-  // we can show error messages at the most opportune time
-  handleChangeOfFocusEvent = () => {
-    this.setState({ showErrorMessage: true })
-  }
+  debouncedOnChange = _.debounce(() => this.props.onTypingBreakpoint(), 1000)
 
   render() {
     return (
@@ -76,7 +60,7 @@ export default class SchemaEditor extends Component {
         <JsonEditor
           value={this.props.originalSchema}
           onChange={this.handleSchemaChange}
-          onEnter={this.handleChangeOfFocusEvent}
+          onEnter={this.props.onTypingBreakpoint}
           readOnly={this.props.readOnly}
         />
       </div>
@@ -91,7 +75,7 @@ export default class SchemaEditor extends Component {
           Locked
         </div>
       )
-    } else if (this.state.showErrorMessage && this.props.errorMessage) {
+    } else if (this.props.showErrorMessage && this.props.errorMessage) {
       return (
         <div key="toolbar-error" className="badge warning full-width">
           <MdReport className="toolbar-icon" />

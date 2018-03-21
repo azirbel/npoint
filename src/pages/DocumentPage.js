@@ -38,6 +38,8 @@ class DocumentPage extends Component {
     schema: null,
     schemaErrorMessage: '',
     serverErrors: [],
+    showContentsErrorMessage: false,
+    showSchemaErrorMessage: false,
     validationErrorMessage: '',
   }
 
@@ -97,6 +99,7 @@ class DocumentPage extends Component {
             contentsErrorMessage: errorMessage,
           })
           if (_.isEmpty(errorMessage)) {
+            this.setState({ showContentsErrorMessage: false })
             this.validateSchemaMatch()
           }
         }
@@ -112,11 +115,26 @@ class DocumentPage extends Component {
             schemaErrorMessage: errorMessage,
           })
           if (_.isEmpty(errorMessage)) {
+            this.setState({ showSchemaErrorMessage: false })
             this.validateSchemaMatch()
           }
         }
       )
       this.lastValidatedSchema = this.state.originalSchema
+    }
+  }
+
+  handleContentsTypingBreakpoint = () => {
+    if (this.state.contentsErrorMessage) {
+      this.setState({ showContentsErrorMessage: true })
+    }
+  }
+
+  handleSchemaTypingBreakpoint = () => {
+    if (this.state.schemaErrorMessage) {
+      this.setState({
+        showSchemaErrorMessage: true,
+      })
     }
   }
 
@@ -130,7 +148,16 @@ class DocumentPage extends Component {
       contents: JSON.stringify(this.state.contents),
       schema: JSON.stringify(this.state.schema),
     }).then(({ data }) => {
-      this.setState({ validationErrorMessage: data.errors[0] })
+      if (data.isValid) {
+        this.setState({
+          validationErrorMessage: null,
+        })
+      } else {
+        this.setState({
+          showContentsErrorMessage: true,
+          validationErrorMessage: data.errors[0],
+        })
+      }
     })
   }
 
@@ -343,13 +370,15 @@ class DocumentPage extends Component {
           errorMessage={
             this.state.contentsErrorMessage || this.state.validationErrorMessage
           }
+          canGenerateSchema={!this.state.originalSchema}
           onAutoformatContents={this.autoformatContents}
           onChange={this.updateContents}
           onGenerateSchema={this.generateSchema}
           onOpenLockModal={() => this.setOpenModal('lockContents')}
+          onTypingBreakpoint={this.handleContentsTypingBreakpoint}
           originalContents={this.state.originalContents}
-          canGenerateSchema={!this.state.originalSchema}
           readOnly={!this.contentsEditable()}
+          showErrorMessage={this.state.showContentsErrorMessage}
         />
       </div>
     )
@@ -359,15 +388,17 @@ class DocumentPage extends Component {
     return (
       <div>
         <SchemaEditor
+          contentsEditable={this.contentsEditable()}
           document={this.state.document}
           errorMessage={this.state.schemaErrorMessage}
-          originalSchema={this.state.originalSchema}
-          onChange={this.updateSchema}
-          onRemoveSchema={this.removeSchema}
           onAutoformatSchema={this.autoformatSchema}
+          onChange={this.updateSchema}
           onOpenLockModal={() => this.setOpenModal('lockSchema')}
+          onRemoveSchema={this.removeSchema}
+          onTypingBreakpoint={this.handleSchemaTypingBreakpoint}
+          originalSchema={this.state.originalSchema}
           readOnly={!this.schemaEditable()}
-          contentsEditable={this.contentsEditable()}
+          showErrorMessage={this.state.showSchemaErrorMessage}
         />
       </div>
     )
