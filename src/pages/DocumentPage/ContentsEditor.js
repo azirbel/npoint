@@ -8,8 +8,10 @@ import JsonEditor from '../../components/JsonEditor'
 
 export default class ContentsEditor extends Component {
   static propTypes = {
+    canGenerateSchema: PropTypes.bool,
     onAutoformatContents: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    onGenerateSchema: PropTypes.func.isRequired,
     onOpenLockModal: PropTypes.func.isRequired,
     originalContents: PropTypes.string.isRequired,
     readOnly: PropTypes.bool,
@@ -32,6 +34,14 @@ export default class ContentsEditor extends Component {
             >
               Lock data...
             </Button>
+            {this.props.canGenerateSchema && (
+              <Button
+                className="small"
+                onClick={this.props.onGenerateSchema}
+              >
+                Add schema
+              </Button>
+            )}
           </div>
         )}
         <JsonEditor

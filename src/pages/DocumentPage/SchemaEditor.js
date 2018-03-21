@@ -45,15 +45,15 @@ export default class SchemaEditor extends Component {
                   </Button>
                   <Button
                     className="small"
-                    onClick={this.props.onRemoveSchema}
-                  >
-                    Remove schema
-                  </Button>
-                  <Button
-                    className="small"
                     onClick={this.props.onOpenLockModal}
                   >
                     Lock schema...
+                  </Button>
+                  <Button
+                    className="small"
+                    onClick={this.props.onRemoveSchema}
+                  >
+                    Remove schema
                   </Button>
                 </div>
               )}

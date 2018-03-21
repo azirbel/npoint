@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
+import { CSSTransitionGroup } from 'react-transition-group'
 import {} from './DocumentPage.css'
 import _ from 'lodash'
 
@@ -15,7 +16,6 @@ import DocumentPageHeader from './DocumentPage/DocumentPageHeader'
 import LockContentsModal from './DocumentPage/LockContentsModal'
 import LockSchemaModal from './DocumentPage/LockSchemaModal'
 import SchemaEditor from './DocumentPage/SchemaEditor'
-import SchemaPlaceholder from './DocumentPage/SchemaPlaceholder'
 import ShareModal from './DocumentPage/ShareModal'
 
 class DocumentPage extends Component {
@@ -242,10 +242,20 @@ class DocumentPage extends Component {
               <h5 className="data-header">JSON Data</h5>
               {this.renderContents()}
             </div>
-            <div className="schema-section col-xs-12 col-sm-6">
-              <h5 className="data-header">Schema</h5>
-              {this.renderSchema()}
-            </div>
+            <CSSTransitionGroup
+              component="div"
+              className="col-xs-12 col-sm-6"
+              transitionName="downfade"
+              transitionEnterTimeout={200}
+              transitionLeaveTimeout={1}
+            >
+              {this.state.originalSchema && (
+                <div key='schema'>
+                  <h5 className="data-header">Schema</h5>
+                  {this.renderSchema()}
+                </div>
+              )}
+            </CSSTransitionGroup>
           </div>
         </div>
         <div className="flex-spring" />
@@ -267,8 +277,10 @@ class DocumentPage extends Component {
         <ContentsEditor
           onAutoformatContents={this.autoformatContents}
           onChange={this.updateContents}
+          onGenerateSchema={this.generateSchema}
           onOpenLockModal={() => this.setOpenModal('lockContents')}
           originalContents={this.state.originalContents}
+          canGenerateSchema={!this.state.originalSchema}
           readOnly={!this.contentsEditable()}
         />
         <div className="text-right">
@@ -279,13 +291,7 @@ class DocumentPage extends Component {
   }
 
   renderSchema() {
-    return _.isEmpty(this.state.originalSchema) ? (
-      this.schemaEditable() && (
-        <SchemaPlaceholder
-          onGenerate={this.generateSchema}
-        />
-      )
-    ) : (
+    return (
       <div>
         <SchemaEditor
           document={this.state.document}

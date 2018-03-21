@@ -63,3 +63,15 @@
   left: 0;
   width: 100%;
 }
+
+/* TODO(azirbel): Move somewhere? */
+.downfade-enter {
+  transform: translateY(-10px);
+  opacity: 0;
+
+  &.downfade-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: all var(--transitionTiming) ease-out;
+  }
+}
