@@ -6,6 +6,7 @@ import { MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css'
 import _ from 'lodash'
 
+import Button from '../components/Button'
 import ClickToEdit from '../components/ClickToEdit'
 import Document from '../models/Document'
 import Header from '../components/Header'
@@ -27,6 +28,7 @@ class DocumentPage extends Component {
     isEditingTitle: false,
     isLoading: false,
     isSavingTitle: false,
+    isSaving: false,
     lockdownContentsModalVisible: false,
     lockdownSchemaModalVisible: false,
     originalContents: '',
@@ -150,6 +152,7 @@ class DocumentPage extends Component {
 
   saveDocument = (extraParams) => {
     let saveState = _.cloneDeep(this.state)
+    this.setState({ isSaving: true })
 
     return Document.update(this.props.params.documentToken, _.merge({
       contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
@@ -159,6 +162,7 @@ class DocumentPage extends Component {
     }, extraParams)).then(({ data }) => {
       this.onLoadDocument(data)
       this.setState({
+        isSaving: false,
         savedOriginalContents: saveState.originalContents,
         savedOriginalSchema: saveState.originalSchema,
       })
@@ -230,9 +234,9 @@ class DocumentPage extends Component {
                 Saved
               </button>
             ) : (
-              <button className="button cta" onClick={() => this.saveDocument()}>
+              <Button isLoading={this.state.isSaving} className="cta" onClick={() => this.saveDocument()}>
                 Save
-              </button>
+              </Button>
             ))}
           <button className="button subtle" onClick={() => this.setOpenModal('share')}>
             Share
