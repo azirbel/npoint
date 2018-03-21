@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Tooltip from 'rc-tooltip'
+import _ from 'lodash'
 
 import Button from '../../components/Button'
 import Document from '../../models/Document'
@@ -15,6 +16,7 @@ export default class DocumentPageHeader extends Component {
   static propTypes = {
     contentsEditable: PropTypes.bool,
     document: PropTypes.object.isRequired,
+    errorMessage: PropTypes.string,
     hasSaved: PropTypes.bool.isRequired,
     isSavingDocument: PropTypes.bool,
     onLoadDocument: PropTypes.func.isRequired,
@@ -70,24 +72,43 @@ export default class DocumentPageHeader extends Component {
           </Tooltip>
         )}
         <div className="flex-spring" />
-        {this.props.contentsEditable &&
-          (this.props.hasSaved ? (
-            <Button disabled className="cta disabled">
-              Saved
-            </Button>
-          ) : (
-            <Button
-              isLoading={this.props.isSavingDocument}
-              className="cta"
-              onClick={this.props.onSaveDocument}
-            >
-              Save
-            </Button>
-          ))}
+        {this.props.contentsEditable && this.renderSaveButton()}
         <button className="button subtle" onClick={this.props.onOpenShareModal}>
           Share
         </button>
       </Header>
     )
+  }
+
+  renderSaveButton() {
+    if (this.props.hasSaved) {
+      return (
+        <Button disabled className="cta disabled">
+          Saved
+        </Button>
+      )
+    } else if (!_.isEmpty(this.props.errorMessage)) {
+      return (
+        <Tooltip
+          placement="bottom"
+          trigger={['click', 'hover']}
+          overlay={this.props.errorMessage}
+        >
+          <div className="button cta disabled">
+            Can{"'"}t save
+          </div>
+        </Tooltip>
+      )
+    } else {
+      return (
+        <Button
+          isLoading={this.props.isSavingDocument}
+          className="cta"
+          onClick={this.props.onSaveDocument}
+        >
+          Save
+        </Button>
+      )
+    }
   }
 }

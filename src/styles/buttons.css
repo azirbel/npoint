@@ -104,7 +104,7 @@ button {
 
   &.disabled {
     background-color: var(--gray) !important;
-    cursor: not-allowed;
+    cursor: default;
   }
 }
 

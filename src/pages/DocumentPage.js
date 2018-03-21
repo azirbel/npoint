@@ -96,7 +96,9 @@ class DocumentPage extends Component {
             contents: json,
             contentsErrorMessage: errorMessage,
           })
-          this.validateSchemaMatch()
+          if (_.isEmpty(errorMessage)) {
+            this.validateSchemaMatch()
+          }
         }
       )
       this.lastValidatedContents = this.state.originalContents
@@ -109,7 +111,9 @@ class DocumentPage extends Component {
             schema: json,
             schemaErrorMessage: errorMessage,
           })
-          this.validateSchemaMatch()
+          if (_.isEmpty(errorMessage)) {
+            this.validateSchemaMatch()
+          }
         }
       )
       this.lastValidatedSchema = this.state.originalSchema
@@ -236,6 +240,11 @@ class DocumentPage extends Component {
       this.state.originalContents === this.state.savedOriginalContents &&
       this.state.originalSchema === this.state.savedOriginalSchema
 
+    let overallErrorMessage =
+      (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
+      (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
+      (this.state.validationErrorMessage ? 'JSON data does not match schema' : null)
+
     return (
       <div className="document-page">
         <iframe
@@ -265,6 +274,7 @@ class DocumentPage extends Component {
         <DocumentPageHeader
           contentsEditable={this.contentsEditable()}
           document={this.state.document}
+          errorMessage={overallErrorMessage}
           hasSaved={hasSaved}
           isSavingDocument={this.state.isSaving}
           onLoadDocument={this.onLoadDocument}
@@ -341,7 +351,6 @@ class DocumentPage extends Component {
           canGenerateSchema={!this.state.originalSchema}
           readOnly={!this.contentsEditable()}
         />
-        <div className="text-right">{this.state.contentsErrorMessage}</div>
       </div>
     )
   }
@@ -360,10 +369,6 @@ class DocumentPage extends Component {
           readOnly={!this.schemaEditable()}
           contentsEditable={this.contentsEditable()}
         />
-        <div className="text-right">
-          {this.state.schemaErrorMessage}
-          {this.state.serverErrors.map((se, idx) => <p key={idx}>{se}</p>)}
-        </div>
       </div>
     )
   }
