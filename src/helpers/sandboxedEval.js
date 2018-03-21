@@ -15,12 +15,13 @@ export const IFRAME_SRC_DOC = `
      <script>
        window.addEventListener('message', function(e) {
          var mainWindow = e.source;
+         var objStr = e.data;
          var result = '';
          try {
            var data = Function('"use strict";return (' + e.data + ')')();
-           result = { original: e.data, data: data };
+           result = { original: objStr, data: data };
          } catch (e) {
-           result = { original: e.data, data: null, errorMessage: e.message };
+           result = { original: objStr, data: null, errorMessage: e.message };
          }
          mainWindow.postMessage(result, event.origin);
        });
