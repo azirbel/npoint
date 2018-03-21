@@ -7,7 +7,7 @@ import {} from './PageLoadingPlaceholder.css'
 export default class PageLoadingPlaceholder extends Component {
   render() {
     return (
-      <div className='page-loading-placeholder'>
+      <div className="page-loading-placeholder">
         <LoadingSpinner />
       </div>
     )

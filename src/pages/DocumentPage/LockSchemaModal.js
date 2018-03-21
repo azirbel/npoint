@@ -30,8 +30,8 @@ export default class LockSchemaModal extends Component {
             but must always conform to the schema.
           </p>
           <p>
-            You can always clone the document later to change the schema under
-            a different ID.
+            You can always clone the document later to change the schema under a
+            different ID.
           </p>
           <p>
             <strong>This action cannot be undone.</strong>
@@ -44,11 +44,7 @@ export default class LockSchemaModal extends Component {
             >
               Lock schema
             </Button>
-            <Button
-              onClick={this.props.onClose}
-            >
-              Cancel
-            </Button>
+            <Button onClick={this.props.onClose}>Cancel</Button>
           </div>
         </div>
       </ReactModal>

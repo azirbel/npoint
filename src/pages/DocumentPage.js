@@ -46,7 +46,7 @@ class DocumentPage extends Component {
     Document.get(token).then(({ data }) => this.onLoadDocument(data))
   }
 
-  onLoadDocument = (data) => {
+  onLoadDocument = data => {
     this.setState({
       contents: data.contents,
       document: data,
@@ -85,34 +85,33 @@ class DocumentPage extends Component {
   lastValidatedSchema = null
   lastValidatedContents = null
   runValidations = () => {
-    let contentsChanged = this.lastValidatedContents !== this.state.originalContents
+    let contentsChanged =
+      this.lastValidatedContents !== this.state.originalContents
     let schemaChanged = this.lastValidatedSchema !== this.state.originalSchema
 
     if (contentsChanged) {
-      evalParseObject(
-        this.state.originalContents,
-        this.sandboxedIframe
-      ).then(({ json, errorMessage }) => {
-        this.setState({
-          contents: json,
-          contentsErrorMessage: errorMessage,
-        })
-        this.validateSchemaMatch()
-      })
+      evalParseObject(this.state.originalContents, this.sandboxedIframe).then(
+        ({ json, errorMessage }) => {
+          this.setState({
+            contents: json,
+            contentsErrorMessage: errorMessage,
+          })
+          this.validateSchemaMatch()
+        }
+      )
       this.lastValidatedContents = this.state.originalContents
     }
 
     if (schemaChanged) {
-      evalParseObject(
-        this.state.originalSchema,
-        this.sandboxedIframe
-      ).then(({ json, errorMessage }) => {
-        this.setState({
-          schema: json,
-          schemaErrorMessage: errorMessage,
-        })
-        this.validateSchemaMatch()
-      })
+      evalParseObject(this.state.originalSchema, this.sandboxedIframe).then(
+        ({ json, errorMessage }) => {
+          this.setState({
+            schema: json,
+            schemaErrorMessage: errorMessage,
+          })
+          this.validateSchemaMatch()
+        }
+      )
       this.lastValidatedSchema = this.state.originalSchema
     }
   }
@@ -120,7 +119,7 @@ class DocumentPage extends Component {
   validateSchemaMatch = () => {
     if (_.isEmpty(this.state.originalSchema)) {
       this.setState({ validationErrorMessage: null })
-      return;
+      return
     }
 
     Schema.validate({
@@ -143,20 +142,19 @@ class DocumentPage extends Component {
     })
   }
 
-  updateContents = (newOriginalContents) => {
+  updateContents = newOriginalContents => {
     this.setState({
       originalContents: newOriginalContents,
     })
   }
 
-  updateSchema = (newOriginalSchema) => {
+  updateSchema = newOriginalSchema => {
     this.setState({
       originalSchema: newOriginalSchema,
     })
   }
 
-  async validateSchema(json, schema) {
-  }
+  async validateSchema(json, schema) {}
 
   generateSchema = async () => {
     Schema.generate({
@@ -177,16 +175,24 @@ class DocumentPage extends Component {
     })
   }
 
-  saveDocument = (extraParams) => {
+  saveDocument = extraParams => {
     let saveState = _.cloneDeep(this.state)
     this.setState({ isSaving: true })
 
-    return Document.update(this.props.params.documentToken, _.merge({
-      contents: saveState.contents ? JSON.stringify(saveState.contents) : null,
-      originalContents: saveState.originalContents,
-      schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
-      originalSchema: saveState.originalSchema,
-    }, extraParams)).then(({ data }) => {
+    return Document.update(
+      this.props.params.documentToken,
+      _.merge(
+        {
+          contents: saveState.contents
+            ? JSON.stringify(saveState.contents)
+            : null,
+          originalContents: saveState.originalContents,
+          schema: saveState.schema ? JSON.stringify(saveState.schema) : null,
+          originalSchema: saveState.originalSchema,
+        },
+        extraParams
+      )
+    ).then(({ data }) => {
       this.onLoadDocument(data)
       this.setState({
         isSaving: false,
@@ -214,14 +220,16 @@ class DocumentPage extends Component {
     })
   }
 
-  setOpenModal = (openModalName) => {
+  setOpenModal = openModalName => {
     this.setState({ openModalName })
   }
 
   // TODO(azirbel): Getters?
   titleEditable = () => this.state.document.editable
-  contentsEditable = () => this.titleEditable() && !this.state.document.contentsLocked
-  schemaEditable = () => this.contentsEditable() && !this.state.document.schemaLocked
+  contentsEditable = () =>
+    this.titleEditable() && !this.state.document.contentsLocked
+  schemaEditable = () =>
+    this.contentsEditable() && !this.state.document.schemaLocked
 
   render() {
     let hasSaved =
@@ -265,11 +273,7 @@ class DocumentPage extends Component {
           title={this.state.document.title}
           titleEditable={this.titleEditable()}
         />
-        {this.state.isLoading ? (
-          <PageLoadingPlaceholder />
-        ) : (
-          this.renderMain()
-        )}
+        {this.state.isLoading ? <PageLoadingPlaceholder /> : this.renderMain()}
       </div>
     )
   }
@@ -301,7 +305,7 @@ class DocumentPage extends Component {
               transitionLeaveTimeout={1}
             >
               {this.state.originalSchema && (
-                <div key='schema'>
+                <div key="schema">
                   <h5 className="data-header">Schema</h5>
                   {this.renderSchema()}
                 </div>
@@ -326,7 +330,9 @@ class DocumentPage extends Component {
     return (
       <div>
         <ContentsEditor
-          errorMessage={this.state.contentsErrorMessage || this.state.validationErrorMessage}
+          errorMessage={
+            this.state.contentsErrorMessage || this.state.validationErrorMessage
+          }
           onAutoformatContents={this.autoformatContents}
           onChange={this.updateContents}
           onGenerateSchema={this.generateSchema}
@@ -335,9 +341,7 @@ class DocumentPage extends Component {
           canGenerateSchema={!this.state.originalSchema}
           readOnly={!this.contentsEditable()}
         />
-        <div className="text-right">
-          {this.state.contentsErrorMessage}
-        </div>
+        <div className="text-right">{this.state.contentsErrorMessage}</div>
       </div>
     )
   }
@@ -358,9 +362,7 @@ class DocumentPage extends Component {
         />
         <div className="text-right">
           {this.state.schemaErrorMessage}
-          {this.state.serverErrors.map((se, idx) => (
-            <p key={idx}>{se}</p>
-          ))}
+          {this.state.serverErrors.map((se, idx) => <p key={idx}>{se}</p>)}
         </div>
       </div>
     )

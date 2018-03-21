@@ -43,7 +43,7 @@ export default class DocumentPageHeader extends Component {
 
   render() {
     return (
-      <Header className='document-page-header' fullWidth={true}>
+      <Header className="document-page-header" fullWidth={true}>
         <ClickToEdit
           value={this.props.title || ''}
           readOnly={!this.props.titleEditable}
@@ -54,19 +54,19 @@ export default class DocumentPageHeader extends Component {
         />
         {this.props.document.ownedByCurrentUser ? (
           <Tooltip
-            placement='bottom'
+            placement="bottom"
             trigger={['click', 'hover']}
-            overlay='Only you can edit this document'
+            overlay="Only you can edit this document"
           >
-            <div className='badge primary cursor-default'>Yours</div>
+            <div className="badge primary cursor-default">Yours</div>
           </Tooltip>
         ) : (
           <Tooltip
-            placement='bottom'
+            placement="bottom"
             trigger={['click', 'hover']}
-            overlay='Anyone with the URL can edit this document'
+            overlay="Anyone with the URL can edit this document"
           >
-            <div className='badge cursor-default'>Public</div>
+            <div className="badge cursor-default">Public</div>
           </Tooltip>
         )}
         <div className="flex-spring" />
@@ -76,8 +76,11 @@ export default class DocumentPageHeader extends Component {
               Saved
             </Button>
           ) : (
-            <Button isLoading={this.props.isSavingDocument}
-              className="cta" onClick={this.props.onSaveDocument}>
+            <Button
+              isLoading={this.props.isSavingDocument}
+              className="cta"
+              onClick={this.props.onSaveDocument}
+            >
               Save
             </Button>
           ))}

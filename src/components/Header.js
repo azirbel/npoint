@@ -12,7 +12,7 @@ import AccountDropdown from './header/AccountDropdown'
 class Header extends Component {
   // TODO(azirbel): Add more proptypes
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
   }
 
   render() {

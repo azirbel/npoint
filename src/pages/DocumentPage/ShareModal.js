@@ -32,14 +32,11 @@ export default class ShareModal extends Component {
           <p>
             Anyone who has the URL (or API URL) is able to view the data and
             title of this document. If the document was created anonymously,
-            anyone will be able to edit it; if it was created with your
-            account, only you can edit it.
+            anyone will be able to edit it; if it was created with your account,
+            only you can edit it.
           </p>
           <div className="button-group">
-            <Button
-              className="primary"
-              onClick={this.props.onClose}
-            >
+            <Button className="primary" onClick={this.props.onClose}>
               Done
             </Button>
           </div>

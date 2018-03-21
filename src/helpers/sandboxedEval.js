@@ -54,7 +54,7 @@ export function evalParseObject(objStr, iframe) {
 
     let handleIframeMessage = event => {
       if (event.data.original !== objStr) {
-        return false; // got a postMessage intended for someone else
+        return false // got a postMessage intended for someone else
       }
 
       // Again from https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes:

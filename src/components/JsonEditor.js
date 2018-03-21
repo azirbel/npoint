@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {} from 'brace'
 import AceEditor from 'react-ace'
-import _ from 'lodash';
+import _ from 'lodash'
 
 import 'brace/mode/javascript'
 import 'brace/snippets/javascript'
@@ -25,7 +25,11 @@ export default class JsonEditor extends Component {
   handleChange = (newValue, e) => {
     this.props.onChange(newValue)
 
-    if (e.action === 'insert' && _.isEqual(e.lines, ['', '']) && this.props.onEnter) {
+    if (
+      e.action === 'insert' &&
+      _.isEqual(e.lines, ['', '']) &&
+      this.props.onEnter
+    ) {
       this.props.onEnter()
     }
   }

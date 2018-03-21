@@ -27,11 +27,11 @@ export default class ContentsEditor extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.handleChangeOfFocusEvent);
+    document.addEventListener('mousemove', this.handleChangeOfFocusEvent)
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.handleChangeOfFocusEvent);
+    document.removeEventListener('mousemove', this.handleChangeOfFocusEvent)
   }
 
   componentWillReceiveProps(newProps) {
@@ -42,7 +42,7 @@ export default class ContentsEditor extends Component {
     }
   }
 
-  handleContentsChange = (newValue) => {
+  handleContentsChange = newValue => {
     this.props.onChange(newValue)
     this.debouncedOnChange()
   }
@@ -59,7 +59,7 @@ export default class ContentsEditor extends Component {
 
   render() {
     return (
-      <div className='contents-editor'>
+      <div className="contents-editor">
         {!this.props.readOnly && (
           <div className="toolbar-container">
             <CSSTransitionGroup
@@ -92,23 +92,14 @@ export default class ContentsEditor extends Component {
     } else {
       return (
         <div key="toolbar-actions" className="button-group">
-          <Button
-            className="small"
-            onClick={this.props.onAutoformatContents}
-          >
+          <Button className="small" onClick={this.props.onAutoformatContents}>
             Autoformat
           </Button>
-          <Button
-            className="small"
-            onClick={this.props.onOpenLockModal}
-          >
+          <Button className="small" onClick={this.props.onOpenLockModal}>
             Lock data...
           </Button>
           {this.props.canGenerateSchema && (
-            <Button
-              className="small"
-              onClick={this.props.onGenerateSchema}
-            >
+            <Button className="small" onClick={this.props.onGenerateSchema}>
               Add schema
             </Button>
           )}
