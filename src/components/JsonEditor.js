@@ -5,24 +5,27 @@ import PropTypes from 'prop-types'
 import {} from 'brace'
 import AceEditor from 'react-ace'
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
-import {} from './JsonEditor.css'
+import _ from 'lodash';
 
 import 'brace/mode/javascript'
 import 'brace/snippets/javascript'
 import 'brace/ext/language_tools'
 import '../helpers/npoint-ace-theme'
 
+import {} from './JsonEditor.css'
+
 export default class JsonEditor extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    onEnter: PropTypes.func,
     readOnly: PropTypes.bool,
     rows: PropTypes.number,
   }
 
   sandboxedIframe = null
 
-  handleChange = async newValue => {
+  handleChange = async (newValue, e) => {
     // TODO(azirbel): Debounce the parse and fire more onChange?
     let { json, errorMessage } = await evalParseObject(
       newValue,
@@ -30,6 +33,10 @@ export default class JsonEditor extends Component {
     )
 
     this.props.onChange(newValue, json, errorMessage)
+
+    if (e.action === 'insert' && _.isEqual(e.lines, ['', '']) && this.props.onEnter) {
+      this.props.onEnter()
+    }
   }
 
   render() {

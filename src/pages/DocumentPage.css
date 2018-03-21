@@ -20,23 +20,12 @@
     }
   }
 
-  & .locked-icon {
-    margin-right: 6px;
-  }
-
   & .data-control-buttons {
   }
 
   & .data-header {
     margin-bottom: var(--smallGutter);
   }
-}
-
-.animated-button-container {
-  position: relative;
-  overflow: hidden;
-  margin-top: var(--smallGutter);
-  margin-bottom: var(--mediumGutter);
 }
 
 /* TODO(azirbel): Move these to schema editor */

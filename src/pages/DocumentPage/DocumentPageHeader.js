@@ -64,7 +64,7 @@ export default class DocumentPageHeader extends Component {
           <Tooltip
             placement='bottom'
             trigger={['click', 'hover']}
-            overlay='Anyone can edit this document'
+            overlay='Anyone with the URL can edit this document'
           >
             <div className='badge cursor-default'>Public</div>
           </Tooltip>

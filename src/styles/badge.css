@@ -17,6 +17,12 @@
   }
 
   &.warning {
+    color: var(--errorColor);
+    background-color: var(--white);
+    border-color: var(--errorColor);
+  }
+
+  &.danger {
     color: var(--white);
     background-color: var(--errorColor);
     border-color: var(--errorColor);

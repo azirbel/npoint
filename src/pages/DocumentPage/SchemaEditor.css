@@ -1,0 +1,16 @@
+/* @format */
+
+@import '../../styles/variables.css';
+
+.schema-editor {
+  & .animated-button-container {
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--smallGutter);
+    margin-bottom: var(--mediumGutter);
+  }
+
+  & .toolbar-icon {
+    margin-right: 6px;
+  }
+}
