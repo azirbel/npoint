@@ -6,14 +6,12 @@ import { MdLock } from 'react-icons/lib/md'
 import {} from './DocumentPage.css'
 import _ from 'lodash'
 
-import Button from '../components/Button'
-import ClickToEdit from '../components/ClickToEdit'
 import Document from '../models/Document'
-import Header from '../components/Header'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import Schema from '../models/Schema'
 
 import ContentsEditor from './DocumentPage/ContentsEditor'
+import DocumentPageHeader from './DocumentPage/DocumentPageHeader'
 import LockContentsModal from './DocumentPage/LockContentsModal'
 import LockSchemaModal from './DocumentPage/LockSchemaModal'
 import SchemaEditor from './DocumentPage/SchemaEditor'
@@ -25,9 +23,7 @@ class DocumentPage extends Component {
     contents: null,
     contentsErrorMessage: '',
     document: {},
-    isEditingTitle: false,
     isLoading: false,
-    isSavingTitle: false,
     isSaving: false,
     lockdownContentsModalVisible: false,
     lockdownSchemaModalVisible: false,
@@ -137,19 +133,6 @@ class DocumentPage extends Component {
     })
   }
 
-  saveNewTitle = newTitle => {
-    this.setState({ isSavingTitle: true })
-
-    return Document.update(this.props.params.documentToken, {
-      title: newTitle,
-    }).then(({ data }) => {
-      this.onLoadDocument(data)
-      this.setState({
-        isSavingTitle: false,
-      })
-    })
-  }
-
   saveDocument = (extraParams) => {
     let saveState = _.cloneDeep(this.state)
     this.setState({ isSaving: true })
@@ -197,7 +180,7 @@ class DocumentPage extends Component {
       this.state.originalSchema === this.state.savedOriginalSchema
 
     let titleEditable = this.state.document.editable
-    let jsonEditable = titleEditable && !this.state.document.contentsLocked
+    let contentsEditable = titleEditable && !this.state.document.contentsLocked
 
     return (
       <div className="document-page">
@@ -218,30 +201,17 @@ class DocumentPage extends Component {
           isOpen={this.state.openModalName === 'share'}
           onClose={() => this.setOpenModal(null)}
         />
-        <Header fullWidth={true}>
-          <ClickToEdit
-            value={this.state.document.title || ''}
-            readOnly={!this.state.document.editable}
-            onChange={this.saveNewTitle}
-            isLoading={this.state.isSavingTitle}
-            textClassName="page-title"
-            inputClassName="edit-title-input"
-          />
-          <div className="flex-spring" />
-          {jsonEditable &&
-            (hasSaved ? (
-              <button disabled className="button cta disabled">
-                Saved
-              </button>
-            ) : (
-              <Button isLoading={this.state.isSaving} className="cta" onClick={() => this.saveDocument()}>
-                Save
-              </Button>
-            ))}
-          <button className="button subtle" onClick={() => this.setOpenModal('share')}>
-            Share
-          </button>
-        </Header>
+        <DocumentPageHeader
+          contentsEditable={contentsEditable}
+          document={this.state.document}
+          hasSaved={hasSaved}
+          isSavingDocument={this.state.isSaving}
+          onLoadDocument={this.onLoadDocument}
+          onOpenShareModal={() => this.setOpenModal('share')}
+          onSaveDocument={() => this.saveDocument()}
+          title={this.state.document.title}
+          titleEditable={titleEditable}
+        />
         {this.state.isLoading ? (
           <PageLoadingPlaceholder />
         ) : (
@@ -253,12 +223,12 @@ class DocumentPage extends Component {
 
   renderMain() {
     let titleEditable = this.state.document.editable
-    let jsonEditable = titleEditable && !this.state.document.contentsLocked
-    let schemaEditable = jsonEditable && !this.state.document.schemaLocked
+    let contentsEditable = titleEditable && !this.state.document.contentsLocked
+    let schemaEditable = contentsEditable && !this.state.document.schemaLocked
 
     return (
       <div className="main-container">
-        {!jsonEditable && (
+        {!contentsEditable && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
               <MdLock className="locked-icon" />
@@ -277,7 +247,7 @@ class DocumentPage extends Component {
                 onChange={this.updateContents}
                 onOpenLockModal={() => this.setOpenModal('lockContents')}
                 originalContents={this.state.originalContents}
-                readOnly={!jsonEditable}
+                readOnly={!contentsEditable}
               />
               <div className="text-right">
                 {this.state.contentsErrorMessage}
@@ -295,7 +265,7 @@ class DocumentPage extends Component {
                     onAutoformatSchema={this.autoformatSchema}
                     onOpenLockModal={() => this.setOpenModal('lockSchema')}
                     readOnly={!schemaEditable}
-                    jsonEditable={jsonEditable}
+                    contentsEditable={contentsEditable}
                   />
                   <div className="text-right">
                     {this.state.schemaErrorMessage}

@@ -11,7 +11,7 @@ import JsonEditor from '../../components/JsonEditor'
 export default class SchemaEditor extends Component {
   static propTypes = {
     document: PropTypes.object.isRequired,
-    jsonEditable: PropTypes.bool.isRequired,
+    contentsEditable: PropTypes.bool.isRequired,
     onAutoformatSchema: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onOpenLockModal: PropTypes.func.isRequired,
@@ -23,7 +23,7 @@ export default class SchemaEditor extends Component {
   render() {
     return (
       <div>
-        {this.props.jsonEditable && (
+        {this.props.contentsEditable && (
           <div className="animated-button-container">
             <CSSTransitionGroup
               transitionName="example"

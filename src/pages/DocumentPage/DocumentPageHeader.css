@@ -1,0 +1,13 @@
+/* @format */
+
+@import '../../styles/variables.css';
+
+.document-page-header {
+  & .edit-title-input {
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: -9px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

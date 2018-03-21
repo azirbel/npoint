@@ -1,6 +1,7 @@
 // @format
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {} from './Header.css'
 import Logo from './Logo'
@@ -9,8 +10,13 @@ import LoginDropdown from './header/LoginDropdown'
 import AccountDropdown from './header/AccountDropdown'
 
 class Header extends Component {
+  // TODO(azirbel): Add more proptypes
+  static propTypes = {
+    className: PropTypes.string
+  }
+
   render() {
-    let { session, children, fullWidth, fullLogo } = this.props
+    let { className, session, children, fullWidth, fullLogo } = this.props
 
     let headerClass =
       'header-container container' +
@@ -18,7 +24,7 @@ class Header extends Component {
       (children ? ' small-logo' : '')
 
     return (
-      <div>
+      <div className={className}>
         <header className="header">
           <div className={headerClass}>
             {fullLogo ? (
@@ -37,10 +43,6 @@ class Header extends Component {
         <div className="header-spacer" />
       </div>
     )
-  }
-
-  renderTitle() {
-    return <div />
   }
 }
 

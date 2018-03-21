@@ -14,14 +14,6 @@
     padding: var(--largeGutter) var(--mediumGutter);
   }
 
-  & .edit-title-input {
-    font-size: 28px;
-    font-weight: bold;
-    margin-left: -9px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
   & .locked-icon {
     margin-right: 6px;
   }
@@ -41,6 +33,7 @@
   margin-bottom: var(--mediumGutter);
 }
 
+/* TODO(azirbel): Move these to schema editor */
 .example-enter {
   transform: translateY(-100%);
 }
