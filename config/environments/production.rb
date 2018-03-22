@@ -75,4 +75,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # https://github.com/rspec/rspec-rails/issues/1275
+  config.action_controller.default_url_options= { host: ENV['HOST'] }
 end
+
+# https://github.com/rspec/rspec-rails/issues/1275
+Rails.application.routes.default_url_options[:host] = ENV['HOST']
