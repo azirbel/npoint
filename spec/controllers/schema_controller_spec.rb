@@ -17,7 +17,7 @@ RSpec.describe SchemaController do
       expect(parsed_response).to eq({
         "valid" => false,
         "errors" => [
-          "The property '#/' of type array did not match the following type: object"
+          "The data did not match the following type: object"
         ]
       })
     end
@@ -34,13 +34,41 @@ RSpec.describe SchemaController do
         expect(parsed_response).to eq({
           "valid" => false,
           "errors" => [
-            "The property '#/' did not contain a required property of 'a'"
+            "The data did not contain a required property of 'a'"
           ]
         })
       end
 
       it 'is valid when the param is provided' do
         post :validate, contents: '{ "a": 3 }', schema: schema
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq({
+          "valid" => true,
+          "errors" => []
+        })
+      end
+    end
+
+    context 'a schema that requires a nested param' do
+      let(:schema) {
+        '{ "properties": { "b": { "required": ["a"] } } }'
+      }
+
+      it 'is invalid for a missing param' do
+        post :validate, contents: '{ "b": { "c": 3 } }', schema: schema
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response).to eq({
+          "valid" => false,
+          "errors" => [
+            "The property 'b' did not contain a required property of 'a'"
+          ]
+        })
+      end
+
+      it 'is valid when the param is provided' do
+        post :validate, contents: '{ "b": { "a": 3 } }', schema: schema
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq({
