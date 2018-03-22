@@ -99,8 +99,10 @@ class DocumentPage extends Component {
             contentsErrorMessage: errorMessage,
           })
           if (_.isEmpty(errorMessage)) {
-            this.setState({ showContentsErrorMessage: false })
             this.validateSchemaMatch()
+            if (_.isEmpty(this.state.validationErrorMessage)) {
+              this.setState({ showContentsErrorMessage: false })
+            }
           }
         }
       )
@@ -152,6 +154,11 @@ class DocumentPage extends Component {
         this.setState({
           validationErrorMessage: null,
         })
+
+        // TODO(azirbel): I'm sure there can be simpler show logic
+        if (_.isEmpty(this.state.contentsErrorMessage)) {
+          this.setState({ showContentsErrorMessage: false })
+        }
       } else {
         this.setState({
           showContentsErrorMessage: true,
