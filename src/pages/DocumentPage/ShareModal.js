@@ -22,18 +22,15 @@ export default class ShareModal extends Component {
         overlayClassName="modal-overlay"
       >
         <div className="modal-header">Share</div>
-        <div className="modal-body">
-          <p>Access this document via the API at:</p>
-          <p>
+        <div className="modal-body prose">
+          <p className="medium">Access this document via the API at:</p>
+          <p className="medium">
             <a target="_blank" href={this.props.document.apiUrl}>
               {this.props.document.apiUrl}
             </a>
           </p>
-          <p>
-            Anyone who has the URL (or API URL) is able to view the data and
-            title of this document. If the document was created anonymously,
-            anyone will be able to edit it; if it was created with your account,
-            only you can edit it.
+          <p className="medium">
+            {this.renderPermissionsCopy()}
           </p>
           <div className="button-group">
             <Button className="primary" onClick={this.props.onClose}>
@@ -43,5 +40,33 @@ export default class ShareModal extends Component {
         </div>
       </ReactModal>
     )
+  }
+
+  renderPermissionsCopy() {
+    let { document } = this.props;
+
+    if (document.ownedByCurrentUser) {
+      if (document.editable) {
+        return `Anyone with the link is able to view this document. Only you
+        can edit the title and data.`
+      } else {
+        return `Anyone with the link is able to view this document. You have
+        locked it for editing, so it can't be deleted and the data can't be
+        changed. Only you can edit the title.`
+      }
+    } else {
+      if (document.editable) {
+        if (document.contentsLocked) {
+          return `This document is public, but the data is locked. Anyone with
+          the link can edit the title.`
+        } else {
+          return `This document is public: anyone with the link can edit the title
+          and data.`
+        }
+      } else {
+        return `Anyone with the link is able to view this document. Only the
+        user who owns this document is able to edit it.`
+      }
+    }
   }
 }

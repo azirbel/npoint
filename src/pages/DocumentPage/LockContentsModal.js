@@ -18,21 +18,21 @@ export default class LockContentsModal extends Component {
       <ReactModal
         isOpen={this.props.isOpen}
         onRequestClose={this.props.onClose}
-        contentLabel="Lock JSON document"
+        contentLabel="Lock JSON data"
         className="modal"
         overlayClassName="modal-overlay"
       >
-        <div className="modal-header">Lock JSON document</div>
-        <div className="modal-body">
-          <p>
+        <div className="modal-header">Lock JSON data</div>
+        <div className="modal-body prose">
+          <p className="medium">
             Once a document is locked, it cannot be deleted and none of its data
-            (except the title) can be changed.
+            can ever be changed.
           </p>
-          <p>
-            You can always clone the document later to keep editing under a
+          <p className="medium">
+            You can always copy the document later to keep editing under a
             different ID.
           </p>
-          <p>
+          <p className="medium">
             <strong>This action cannot be undone.</strong>
           </p>
           <div className="button-group">

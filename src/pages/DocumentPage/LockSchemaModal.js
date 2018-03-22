@@ -20,20 +20,20 @@ export default class LockSchemaModal extends Component {
         onRequestClose={this.props.onClose}
         contentLabel="Lock schema"
         className="modal"
-        overlayClassName="modal-overlay"
+        overlayClassName="modal-overlay prose"
       >
         <div className="modal-header">Lock schema</div>
         <div className="modal-body">
-          <p>
+          <p className="medium">
             Once a schema is locked, the document cannot be deleted and the
             schema cannot be changed again. The JSON data can still be edited,
-            but must always conform to the schema.
+            but can only be saved if it matches the schema.
           </p>
-          <p>
-            You can always clone the document later to change the schema under a
-            different ID.
+          <p className="medium">
+            You can always copy the document later to make a version with a
+            different schema.
           </p>
-          <p>
+          <p className="medium">
             <strong>This action cannot be undone.</strong>
           </p>
           <div className="button-group">

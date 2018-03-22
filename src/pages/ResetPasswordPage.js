@@ -30,9 +30,9 @@ class ResetPasswordPage extends Component {
       password: this.state.password,
       reset_token: resetToken,
     }).then(response => {
-      let { name, email, avatar_url } = response
+      let { name, email, avatarUrl } = response
       debugger
-      dispatch(logIn({ name, email, avatar_url }))
+      dispatch(logIn({ name, email, avatarUrl }))
       dispatch(push('/docs'))
     })
   }
@@ -47,29 +47,31 @@ class ResetPasswordPage extends Component {
           <div className="flex-spring" />
         </Header>
         <div className="container">
-          <Input
-            label="New password"
-            type="password"
-            value={this.state.password}
-            onChange={password => this.setState({ password })}
-          />
-          <Input
-            label="Confirm new password"
-            type="password"
-            value={this.state.confirmPassword}
-            onChange={confirmPassword => this.setState({ confirmPassword })}
-          />
-          <button
-            className="button primary"
-            type="submit"
-            onClick={this.resetPassword}
-          >
-            Reset
-          </button>
-          {this.state.attemptedReset &&
-            !passwordsMatch && (
-              <div className="text-error">Passwords must match.</div>
-            )}
+          <div className="reset-form form spaced-children">
+            <Input
+              label="New password"
+              type="password"
+              value={this.state.password}
+              onChange={password => this.setState({ password })}
+            />
+            <Input
+              label="Confirm new password"
+              type="password"
+              value={this.state.confirmPassword}
+              onChange={confirmPassword => this.setState({ confirmPassword })}
+            />
+            <button
+              className="button primary"
+              type="submit"
+              onClick={this.resetPassword}
+            >
+              Reset
+            </button>
+            {this.state.attemptedReset &&
+              !passwordsMatch && (
+                <div className="text-error">Passwords must match.</div>
+              )}
+          </div>
         </div>
       </div>
     )

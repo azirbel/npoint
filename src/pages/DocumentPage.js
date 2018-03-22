@@ -329,6 +329,7 @@ class DocumentPage extends Component {
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
               <MdLock className="locked-icon" />
+              &nbsp;
               {this.state.document.contentsLocked
                 ? 'This document is locked, but you can make a copy.'
                 : 'This document belongs to another user. Log in to make changes, or make a copy.'}
@@ -359,7 +360,7 @@ class DocumentPage extends Component {
         </div>
         <div className="flex-spring" />
         <div className="section dark-white">
-          <p className="text-center">
+          <p className="medium text-center">
             This document is available at&nbsp;
             <a target="_blank" href={this.state.document.apiUrl}>
               {this.state.document.apiUrl}

@@ -9,7 +9,7 @@ export default class Footer extends Component {
       <footer className="footer">
         <div className="section blue">
           <div className="container">
-            <div className="text-white text-center">n:point &copy; 2017</div>
+            <div className="text-white text-center">n:point &copy; 2018</div>
           </div>
         </div>
       </footer>

@@ -127,18 +127,6 @@ export default class IndexPage extends Component {
             </div>
           </div>
         </div>
-        <div className="section">
-          <div className="container prose">
-            <h2>How it Works</h2>
-            <div className="row">
-              <div className="col-xs-1 how-it-works-number">1.</div>
-              <div className="col-xs-11">
-                <h3>Save a JSON blob</h3>
-                <p>Forget the quotes</p>
-              </div>
-            </div>
-          </div>
-        </div>
         <Footer />
       </div>
     )

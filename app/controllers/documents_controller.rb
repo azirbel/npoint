@@ -17,6 +17,9 @@ class DocumentsController < ApplicationController
 
     if params[:generate_contents]
       @document.contents = random_contents
+    end
+
+    unless @document.original_contents.present?
       @document.original_contents = JSON.pretty_generate(@document.contents)
     end
     @document.title = random_title unless @document.title

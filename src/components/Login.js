@@ -7,6 +7,7 @@ import User from '../models/User'
 import Session from '../models/Session'
 import { logIn } from '../actions'
 import { Tabs, Tab } from '../components/Tabs'
+import Button from '../components/Button'
 import Input from './Input'
 import {} from './Login.css'
 
@@ -25,32 +26,28 @@ class Login extends Component {
     resetPasswordSentToEmail: '',
   }
 
-  handleSignup = e => {
-    let { dispatch } = this.props
+  handleSignup = () => {
     User.create({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      password_confirmation: this.state.password,
+      passwordConfirmation: this.state.password,
     }).then(response => {
-      let { name, email, avatar_url } = response.data
-      dispatch(logIn({ name, email, avatar_url }))
+      let { name, email, avatarUrl } = response.data
+      this.props.dispatch(logIn({ name, email, avatarUrl }))
       this.props.onLogin()
     })
-    e.preventDefault()
   }
 
-  handleLogin = e => {
-    let { dispatch } = this.props
+  handleLogin = () => {
     Session.login({
       email: this.state.email,
       password: this.state.password,
     }).then(response => {
-      let { name, email, avatar_url } = response.data
-      dispatch(logIn({ name, email, avatar_url }))
+      let { name, email, avatarUrl } = response.data
+      this.props.dispatch(logIn({ name, email, avatarUrl }))
       this.props.onLogin()
     })
-    e.preventDefault()
   }
 
   handleForgotPassword = () => {
@@ -99,7 +96,7 @@ class Login extends Component {
 
   renderLogInForm() {
     return (
-      <div className="form padded vertical-input-group">
+      <div className="form padded spaced-children">
         <Input
           label="Email"
           type="email"
@@ -113,12 +110,14 @@ class Login extends Component {
           onChange={password => this.setState({ password })}
         />
         <div className="flex justify-end">
-          <button className="button link" onClick={this.handleForgotPassword}>
-            (Forgot?)
-          </button>
-          <button className="button primary" onClick={this.handleLogin}>
-            Log in
-          </button>
+          <div className="button-group">
+            <Button className="link" onClick={this.handleForgotPassword}>
+              (Forgot?)
+            </Button>
+            <Button className="primary" onClick={this.handleLogin}>
+              Log in
+            </Button>
+          </div>
         </div>
       </div>
     )
@@ -126,7 +125,7 @@ class Login extends Component {
 
   renderSignInForm() {
     return (
-      <div className="form padded vertical-input-group">
+      <div className="form padded spaced-children">
         <Input
           label="First name"
           value={this.state.name}
@@ -145,9 +144,9 @@ class Login extends Component {
           onChange={password => this.setState({ password })}
         />
         <div className="flex justify-end">
-          <button className="button primary" onClick={this.handleSignup}>
+          <Button className="primary" onClick={this.handleSignup}>
             Sign up
-          </button>
+          </Button>
         </div>
       </div>
     )
@@ -155,24 +154,26 @@ class Login extends Component {
 
   renderForgotPasswordForm() {
     return (
-      <div className="form padded vertical-input-group">
+      <div className="form padded spaced-children">
         <Input
           label="Email"
           type="email"
           value={this.state.email}
           onChange={email => this.setState({ email })}
         />
-        <p>
+        <p className="medium">
           No worries, just fill in your email and hit "reset" - we'll send you a
           link to set a new password.
         </p>
         <div className="flex justify-end">
-          <button className="button link" onClick={this.cancelForgotPassword}>
-            Back
-          </button>
-          <button className="button primary" onClick={this.sendResetLink}>
-            Reset
-          </button>
+          <div className="button-group">
+            <Button className="link" onClick={this.cancelForgotPassword}>
+              Back to login
+            </Button>
+            <Button className="primary" onClick={this.sendResetLink}>
+              Reset
+            </Button>
+          </div>
         </div>
       </div>
     )
