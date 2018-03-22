@@ -29,9 +29,7 @@ export default class ShareModal extends Component {
               {this.props.document.apiUrl}
             </a>
           </p>
-          <p className="medium">
-            {this.renderPermissionsCopy()}
-          </p>
+          <p className="medium">{this.renderPermissionsCopy()}</p>
           <div className="button-group">
             <Button className="primary" onClick={this.props.onClose}>
               Done
@@ -43,7 +41,7 @@ export default class ShareModal extends Component {
   }
 
   renderPermissionsCopy() {
-    let { document } = this.props;
+    let { document } = this.props
 
     if (document.ownedByCurrentUser) {
       if (document.editable) {

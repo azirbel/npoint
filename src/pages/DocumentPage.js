@@ -277,7 +277,9 @@ class DocumentPage extends Component {
     let overallErrorMessage =
       (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
       (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
-      (this.state.validationErrorMessage ? 'JSON data does not match schema' : null)
+      (this.state.validationErrorMessage
+        ? 'JSON data does not match schema'
+        : null)
 
     return (
       <div className="document-page">

@@ -94,9 +94,7 @@ export default class DocumentPageHeader extends Component {
           trigger={['click', 'hover']}
           overlay={this.props.errorMessage}
         >
-          <div className="button cta disabled">
-            Can{"'"}t save
-          </div>
+          <div className="button cta disabled">Can{"'"}t save</div>
         </Tooltip>
       )
     } else {
