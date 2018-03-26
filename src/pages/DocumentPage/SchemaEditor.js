@@ -20,6 +20,7 @@ export default class SchemaEditor extends Component {
     onChange: PropTypes.func.isRequired,
     onOpenLockModal: PropTypes.func.isRequired,
     onRemoveSchema: PropTypes.func.isRequired,
+    onSave: PropTypes.func,
     onTypingBreakpoint: PropTypes.func.isRequired,
     originalSchema: PropTypes.string.isRequired,
     readOnly: PropTypes.bool,
@@ -61,6 +62,7 @@ export default class SchemaEditor extends Component {
           value={this.props.originalSchema}
           onChange={this.handleSchemaChange}
           onEnter={this.props.onTypingBreakpoint}
+          onSave={this.props.onSave}
           readOnly={this.props.readOnly}
         />
       </div>

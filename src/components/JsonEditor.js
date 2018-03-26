@@ -18,6 +18,7 @@ export default class JsonEditor extends Component {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onEnter: PropTypes.func,
+    onSave: PropTypes.func,
     readOnly: PropTypes.bool,
     rows: PropTypes.number,
   }
@@ -33,6 +34,21 @@ export default class JsonEditor extends Component {
       this.props.onEnter()
     }
   }
+
+  commands = [
+    {
+      name: 'save',
+      bindKey: {
+        win: 'Ctrl-S',
+        mac: 'Command-S',
+      },
+      exec: (env, args, request) => {
+        if (this.props.onSave) {
+          this.props.onSave()
+        }
+      }
+    }
+  ]
 
   render() {
     return (
@@ -53,6 +69,7 @@ export default class JsonEditor extends Component {
           annotations={[]}
           markers={[]}
           setOptions={{ useWorker: false, wrap: true }}
+          commands={this.commands}
         />
       </div>
     )

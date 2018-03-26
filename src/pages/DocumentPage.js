@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { Helmet } from 'react-helmet'
+import { HotKeys } from 'react-hotkeys'
 import _ from 'lodash'
 
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
@@ -193,8 +194,6 @@ class DocumentPage extends Component {
     })
   }
 
-  async validateSchema(json, schema) {}
-
   generateSchema = async () => {
     Schema.generate({
       contents: JSON.stringify(this.state.contents),
@@ -203,7 +202,6 @@ class DocumentPage extends Component {
         schema: data.schema,
         originalSchema: data.originalSchema,
       })
-      this.validateSchema(this.state.contents, data.schema)
     })
   }
 
@@ -215,6 +213,15 @@ class DocumentPage extends Component {
   }
 
   saveDocument = extraParams => {
+    if (this.state.contentsErrorMessage ||
+      this.state.schemaErrorMessage ||
+      this.state.validationErrorMessage) {
+
+      // TODO(azirbel): Maybe show a warning / popup
+      console.warn('Document has errors; not saving')
+      return
+    }
+
     let saveState = _.cloneDeep(this.state)
     this.setState({ isSaving: true })
 
@@ -261,6 +268,23 @@ class DocumentPage extends Component {
 
   setOpenModal = openModalName => {
     this.setState({ openModalName })
+  }
+
+  keyMap = {
+    save: ['meta+s', 'ctrl+s'],
+  }
+
+  handlers = {
+    save: (e) => {
+      this.saveDocument()
+
+      if (e.preventDefault) {
+        e.preventDefault()
+      } else {
+        // internet explorer
+        e.returnValue = false
+      }
+    }
   }
 
   // TODO(azirbel): Getters?
@@ -331,6 +355,7 @@ class DocumentPage extends Component {
         <Helmet>
           <title>{this.state.document.title}</title>
         </Helmet>
+        <HotKeys keyMap={this.keyMap} handlers={this.handlers} focused={true} attach={window} />
         {!this.contentsEditable() && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
@@ -389,6 +414,7 @@ class DocumentPage extends Component {
           onChange={this.updateContents}
           onGenerateSchema={this.generateSchema}
           onOpenLockModal={() => this.setOpenModal('lockContents')}
+          onSave={this.saveDocument}
           onTypingBreakpoint={this.handleContentsTypingBreakpoint}
           originalContents={this.state.originalContents}
           readOnly={!this.contentsEditable()}
@@ -409,6 +435,7 @@ class DocumentPage extends Component {
           onChange={this.updateSchema}
           onOpenLockModal={() => this.setOpenModal('lockSchema')}
           onRemoveSchema={this.removeSchema}
+          onSave={this.saveDocument}
           onTypingBreakpoint={this.handleSchemaTypingBreakpoint}
           originalSchema={this.state.originalSchema}
           readOnly={!this.schemaEditable()}

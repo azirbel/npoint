@@ -54,11 +54,13 @@
   "dependencies": {
     "axios": "^0.15.3",
     "lodash": "^4.17.4",
+    "mousetrap": "^1.6.1",
     "rc-tooltip": "^3.7.0",
     "react": "16.2.0",
     "react-ace": "^5.9.0",
     "react-dom": "16.2.0",
     "react-helmet": "^5.2.0",
+    "react-hotkeys": "^1.0.3",
     "react-icons": "^2.2.3",
     "react-modal": "^3.3.2",
     "react-overlays": "0.8.3",

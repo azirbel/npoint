@@ -18,6 +18,7 @@ export default class ContentsEditor extends Component {
     onChange: PropTypes.func.isRequired,
     onGenerateSchema: PropTypes.func.isRequired,
     onOpenLockModal: PropTypes.func.isRequired,
+    onSave: PropTypes.func,
     onTypingBreakpoint: PropTypes.func.isRequired,
     originalContents: PropTypes.string.isRequired,
     readOnly: PropTypes.bool,
@@ -59,6 +60,7 @@ export default class ContentsEditor extends Component {
           value={this.props.originalContents}
           onChange={this.handleContentsChange}
           onEnter={this.props.onTypingBreakpoint}
+          onSave={this.props.onSave}
           readOnly={this.props.readOnly}
         />
       </div>
