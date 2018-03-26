@@ -39,10 +39,14 @@ export default class IndexPage extends Component {
           </button>
         </Header>
         <div className="section dark-white index-splash">
-          <div className="container">
-            <h1 className="title text-center index-title">
-              Simple, powerful JSON endpoints
-            </h1>
+          <div className="container prose text-center">
+            <h1 className="title index-title">
+      JSON Storage That Won{"'"}t Break Your App</h1>
+            <p>
+      Set up a lightweight JSON endpoint in seconds, then add schema validation
+      <br/>
+      so that you don{"'"}t accidentally break your app as you edit the data.
+            </p>
             <div className="index-editor-container">
               <JsonEditor
                 rows={9}
@@ -82,6 +86,60 @@ export default class IndexPage extends Component {
             </p>
           </div>
         </div>
+        <div className="section">
+          <div className="container prose">
+            <div className="row">
+              <div className="col-xs-6">
+                <img width="100%" src="img/step-1.png" role="presentation" />
+              </div>
+              <div className="col-xs-6">
+                <h3>Store JSON online</h3>
+                <p>
+                  Use n:point as a lightweight backend while you prototype your
+                  app
+                </p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-6">
+                <h3>Lock the schema</h3>
+                <p>
+                  Add{' '}
+                  <a target="_blank" href="http://json-schema.org/">
+                    JSON Schema
+                  </a>{' '}
+                  to enforce the structure of your data. When you{"'"}re ready,
+                  lock the schema so it can never change again.
+                </p>
+              </div>
+              <div className="col-xs-6">
+                <img width="100%" src="img/step-2.png" role="presentation" />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-6">
+                <img width="100%" src="img/step-3.png" role="presentation" />
+              </div>
+              <div className="col-xs-6">
+                <h3>Edit with a friend</h3>
+                <p>
+                  Let others make changes to the saved JSON data. With the
+                  schema locked, you can be sure their edits won{"'"}t break
+                  your app.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="section">
+          Features
+        </div>
+
+        <div className="section dark-white">
+          Demo video
+        </div>
+
         <div className="section">
           <div className="container prose">
             <div className="row">

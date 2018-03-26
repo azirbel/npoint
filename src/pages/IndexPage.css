@@ -5,6 +5,7 @@
 .index-page {
   & .index-editor-container {
     position: relative;
+    margin-top: 50px;
     margin-bottom: 20px; /* compensate for hanging button */
     padding: 20px;
     background-color: var(--white);
@@ -29,7 +30,7 @@
   }
 
   & .index-title {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
   }
 
   & .icon-benefit {
