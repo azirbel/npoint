@@ -30,7 +30,7 @@ class Header extends Component {
             {fullLogo ? (
               <Logo />
             ) : (
-              <Link href="/" className="unstyled">
+              <Link to="/" className="unstyled">
                 <div className="small-logo-container">
                   <Logo small={true} />
                 </div>
