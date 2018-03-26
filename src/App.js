@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { logIn } from './actions'
 import User from './models/User'
 
@@ -24,7 +25,13 @@ class App extends Component {
   }
 
   render() {
-    return <div>{this.props.children}</div>
+    return (
+      <div>
+        <Helmet defaultTitle="n:point JSON storage">
+        </Helmet>
+        {this.props.children}
+      </div>
+    )
   }
 }
 

@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash'
 import { Link } from 'react-router'
+import { Helmet } from 'react-helmet'
 import {} from './DocumentIndexPage.css'
 import Document from '../models/Document'
 import Header from '../components/Header'
@@ -44,6 +45,9 @@ export default class DocumentIndexPage extends Component {
           <h1 className="page-title">My Documents</h1>
           <div className="flex-spring" />
         </Header>
+        <Helmet>
+          <title>My Documents</title>
+        </Helmet>
         <div className="container">
           {!this.state.isLoading &&
             isEmpty(this.state.documents) && (

@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import User from '../models/User'
 import Header from '../components/Header'
 import Input from '../components/Input'
@@ -46,6 +47,9 @@ class ResetPasswordPage extends Component {
           <h1 className="page-title">Reset Password</h1>
           <div className="flex-spring" />
         </Header>
+        <Helmet>
+          <title>Reset Password</title>
+        </Helmet>
         <div className="container">
           <div className="reset-form form spaced-children">
             <Input

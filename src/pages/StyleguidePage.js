@@ -1,6 +1,7 @@
 // @format
 
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import Logo from '../components/Logo'
 import Input from '../components/Input'
 import Badge from '../components/Badge'
@@ -25,6 +26,9 @@ export default class StyleguidePage extends Component {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>Styleguide</title>
+        </Helmet>
         <div className="section blue">
           <div className="container">
             <h1 className="title text-white">Styleguide</h1>

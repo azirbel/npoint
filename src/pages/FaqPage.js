@@ -3,6 +3,7 @@
 /* global axios */
 
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import Header from '../components/Header'
 import {} from './FaqPage.css'
 
@@ -33,7 +34,11 @@ export default class FaqPage extends Component {
       <div className="faq-page">
         <Header>
           <h1 className="page-title">Frequently Asked Questions</h1>
+          <div className="flex-spring" />
         </Header>
+        <Helmet>
+          <title>Frequently Asked Questions</title>
+        </Helmet>
         <div className="section">
           <div className="container">
             {this.state.faqs.map(faq => (

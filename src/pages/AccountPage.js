@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import User from '../models/User'
 import Header from '../components/Header'
 import ClickToEdit from '../components/ClickToEdit'
@@ -66,6 +67,9 @@ class AccountPage extends Component {
           <h1 className="page-title">Account</h1>
           <div className="flex-spring" />
         </Header>
+        <Helmet>
+          <title>Account</title>
+        </Helmet>
         <div className="container">
           <div className="account-info">
             <div className="account-info-section">

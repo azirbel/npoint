@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { Helmet } from 'react-helmet'
 import _ from 'lodash'
 
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
@@ -327,6 +328,9 @@ class DocumentPage extends Component {
   renderMain() {
     return (
       <div className="main-container">
+        <Helmet>
+          <title>{this.state.document.title}</title>
+        </Helmet>
         {!this.contentsEditable() && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">

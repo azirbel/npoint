@@ -3,6 +3,7 @@
 /* global axios */
 
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import Header from '../components/Header'
 
 export default class ChangelogPage extends Component {
@@ -21,7 +22,11 @@ export default class ChangelogPage extends Component {
       <div className="changelog-page">
         <Header>
           <h1 className="page-title">Changelog</h1>
+          <div className="flex-spring" />
         </Header>
+        <Helmet>
+          <title>Changelog</title>
+        </Helmet>
         <div className="section">
           <div className="container">
             {this.state.changes.map(change => (
