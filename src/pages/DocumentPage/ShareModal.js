@@ -29,6 +29,16 @@ export default class ShareModal extends Component {
               {this.props.document.apiUrl}
             </a>
           </p>
+          {this.props.document.exampleSubpropertyUrl && (
+            <p className="medium">You can even access nested data directly, like this:</p>
+          )}
+          {this.props.document.exampleSubpropertyUrl && (
+            <p className="medium">
+              <a target="_blank" href={this.props.document.exampleSubpropertyUrl}>
+                {this.props.document.exampleSubpropertyUrl}
+              </a>
+            </p>
+          )}
           <p className="medium">{this.renderPermissionsCopy()}</p>
           <div className="button-group">
             <Button className="primary" onClick={this.props.onClose}>

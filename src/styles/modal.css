@@ -3,7 +3,7 @@
 @import './variables.css';
 
 .modal {
-  width: 400px;
+  width: 440px;
   background-color: var(--white);
   outline: none;
   box-shadow: 0 1px 4px 0 var(--shadowColor);

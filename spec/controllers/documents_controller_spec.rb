@@ -293,4 +293,118 @@ RSpec.describe DocumentsController do
       end
     end
   end
+
+  describe 'api URLs' do
+    context 'a document with no data' do
+      before do
+        unowned_document.update!(contents: nil)
+      end
+
+      it 'has correct api URLs' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          nil
+        )
+      end
+    end
+
+    context 'a document with empty object data' do
+      before do
+        unowned_document.update!(contents: {})
+      end
+
+      it 'has correct api URLs' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          nil
+        )
+      end
+    end
+
+    context 'a document with empty array data' do
+      before do
+        unowned_document.update!(contents: [])
+      end
+
+      it 'has correct api URLs' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          nil
+        )
+      end
+    end
+
+    context 'a document with simple object data' do
+      before do
+        unowned_document.update!(contents: { a: 3 })
+      end
+
+      it 'has correct api URLs' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}/a"
+        )
+      end
+    end
+
+    context 'a document with simple array data' do
+      before do
+        unowned_document.update!(contents: [ 1, 2, 3 ])
+      end
+
+      it 'has correct api URLs' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}/0"
+        )
+      end
+    end
+
+    context 'a document with complex object data' do
+      before do
+        unowned_document.update!(contents: { a: [{ c: 2 }, { c: 3 }, { c: 4 }], b: 6 })
+      end
+
+      it 'has correct api URLs 2 levels deep' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}/a/0"
+        )
+      end
+    end
+
+    context 'a document with complex array data' do
+      before do
+        unowned_document.update!(contents: [ { a: [6, 7, 8] }, 2, 3 ])
+      end
+
+      it 'has correct api URLs 2 levels deep' do
+        get :show, token: unowned_document.token
+        expect(parsed_response['api_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}"
+        )
+        expect(parsed_response['example_subproperty_url']).to eq(
+          "http://api.test.com/#{unowned_document.token}/0/a"
+        )
+      end
+    end
+  end
 end
