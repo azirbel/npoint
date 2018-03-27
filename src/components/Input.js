@@ -10,6 +10,7 @@ export default class Input extends Component {
     label: PropTypes.string,
     type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    onEnter: PropTypes.func,
     onKeyPress: PropTypes.func,
     placeholder: PropTypes.string,
     className: PropTypes.string,
@@ -18,6 +19,16 @@ export default class Input extends Component {
 
   handleChange = e => {
     this.props.onChange(e.target.value)
+  }
+
+   handleKeyPress = e => {
+    if (this.props.onKeyPress) {
+      this.props.onKeyPress()
+    }
+
+    if (this.props.onEnter && e.key === 'Enter') {
+      this.props.onEnter()
+    }
   }
 
   render() {
@@ -32,7 +43,7 @@ export default class Input extends Component {
           type={this.props.type || 'text'}
           value={this.props.value}
           onChange={this.handleChange}
-          onKeyPress={this.props.onKeyPress}
+          onKeyPress={this.handleKeyPress}
           placeholder={this.props.placeholder}
         />
       </label>

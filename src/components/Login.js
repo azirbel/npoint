@@ -145,6 +145,7 @@ class Login extends Component {
           type="password"
           value={this.state.password}
           onChange={password => this.setState({ password })}
+          onEnter={this.handleLogin}
         />
         {this.renderErrors(this.state.loginErrors)}
         <div className="flex justify-end">
@@ -154,6 +155,66 @@ class Login extends Component {
             </Button>
             <Button className="primary" isLoading={this.state.isLoggingIn} onClick={this.handleLogin}>
               Log in
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderSignUpForm() {
+    return (
+      <div className="form padded spaced-children">
+        <Input
+          label="First name"
+          value={this.state.name}
+          onChange={name => this.setState({ name })}
+        />
+        <Input
+          label="Email"
+          type="email"
+          value={this.state.email}
+          onChange={email => this.setState({ email })}
+        />
+        <Input
+          label="Choose a password"
+          type="password"
+          value={this.state.password}
+          onChange={password => this.setState({ password })}
+          onEnter={this.handleSignup}
+        />
+        {this.renderErrors(this.state.signUpErrors)}
+        <div className="flex justify-end">
+          <Button className="primary" isLoading={this.state.isSigningUp} onClick={this.handleSignup}>
+            Sign up
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  renderForgotPasswordForm() {
+    return (
+      <div className="form padded spaced-children">
+        <Input
+          label="Email"
+          type="email"
+          value={this.state.email}
+          onChange={email => this.setState({ email })}
+          onEnter={this.sendResetLink}
+        />
+        <p className="medium">
+          No worries, just fill in your email and hit "reset" - we'll send you a
+          link to set a new password.
+        </p>
+        {this.renderErrors(this.state.resetPasswordErrors)}
+        <div className="flex justify-end">
+          <div className="button-group">
+            <Button className="link" onClick={this.cancelForgotPassword}>
+              Back to login
+            </Button>
+            <Button className="primary" isLoading={this.state.isResettingPassword} onClick={this.sendResetLink}>
+              Reset
             </Button>
           </div>
         </div>
@@ -178,64 +239,6 @@ class Login extends Component {
           </div>
         ))}
       </CSSTransitionGroup>
-    )
-  }
-
-  renderSignUpForm() {
-    return (
-      <div className="form padded spaced-children">
-        <Input
-          label="First name"
-          value={this.state.name}
-          onChange={name => this.setState({ name })}
-        />
-        <Input
-          label="Email"
-          type="email"
-          value={this.state.email}
-          onChange={email => this.setState({ email })}
-        />
-        <Input
-          label="Choose a password"
-          type="password"
-          value={this.state.password}
-          onChange={password => this.setState({ password })}
-        />
-        {this.renderErrors(this.state.signUpErrors)}
-        <div className="flex justify-end">
-          <Button className="primary" isLoading={this.state.isSigningUp} onClick={this.handleSignup}>
-            Sign up
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
-  renderForgotPasswordForm() {
-    return (
-      <div className="form padded spaced-children">
-        <Input
-          label="Email"
-          type="email"
-          value={this.state.email}
-          onChange={email => this.setState({ email })}
-        />
-        <p className="medium">
-          No worries, just fill in your email and hit "reset" - we'll send you a
-          link to set a new password.
-        </p>
-        {this.renderErrors(this.state.resetPasswordErrors)}
-        <div className="flex justify-end">
-          <div className="button-group">
-            <Button className="link" onClick={this.cancelForgotPassword}>
-              Back to login
-            </Button>
-            <Button className="primary" isLoading={this.state.isResettingPassword} onClick={this.sendResetLink}>
-              Reset
-            </Button>
-          </div>
-        </div>
-      </div>
     )
   }
 }

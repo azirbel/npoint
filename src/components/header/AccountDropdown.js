@@ -6,15 +6,19 @@ import { MdArrowDropDown } from 'react-icons/lib/md'
 import { findDOMNode } from 'react-dom'
 import Overlay from 'react-overlays/lib/Overlay'
 import { Link } from 'react-router'
+import { push } from 'react-router-redux'
+import _ from 'lodash'
+
 import Session from '../../models/Session'
 import Tooltip from '../Tooltip'
 import { logOut } from '../../actions'
-import { push } from 'react-router-redux'
+
 import {} from './AccountDropdown.css'
 
 class AccountDropdown extends Component {
   state = {
     show: false,
+    lastAvatarUrl: '',
   }
 
   logOut() {
@@ -26,7 +30,18 @@ class AccountDropdown extends Component {
     })
   }
 
+  // Make sure this component can still render as a user is logging out (it will still be rendered
+  // to show the logout animation)
+  componentWillReceiveProps(newProps) {
+    let avatarUrl = _.get(newProps, ['user', 'avatarUrl'])
+    if (avatarUrl) {
+      this.setState({ lastAvatarUrl: avatarUrl })
+    }
+  }
+
   render() {
+    let avatarUrl = _.get(this.props, ['user', 'avatarUrl']) || this.state.lastAvatarUrl
+
     return (
       <div className="account-dropdown-component">
         <button
@@ -38,7 +53,7 @@ class AccountDropdown extends Component {
             <img
               className="avatar account-dropdown-avatar"
               role="presentation"
-              src={this.props.session.user.avatarUrl}
+              src={avatarUrl}
             />
             <MdArrowDropDown />
           </div>

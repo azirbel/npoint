@@ -3,11 +3,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {} from './Header.css'
-import Logo from './Logo'
 import { Link } from 'react-router'
+import { CSSTransitionGroup } from 'react-transition-group'
+
+import Logo from './Logo'
 import LoginDropdown from './header/LoginDropdown'
 import AccountDropdown from './header/AccountDropdown'
+
+import {} from './Header.css'
 
 class Header extends Component {
   // TODO(azirbel): Add more proptypes
@@ -37,7 +40,15 @@ class Header extends Component {
               </Link>
             )}
             {children}
-            {session.loggedIn ? <AccountDropdown /> : <LoginDropdown />}
+            <div className="account-login-container">
+              <CSSTransitionGroup
+                transitionName="example"
+                transitionEnterTimeout={400}
+                transitionLeaveTimeout={300}
+              >
+                {session.loggedIn ? <AccountDropdown key='acc' /> : <LoginDropdown key='login' />}
+              </CSSTransitionGroup>
+            </div>
           </div>
         </header>
         <div className="header-spacer" />

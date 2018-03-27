@@ -40,6 +40,11 @@
   & .small-logo-container {
     width: 36px; /* gutter_size */
   }
+
+  & .account-login-container {
+    position: relative;
+    overflow: hidden;
+  }
 }
 
 /* Take up as much height as the header, so that the content

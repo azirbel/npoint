@@ -6,6 +6,7 @@ import { findDOMNode } from 'react-dom'
 import Overlay from 'react-overlays/lib/Overlay'
 import Tooltip from '../Tooltip'
 import Login from '../Login'
+import {} from './LoginDropdown.css'
 
 export default class LoginDropdown extends Component {
   state = {
@@ -18,9 +19,9 @@ export default class LoginDropdown extends Component {
 
   render() {
     return (
-      <div>
+      <div className='login-dropdown-component'>
         <button
-          className="button subtle"
+          className="button subtle login-dropdown-button"
           ref="target"
           onClick={() => this.setState({ show: !this.state.show })}
         >

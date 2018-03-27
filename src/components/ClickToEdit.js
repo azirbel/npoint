@@ -38,12 +38,6 @@ export default class ClickToEdit extends Component {
     })
   }
 
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.saveNewValue()
-    }
-  }
-
   render() {
     let showInput = this.state.isEditing || this.props.isLoading
     let textClassName = `display-text ${this.props.textClassName}`
@@ -54,7 +48,7 @@ export default class ClickToEdit extends Component {
           <div className="flex align-stretch">
             <Input
               value={this.state.newValue}
-              onKeyPress={e => this.handleKeyPress(e)}
+              onEnter={this.saveNewValue}
               onChange={newValue => this.setState({ newValue })}
               inputClassName={this.props.inputClassName}
             />

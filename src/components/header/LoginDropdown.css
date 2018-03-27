@@ -1,0 +1,7 @@
+/* @format */
+
+.login-dropdown-component {
+  & .login-dropdown-button {
+    margin-right: -8px; /* eyeball align with right side of container */
+  }
+}

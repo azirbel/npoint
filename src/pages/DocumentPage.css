@@ -28,7 +28,7 @@
   }
 }
 
-/* TODO(azirbel): Move these to schema editor */
+/* TODO(azirbel): Move these to animations folder */
 .example-enter {
   transform: translateY(-100%);
 }
