@@ -3,12 +3,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { CSSTransitionGroup } from 'react-transition-group'
+import { MdReportProblem } from 'react-icons/lib/md'
+import _ from 'lodash'
+
 import User from '../models/User'
 import Session from '../models/Session'
 import { logIn } from '../actions'
 import { Tabs, Tab } from '../components/Tabs'
 import Button from '../components/Button'
 import Input from './Input'
+
 import {} from './Login.css'
 
 class Login extends Component {
@@ -17,22 +22,36 @@ class Login extends Component {
   }
 
   state = {
-    tab: 'log-in',
-    name: '',
     email: '',
-    password: '',
+    isLoggingIn: false,
     isResettingPassword: false,
+    isSigningUp: false,
+    loginErrors: [],
+    name: '',
+    password: '',
     resetPasswordEmailSent: false,
+    resetPasswordErrors: [],
     resetPasswordSentToEmail: '',
+    showResetPasswordForm: false,
+    signUpErrors: [],
+    tab: 'log-in',
   }
 
   handleSignup = () => {
+    this.setState({ signUpErrors: [], isSigningUp: true })
     User.create({
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       passwordConfirmation: this.state.password,
     }).then(response => {
+      this.setState({ isSigningUp: false })
+
+      if (!_.isEmpty(response.data.errors)) {
+        this.setState({ signUpErrors: response.data.errors })
+        return
+      }
+
       let { name, email, avatarUrl } = response.data
       this.props.dispatch(logIn({ name, email, avatarUrl }))
       this.props.onLogin()
@@ -40,31 +59,49 @@ class Login extends Component {
   }
 
   handleLogin = () => {
+    this.setState({ loginErrors: [], isLoggingIn: true })
     Session.login({
       email: this.state.email,
       password: this.state.password,
     }).then(response => {
+      this.setState({ isLoggingIn: false })
+
       let { name, email, avatarUrl } = response.data
       this.props.dispatch(logIn({ name, email, avatarUrl }))
       this.props.onLogin()
+    }).catch(error => {
+      this.setState({ isLoggingIn: false })
+      this.setState({ loginErrors: ['Invalid username or password'] })
     })
   }
 
   handleForgotPassword = () => {
-    this.setState({ isResettingPassword: true })
+    this.setState({ showResetPasswordForm: true })
   }
 
   cancelForgotPassword = () => {
-    this.setState({ isResettingPassword: false })
+    this.setState({ showResetPasswordForm: false })
   }
 
   sendResetLink = () => {
     this.setState({
       resetPasswordSentToEmail: this.state.email,
+      isResettingPassword: true,
+      resetPasswordErrors: [],
     })
 
     User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({ resetPasswordEmailSent: true })
+      this.setState({
+        resetPasswordEmailSent: true,
+        isResettingPassword: false,
+      })
+    }).catch(error => {
+      this.setState({
+        resetPasswordErrors: [
+          `Could not send an email to ${this.state.resetPasswordSentToEmail}. Are you sure the account exists?`
+        ],
+        isResettingPassword: false,
+      })
     })
   }
 
@@ -80,10 +117,10 @@ class Login extends Component {
           <Tab value="sign-up">Sign up</Tab>
         </Tabs>
         {this.state.tab === 'log-in'
-          ? this.state.isResettingPassword
+          ? this.state.showResetPasswordForm
             ? this.renderForgotPasswordForm()
             : this.renderLogInForm()
-          : this.renderSignInForm()}
+          : this.renderSignUpForm()}
         {this.state.resetPasswordEmailSent && (
           <div className="text-success">
             Sent password reset email to
@@ -109,12 +146,13 @@ class Login extends Component {
           value={this.state.password}
           onChange={password => this.setState({ password })}
         />
+        {this.renderErrors(this.state.loginErrors)}
         <div className="flex justify-end">
           <div className="button-group">
             <Button className="link" onClick={this.handleForgotPassword}>
               (Forgot?)
             </Button>
-            <Button className="primary" onClick={this.handleLogin}>
+            <Button className="primary" isLoading={this.state.isLoggingIn} onClick={this.handleLogin}>
               Log in
             </Button>
           </div>
@@ -123,7 +161,27 @@ class Login extends Component {
     )
   }
 
-  renderSignInForm() {
+  renderErrors(errors) {
+    return (
+      <CSSTransitionGroup
+        component="div"
+        className="text-small text-error"
+        transitionName="downfade"
+        transitionEnterTimeout={200}
+        transitionLeaveTimeout={1}
+      >
+        {errors.map((err, idx) => (
+          <div className="flex align-center" key={idx}>
+            <MdReportProblem />
+            &nbsp;
+            {err}
+          </div>
+        ))}
+      </CSSTransitionGroup>
+    )
+  }
+
+  renderSignUpForm() {
     return (
       <div className="form padded spaced-children">
         <Input
@@ -143,8 +201,9 @@ class Login extends Component {
           value={this.state.password}
           onChange={password => this.setState({ password })}
         />
+        {this.renderErrors(this.state.signUpErrors)}
         <div className="flex justify-end">
-          <Button className="primary" onClick={this.handleSignup}>
+          <Button className="primary" isLoading={this.state.isSigningUp} onClick={this.handleSignup}>
             Sign up
           </Button>
         </div>
@@ -165,12 +224,13 @@ class Login extends Component {
           No worries, just fill in your email and hit "reset" - we'll send you a
           link to set a new password.
         </p>
+        {this.renderErrors(this.state.resetPasswordErrors)}
         <div className="flex justify-end">
           <div className="button-group">
             <Button className="link" onClick={this.cancelForgotPassword}>
               Back to login
             </Button>
-            <Button className="primary" onClick={this.sendResetLink}>
+            <Button className="primary" isLoading={this.state.isResettingPassword} onClick={this.sendResetLink}>
               Reset
             </Button>
           </div>

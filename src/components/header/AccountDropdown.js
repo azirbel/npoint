@@ -37,7 +37,7 @@ class AccountDropdown extends Component {
           <div className="flex align-center">
             <img
               className="avatar account-dropdown-avatar"
-              alt={this.props.session.user.name}
+              role="presentation"
               src={this.props.session.user.avatarUrl}
             />
             <MdArrowDropDown />

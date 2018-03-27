@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { MdReport } from 'react-icons/lib/md'
+import { MdReportProblem } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
 import _ from 'lodash'
 
@@ -71,7 +71,7 @@ export default class ContentsEditor extends Component {
     if (this.props.showErrorMessage && this.props.errorMessage) {
       return (
         <div key="toolbar-error" className="badge warning full-width">
-          <MdReport className="toolbar-icon" />
+          <MdReportProblem className="toolbar-icon" />
           {this.props.errorMessage}
         </div>
       )

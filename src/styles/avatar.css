@@ -5,4 +5,5 @@
 .avatar {
   border-radius: 50%;
   height: 40px;
+  background-color: var(--darkGray);
 }
