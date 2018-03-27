@@ -5,7 +5,6 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    sleep 2
     params.permit(:name, :email, :password, :password_confirmation)
   end
 
@@ -15,6 +14,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Override devise default so we always respond with JSON
   def respond_with(resource, *ignored)
+    # We lose this info from devise. DON'T SAVE!
+    resource.password = params[:password]
+
     if resource.valid?
       render json: resource, serializer: UserSerializer
     else
