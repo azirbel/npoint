@@ -68,7 +68,7 @@ export default class DocumentPageHeader extends Component {
             trigger={['click', 'hover']}
             overlay="Anyone with the URL can edit this document"
           >
-            <div className="badge cursor-default">Public</div>
+            <div className="badge dark-gray cursor-default">Public</div>
           </Tooltip>
         )}
         <div className="flex-spring" />

@@ -26,8 +26,10 @@ RSpec.describe DocumentsController do
         expect(response).to have_http_status(200)
         expect(parsed_response)
           .to eq([
-            serialize_one(owned_document1).merge('editable' => true),
-            serialize_one(owned_document2).merge('editable' => true),
+            serialize_one(owned_document1).merge('editable' => true,
+                                                 'owned_by_current_user' => true),
+            serialize_one(owned_document2).merge('editable' => true,
+                                                 'owned_by_current_user' => true)
           ])
       end
     end
@@ -69,7 +71,8 @@ RSpec.describe DocumentsController do
         get :show, token: owned_document1.token
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq(
-          serialize_one(owned_document1).merge('editable' => true)
+          serialize_one(owned_document1).merge('editable' => true,
+                                               'owned_by_current_user' => true)
         )
       end
 
@@ -196,7 +199,8 @@ RSpec.describe DocumentsController do
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq(
-          serialize_one(owned_document1).merge('editable' => true)
+          serialize_one(owned_document1).merge('editable' => true,
+                                               'owned_by_current_user' => true)
         )
       end
 
