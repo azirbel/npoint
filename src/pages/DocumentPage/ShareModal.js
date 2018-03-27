@@ -30,11 +30,16 @@ export default class ShareModal extends Component {
             </a>
           </p>
           {this.props.document.exampleSubpropertyUrl && (
-            <p className="medium">You can even access nested data directly, like this:</p>
+            <p className="medium">
+              You can even access nested data directly, like this:
+            </p>
           )}
           {this.props.document.exampleSubpropertyUrl && (
             <p className="medium">
-              <a target="_blank" href={this.props.document.exampleSubpropertyUrl}>
+              <a
+                target="_blank"
+                href={this.props.document.exampleSubpropertyUrl}
+              >
                 {this.props.document.exampleSubpropertyUrl}
               </a>
             </p>

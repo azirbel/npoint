@@ -70,11 +70,7 @@ export default class DocumentIndexPage extends Component {
     let linkTo = `/docs/${doc.token}`
 
     return (
-      <Link
-        to={linkTo}
-        className="document-row"
-        key={doc.token}
-      >
+      <Link to={linkTo} className="document-row" key={doc.token}>
         {doc.title}
         {this.renderDeleteOption(doc)}
       </Link>
@@ -87,9 +83,11 @@ export default class DocumentIndexPage extends Component {
         <Tooltip
           placement="bottom"
           trigger={['click', 'hover']}
-          overlay='This document is locked'
+          overlay="This document is locked"
         >
-          <div className='badge dark-gray'><MdLock /></div>
+          <div className="badge dark-gray">
+            <MdLock />
+          </div>
         </Tooltip>
       )
     } else if (doc.schemaLocked) {
@@ -97,15 +95,17 @@ export default class DocumentIndexPage extends Component {
         <Tooltip
           placement="bottom"
           trigger={['click', 'hover']}
-          overlay='The schema for this document is locked'
+          overlay="The schema for this document is locked"
         >
-          <div className='badge dark-gray'><MdLockOutline /></div>
+          <div className="badge dark-gray">
+            <MdLockOutline />
+          </div>
         </Tooltip>
       )
     } else {
       return (
         <Button
-          className='danger small'
+          className="danger small"
           onClick={() => this.deleteDocument(doc)}
         >
           <MdDelete />&nbsp;Delete

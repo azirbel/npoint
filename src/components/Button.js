@@ -11,7 +11,7 @@ export default class Button extends Component {
     onClick: PropTypes.func,
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     if (!this.props.isLoading && this.props.onClick) {
       e.preventDefault()
       this.props.onClick()
