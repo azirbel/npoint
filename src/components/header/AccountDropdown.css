@@ -1,6 +1,9 @@
 /* @format */
 
 .account-dropdown-component {
+  display: flex;
+  justify-content: flex-end;
+
   & .account-dropdown-avatar {
     height: 30px;
     width: 30px;

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { logIn } from './actions'
+import { logIn, logOut } from './actions'
 import User from './models/User'
 
 class App extends Component {
@@ -18,6 +18,8 @@ class App extends Component {
       response => {
         if (response.data && response.data.name) {
           dispatch(logIn(response.data))
+        } else {
+          dispatch(logOut())
         }
       },
       error => {}

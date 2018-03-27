@@ -6,6 +6,7 @@ import { LOG_IN, LOG_OUT } from '../actions'
 
 function session(
   state = {
+    loaded: false,
     loggedIn: false,
     user: null,
   },
@@ -14,11 +15,13 @@ function session(
   switch (action.type) {
     case LOG_IN:
       return {
+        loaded: true,
         loggedIn: true,
         user: action.user,
       }
     case LOG_OUT:
       return {
+        loaded: true,
         loggedIn: false,
         user: null,
       }

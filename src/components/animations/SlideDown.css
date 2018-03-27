@@ -1,0 +1,32 @@
+/* @format */
+
+@import '../../styles/variables.css';
+
+.slide-down-component {
+  position: relative;
+  overflow: hidden;
+
+  & .slide-down-enter {
+    transform: translateY(-100%);
+  }
+
+  & .slide-down-enter.slide-down-enter-active {
+    transform: translateY(0);
+    transition: all 200ms ease-in;
+    transition-delay: 200ms;
+  }
+
+  & .slide-down-leave {
+    transform: translateY(0);
+  }
+
+  & .slide-down-leave.slide-down-leave-active {
+    transform: translateY(100%);
+    transition: all 200ms ease-in;
+    transition-delay: 100ms;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}

@@ -3,11 +3,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MdReportProblem } from 'react-icons/lib/md'
-import { CSSTransitionGroup } from 'react-transition-group'
 import _ from 'lodash'
 
 import Button from '../../components/Button'
 import JsonEditor from '../../components/JsonEditor'
+import SlideDown from '../../components/animations/SlideDown'
 
 import {} from './ContentsEditor.css'
 
@@ -47,13 +47,9 @@ export default class ContentsEditor extends Component {
       <div className="contents-editor">
         {!this.props.readOnly && (
           <div className="toolbar-container">
-            <CSSTransitionGroup
-              transitionName="example"
-              transitionEnterTimeout={400}
-              transitionLeaveTimeout={300}
-            >
+            <SlideDown>
               {this.renderToolbar()}
-            </CSSTransitionGroup>
+            </SlideDown>
           </div>
         )}
         <JsonEditor

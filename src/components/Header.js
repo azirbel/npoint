@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { CSSTransitionGroup } from 'react-transition-group'
 
 import Logo from './Logo'
 import LoginDropdown from './header/LoginDropdown'
 import AccountDropdown from './header/AccountDropdown'
+import SlideDown from '../components/animations/SlideDown'
 
 import {} from './Header.css'
 
@@ -40,18 +40,16 @@ class Header extends Component {
               </Link>
             )}
             {children}
-            <div className="account-login-container">
-              <CSSTransitionGroup
-                transitionName="example"
-                transitionEnterTimeout={400}
-                transitionLeaveTimeout={300}
-              >
-                {session.loggedIn ? (
-                  <AccountDropdown key="acc" />
-                ) : (
-                  <LoginDropdown key="login" />
-                )}
-              </CSSTransitionGroup>
+            <div className="user-info-container">
+              {session.loaded && (
+                <SlideDown>
+                  {session.loggedIn ? (
+                    <AccountDropdown key="acc" />
+                  ) : (
+                    <LoginDropdown key="login" />
+                  )}
+                </SlideDown>
+              )}
             </div>
           </div>
         </header>
