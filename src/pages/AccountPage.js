@@ -18,7 +18,7 @@ class AccountPage extends Component {
     isSavingName: false,
     isResettingPassword: false,
     resetPasswordEmailSent: false,
-    errorResettingPassword: ''
+    errorResettingPassword: '',
   }
 
   // TODO(azirbel): Use data from the redux store
@@ -52,18 +52,24 @@ class AccountPage extends Component {
   }
 
   sendPasswordResetEmail = () => {
-    this.setState({ isResettingPassword: true, errorResettingPassword: false, resetPasswordEmailSent: false })
-    User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({
-        isResettingPassword: false,
-        resetPasswordEmailSent: true,
-      })
-    }).catch(error => {
-      this.setState({
-        errorResettingPassword: true,
-        isResettingPassword: false,
-      })
+    this.setState({
+      isResettingPassword: true,
+      errorResettingPassword: false,
+      resetPasswordEmailSent: false,
     })
+    User.sendResetPasswordEmail({ email: this.state.email })
+      .then(() => {
+        this.setState({
+          isResettingPassword: false,
+          resetPasswordEmailSent: true,
+        })
+      })
+      .catch(error => {
+        this.setState({
+          errorResettingPassword: true,
+          isResettingPassword: false,
+        })
+      })
   }
 
   render() {
@@ -114,7 +120,8 @@ class AccountPage extends Component {
               </Button>
               {this.state.errorResettingPassword && (
                 <div className="text-error password-reset-confirmation">
-                  Could not send an email to {this.state.email}. Please try again later.
+                  Could not send an email to {this.state.email}. Please try
+                  again later.
                 </div>
               )}
               {this.state.resetPasswordEmailSent && (

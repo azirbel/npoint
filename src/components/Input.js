@@ -21,7 +21,7 @@ export default class Input extends Component {
     this.props.onChange(e.target.value)
   }
 
-   handleKeyPress = e => {
+  handleKeyPress = e => {
     if (this.props.onKeyPress) {
       this.props.onKeyPress()
     }

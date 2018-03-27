@@ -63,16 +63,18 @@ class Login extends Component {
     Session.login({
       email: this.state.email,
       password: this.state.password,
-    }).then(response => {
-      this.setState({ isLoggingIn: false })
-
-      let { name, email, avatarUrl } = response.data
-      this.props.dispatch(logIn({ name, email, avatarUrl }))
-      this.props.onLogin()
-    }).catch(error => {
-      this.setState({ isLoggingIn: false })
-      this.setState({ loginErrors: ['Invalid username or password'] })
     })
+      .then(response => {
+        this.setState({ isLoggingIn: false })
+
+        let { name, email, avatarUrl } = response.data
+        this.props.dispatch(logIn({ name, email, avatarUrl }))
+        this.props.onLogin()
+      })
+      .catch(error => {
+        this.setState({ isLoggingIn: false })
+        this.setState({ loginErrors: ['Invalid username or password'] })
+      })
   }
 
   handleForgotPassword = () => {
@@ -90,19 +92,23 @@ class Login extends Component {
       resetPasswordErrors: [],
     })
 
-    User.sendResetPasswordEmail({ email: this.state.email }).then(() => {
-      this.setState({
-        resetPasswordEmailSent: true,
-        isResettingPassword: false,
+    User.sendResetPasswordEmail({ email: this.state.email })
+      .then(() => {
+        this.setState({
+          resetPasswordEmailSent: true,
+          isResettingPassword: false,
+        })
       })
-    }).catch(error => {
-      this.setState({
-        resetPasswordErrors: [
-          `Could not send an email to ${this.state.resetPasswordSentToEmail}. Are you sure the account exists?`
-        ],
-        isResettingPassword: false,
+      .catch(error => {
+        this.setState({
+          resetPasswordErrors: [
+            `Could not send an email to ${
+              this.state.resetPasswordSentToEmail
+            }. Are you sure the account exists?`,
+          ],
+          isResettingPassword: false,
+        })
       })
-    })
   }
 
   render() {
@@ -153,7 +159,11 @@ class Login extends Component {
             <Button className="link" onClick={this.handleForgotPassword}>
               (Forgot?)
             </Button>
-            <Button className="primary" isLoading={this.state.isLoggingIn} onClick={this.handleLogin}>
+            <Button
+              className="primary"
+              isLoading={this.state.isLoggingIn}
+              onClick={this.handleLogin}
+            >
               Log in
             </Button>
           </div>
@@ -185,7 +195,11 @@ class Login extends Component {
         />
         {this.renderErrors(this.state.signUpErrors)}
         <div className="flex justify-end">
-          <Button className="primary" isLoading={this.state.isSigningUp} onClick={this.handleSignup}>
+          <Button
+            className="primary"
+            isLoading={this.state.isSigningUp}
+            onClick={this.handleSignup}
+          >
             Sign up
           </Button>
         </div>
@@ -213,7 +227,11 @@ class Login extends Component {
             <Button className="link" onClick={this.cancelForgotPassword}>
               Back to login
             </Button>
-            <Button className="primary" isLoading={this.state.isResettingPassword} onClick={this.sendResetLink}>
+            <Button
+              className="primary"
+              isLoading={this.state.isResettingPassword}
+              onClick={this.sendResetLink}
+            >
               Reset
             </Button>
           </div>

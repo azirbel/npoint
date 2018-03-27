@@ -19,7 +19,7 @@ export default class LoginDropdown extends Component {
 
   render() {
     return (
-      <div className='login-dropdown-component'>
+      <div className="login-dropdown-component">
         <button
           className="button subtle login-dropdown-button"
           ref="target"

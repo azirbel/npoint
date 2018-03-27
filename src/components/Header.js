@@ -46,7 +46,11 @@ class Header extends Component {
                 transitionEnterTimeout={400}
                 transitionLeaveTimeout={300}
               >
-                {session.loggedIn ? <AccountDropdown key='acc' /> : <LoginDropdown key='login' />}
+                {session.loggedIn ? (
+                  <AccountDropdown key="acc" />
+                ) : (
+                  <LoginDropdown key="login" />
+                )}
               </CSSTransitionGroup>
             </div>
           </div>
