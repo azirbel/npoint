@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
-import { CSSTransitionGroup } from 'react-transition-group'
 import { Helmet } from 'react-helmet'
 import { HotKeys } from 'react-hotkeys'
 import _ from 'lodash'
@@ -13,6 +12,7 @@ import Document from '../models/Document'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import Schema from '../models/Schema'
 
+import Downfade from '../components/animations/Downfade'
 import ContentsEditor from './DocumentPage/ContentsEditor'
 import DocumentPageHeader from './DocumentPage/DocumentPageHeader'
 import LeaveModal from './DocumentPage/LeaveModal'
@@ -412,20 +412,14 @@ class DocumentPage extends Component {
               <h5 className="data-header">JSON Data</h5>
               {this.renderContents()}
             </div>
-            <CSSTransitionGroup
-              component="div"
-              className="col-xs-12 col-sm-6"
-              transitionName="downfade"
-              transitionEnterTimeout={200}
-              transitionLeaveTimeout={1}
-            >
+            <Downfade className="col-xs-12 col-sm-6">
               {this.state.originalSchema && (
                 <div key="schema">
                   <h5 className="data-header">Schema</h5>
                   {this.renderSchema()}
                 </div>
               )}
-            </CSSTransitionGroup>
+            </Downfade>
           </div>
         </div>
         <div className="flex-spring" />

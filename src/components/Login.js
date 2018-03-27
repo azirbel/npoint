@@ -3,10 +3,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { CSSTransitionGroup } from 'react-transition-group'
 import { MdReportProblem } from 'react-icons/lib/md'
 import _ from 'lodash'
 
+import Downfade from '../components/animations/Downfade'
 import User from '../models/User'
 import Session from '../models/Session'
 import { logIn } from '../actions'
@@ -242,13 +242,7 @@ class Login extends Component {
 
   renderErrors(errors) {
     return (
-      <CSSTransitionGroup
-        component="div"
-        className="text-small text-error"
-        transitionName="downfade"
-        transitionEnterTimeout={200}
-        transitionLeaveTimeout={1}
-      >
+      <Downfade className="text-small text-error">
         {errors.map((err, idx) => (
           <div className="flex align-center" key={idx}>
             <MdReportProblem />
@@ -256,7 +250,7 @@ class Login extends Component {
             {err}
           </div>
         ))}
-      </CSSTransitionGroup>
+      </Downfade>
     )
   }
 }
