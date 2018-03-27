@@ -11,7 +11,7 @@ RSpec.describe ResetPasswordController do
   describe '#send_reset_password_email' do
     context 'with a valid user' do
       it 'triggers sending an email' do
-        expect(Npointmail).to receive(:reset_password)
+        expect(TransactionalMail).to receive(:reset_password)
           .with(user, RAW_TOKEN)
           .and_return(true)
 
@@ -22,7 +22,7 @@ RSpec.describe ResetPasswordController do
 
     context 'with an invalid user' do
       it 'returns 404' do
-        allow(Npointmail).to receive(:reset_password).and_return(true)
+        allow(TransactionalMail).to receive(:reset_password).and_return(true)
 
         post :send_reset_password_email, email: 'bad.email@npoint.io'
         expect(response).to have_http_status(404)
@@ -31,7 +31,7 @@ RSpec.describe ResetPasswordController do
 
     context 'if sending the email fails' do
       it 'returns a failed status' do
-        expect(Npointmail).to receive(:reset_password)
+        expect(TransactionalMail).to receive(:reset_password)
           .with(user, RAW_TOKEN)
           .and_return(false)
 
@@ -44,7 +44,7 @@ RSpec.describe ResetPasswordController do
   describe 'full reset flow' do
     context 'with the same token sent through email' do
       it 'resets the user password' do
-        expect(Npointmail).to receive(:reset_password)
+        expect(TransactionalMail).to receive(:reset_password)
           .with(user, RAW_TOKEN)
           .and_return(true)
 
@@ -72,7 +72,7 @@ RSpec.describe ResetPasswordController do
       BAD_TOKEN = 'BAD_TOKEN'
 
       it 'does not reset the password' do
-        expect(Npointmail).to receive(:reset_password)
+        expect(TransactionalMail).to receive(:reset_password)
           .with(user, RAW_TOKEN)
           .and_return(true)
 
@@ -94,7 +94,7 @@ RSpec.describe ResetPasswordController do
 
     context 'with no token' do
       it 'does not reset the password' do
-        expect(Npointmail).to receive(:reset_password)
+        expect(TransactionalMail).to receive(:reset_password)
           .with(user, RAW_TOKEN)
           .and_return(true)
 

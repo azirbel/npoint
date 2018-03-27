@@ -58,3 +58,7 @@ heroku run rake db:migrate --app npoint-io
 ## Bookmarks
 
 * [JSON in Postgres](https://blog.codeship.com/unleash-the-power-of-storing-json-in-postgres/)
+
+## Codebase TODOs
+
+* Add sentry or similar error collection service (search: `TODO(sentry)`)

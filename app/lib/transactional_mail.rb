@@ -2,8 +2,7 @@ require 'sendgrid-ruby'
 include SendGrid
 include Rails.application.routes.url_helpers
 
-# TODO(azirbel): Rename
-class Npointmail
+class TransactionalMail
   # Currently returns true on success, false on error
   def self.reset_password(user, token)
     port = if Rails.env.development? then 3000 else 80 end
@@ -22,7 +21,7 @@ class Npointmail
     begin
       response = sg.client.mail._('send').post(request_body: mail.to_json)
     rescue Exception => e
-      # TODO(azirbel): Handle this?
+      # TODO(sentry): Log this failure
       return false
     end
 

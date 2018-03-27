@@ -3,7 +3,7 @@ class ResetPasswordController < ApplicationController
   def send_reset_password_email
     user = User.find_by!(email: params.require(:email))
     token = set_reset_password_token(user)
-    email_sent = Npointmail.reset_password(user, token)
+    email_sent = TransactionalMail.reset_password(user, token)
     if email_sent
       head :ok
     else
