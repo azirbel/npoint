@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # TODO(azirbel): Copy opendoor/web setup, the routes are more beautiful
   devise_for :users, :controllers => {
     registrations: 'registrations',
     sessions: 'sessions'
