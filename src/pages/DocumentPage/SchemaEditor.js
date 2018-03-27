@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { MdLock, MdReport } from 'react-icons/lib/md'
+import { MdLockOutline, MdReport } from 'react-icons/lib/md'
 import { CSSTransitionGroup } from 'react-transition-group'
 import _ from 'lodash'
 
@@ -73,7 +73,7 @@ export default class SchemaEditor extends Component {
     if (this.props.document.schemaLocked) {
       return (
         <div key="toolbar-locked" className="badge dark-gray full-width">
-          <MdLock className="toolbar-icon" />
+          <MdLockOutline className="toolbar-icon" />
           Locked
         </div>
       )

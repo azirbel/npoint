@@ -12,6 +12,7 @@
 
   & .account-dropdown-button {
     padding: 4px 4px 4px 8px;
+    margin-right: -8px; /* eyeball align with right side of container */
   }
 }
 

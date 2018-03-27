@@ -69,13 +69,13 @@ class DocumentPage extends Component {
   }
 
   validationsHandlerId = null
-  beforeNavListener = null
+  unmountBeforeNavigation = null
 
   componentDidMount() {
     this.loadDocument(this.props.params.documentToken)
     this.validationsHandlerId = setInterval(this.runValidations, 100)
 
-    this.beforeNavListener = this.props.router.listenBefore(
+    this.unmountBeforeNavigation = this.props.router.listenBefore(
       (location, done) => {
         if (this.hasSaved()) {
           done()
@@ -86,15 +86,18 @@ class DocumentPage extends Component {
     )
 
     window.onbeforeunload = e => {
-      e.returnValue = CONFIRM_TEXT
-      return CONFIRM_TEXT
+      if (!this.hasSaved()) {
+        e.returnValue = CONFIRM_TEXT
+        return CONFIRM_TEXT
+      }
     }
   }
 
   componentWillUnmount() {
     // TODO(azirbel): Confirm that this stops running on client-side transitions
     clearInterval(this.validationsHandlerId)
-    this.beforeNavListener()
+    this.unmountBeforeNavigation()
+    window.onbeforeunload = null
   }
 
   componentWillReceiveProps(newProps) {

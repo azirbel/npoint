@@ -4,10 +4,12 @@ import React, { Component } from 'react'
 import { isEmpty } from 'lodash'
 import { Link } from 'react-router'
 import { Helmet } from 'react-helmet'
+import Tooltip from 'rc-tooltip'
 import {} from './DocumentIndexPage.css'
 import Document from '../models/Document'
 import Header from '../components/Header'
-import { MdDelete } from 'react-icons/lib/md'
+import Button from '../components/Button'
+import { MdDelete, MdLock, MdLockOutline } from 'react-icons/lib/md'
 import { without } from 'lodash'
 
 export default class DocumentIndexPage extends Component {
@@ -31,8 +33,7 @@ export default class DocumentIndexPage extends Component {
     )
   }
 
-  deleteDocument(e, doc) {
-    e.preventDefault()
+  deleteDocument(doc) {
     Document.delete(doc.token).then(() => {
       this.setState({ documents: without(this.state.documents, doc) })
     })
@@ -59,25 +60,57 @@ export default class DocumentIndexPage extends Component {
           {this.state.needsAuth && (
             <div>Please sign in to view your documents.</div>
           )}
-          {this.state.documents.map(doc => {
-            return (
-              <Link
-                to={`/docs/${doc.token}`}
-                className="document-row"
-                key={doc.token}
-              >
-                {doc.title}
-                <button
-                  className="button danger"
-                  onClick={e => this.deleteDocument(e, doc)}
-                >
-                  <MdDelete />
-                </button>
-              </Link>
-            )
-          })}
+          {this.state.documents.map(doc => this.renderDocumentRow(doc))}
         </div>
       </div>
     )
+  }
+
+  renderDocumentRow(doc) {
+    let linkTo = `/docs/${doc.token}`
+
+    return (
+      <Link
+        to={linkTo}
+        className="document-row"
+        key={doc.token}
+      >
+        {doc.title}
+        {this.renderDeleteOption(doc)}
+      </Link>
+    )
+  }
+
+  renderDeleteOption(doc) {
+    if (doc.contentsLocked) {
+      return (
+        <Tooltip
+          placement="bottom"
+          trigger={['click', 'hover']}
+          overlay='This document is locked'
+        >
+          <div className='badge dark-gray'><MdLock /></div>
+        </Tooltip>
+      )
+    } else if (doc.schemaLocked) {
+      return (
+        <Tooltip
+          placement="bottom"
+          trigger={['click', 'hover']}
+          overlay='The schema for this document is locked'
+        >
+          <div className='badge dark-gray'><MdLockOutline /></div>
+        </Tooltip>
+      )
+    } else {
+      return (
+        <Button
+          className='danger small'
+          onClick={() => this.deleteDocument(doc)}
+        >
+          <MdDelete />&nbsp;Delete
+        </Button>
+      )
+    }
   }
 }
