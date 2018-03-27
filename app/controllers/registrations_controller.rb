@@ -4,10 +4,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
-  # TODO(azirbel): Use configure_permitted_parameters instead
-  # like in opendoor/web?
-
   def sign_up_params
+    sleep 2
     params.permit(:name, :email, :password, :password_confirmation)
   end
 
@@ -17,6 +15,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Override devise default so we always respond with JSON
   def respond_with(resource, *ignored)
-    render json: resource, serializer: UserSerializer
+    if resource.valid?
+      render json: resource, serializer: UserSerializer
+    else
+      render json: { errors: resource.errors.full_messages }
+    end
   end
 end

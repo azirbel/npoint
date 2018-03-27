@@ -7,7 +7,6 @@ class ResetPasswordController < ApplicationController
     if email_sent
       head :ok
     else
-      # TODO(azirbel): Test this
       head :service_unavailable
     end
   end
@@ -24,6 +23,7 @@ class ResetPasswordController < ApplicationController
     user = User.find_by!(reset_password_token: reset_password_token)
 
     if user.persisted?
+      # TODO(azirbel): Test timeout
       if user.reset_password_period_valid?
         user.reset_password(params.require(:password), params.require(:password))
         user.update!(reset_password_token: nil)
@@ -34,6 +34,8 @@ class ResetPasswordController < ApplicationController
     end
 
     render json: user, serializer: UserSerializer
+  rescue ActiveRecord::RecordNotFound
+    head :bad_request
   end
 
   private
