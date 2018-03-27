@@ -27,8 +27,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Helmet defaultTitle="n:point JSON storage">
-        </Helmet>
+        <Helmet defaultTitle="n:point JSON storage" />
         {this.props.children}
       </div>
     )

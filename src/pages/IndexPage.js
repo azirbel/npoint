@@ -41,11 +41,14 @@ export default class IndexPage extends Component {
         <div className="section dark-white index-splash">
           <div className="container prose text-center">
             <h1 className="title index-title">
-      JSON Storage That Won{"'"}t Break Your App</h1>
+              JSON Storage That Won{"'"}t Break Your App
+            </h1>
             <p>
-      Set up a lightweight JSON endpoint in seconds, then add schema validation
-      <br/>
-      so that you don{"'"}t accidentally break your app as you edit the data.
+              Set up a lightweight JSON endpoint in seconds, then add schema
+              validation
+              <br />
+              so that you don{"'"}t accidentally break your app as you edit the
+              data.
             </p>
             <div className="index-editor-container">
               <JsonEditor
@@ -132,13 +135,9 @@ export default class IndexPage extends Component {
           </div>
         </div>
 
-        <div className="section">
-          Features
-        </div>
+        <div className="section">Features</div>
 
-        <div className="section dark-white">
-          Demo video
-        </div>
+        <div className="section dark-white">Demo video</div>
 
         <div className="section">
           <div className="container prose">

@@ -46,8 +46,8 @@ export default class JsonEditor extends Component {
         if (this.props.onSave) {
           this.props.onSave()
         }
-      }
-    }
+      },
+    },
   ]
 
   render() {

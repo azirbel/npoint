@@ -23,7 +23,8 @@ import ShareModal from './DocumentPage/ShareModal'
 
 import {} from './DocumentPage.css'
 
-const CONFIRM_TEXT = 'Your document has unsaved changes. Are you sure you want to leave?'
+const CONFIRM_TEXT =
+  'Your document has unsaved changes. Are you sure you want to leave?'
 
 class DocumentPage extends Component {
   state = {
@@ -74,18 +75,20 @@ class DocumentPage extends Component {
     this.loadDocument(this.props.params.documentToken)
     this.validationsHandlerId = setInterval(this.runValidations, 100)
 
-    this.beforeNavListener = this.props.router.listenBefore((location, done) => {
-      if (this.hasSaved()) {
-        done()
-      } else {
-        this.setOpenModal('leave', () => done())
+    this.beforeNavListener = this.props.router.listenBefore(
+      (location, done) => {
+        if (this.hasSaved()) {
+          done()
+        } else {
+          this.setOpenModal('leave', () => done())
+        }
       }
-    })
+    )
 
-    window.onbeforeunload = (e) => {
+    window.onbeforeunload = e => {
       e.returnValue = CONFIRM_TEXT
       return CONFIRM_TEXT
-    };
+    }
   }
 
   componentWillUnmount() {
@@ -232,10 +235,11 @@ class DocumentPage extends Component {
   }
 
   saveDocument = extraParams => {
-    if (this.state.contentsErrorMessage ||
+    if (
+      this.state.contentsErrorMessage ||
       this.state.schemaErrorMessage ||
-      this.state.validationErrorMessage) {
-
+      this.state.validationErrorMessage
+    ) {
       // TODO(azirbel): Maybe show a warning / popup
       console.warn('Document has errors; not saving')
       return
@@ -294,7 +298,7 @@ class DocumentPage extends Component {
   }
 
   handlers = {
-    save: (e) => {
+    save: e => {
       this.saveDocument()
 
       if (e.preventDefault) {
@@ -303,7 +307,7 @@ class DocumentPage extends Component {
         // internet explorer
         e.returnValue = false
       }
-    }
+    },
   }
 
   // TODO(azirbel): Getters?
@@ -313,8 +317,10 @@ class DocumentPage extends Component {
   schemaEditable = () =>
     this.contentsEditable() && !this.state.document.schemaLocked
   hasSaved = () => {
-    return this.state.originalContents === this.state.savedOriginalContents &&
+    return (
+      this.state.originalContents === this.state.savedOriginalContents &&
       this.state.originalSchema === this.state.savedOriginalSchema
+    )
   }
 
   render() {
@@ -380,7 +386,12 @@ class DocumentPage extends Component {
         <Helmet>
           <title>{this.state.document.title}</title>
         </Helmet>
-        <HotKeys keyMap={this.keyMap} handlers={this.handlers} focused={true} attach={window} />
+        <HotKeys
+          keyMap={this.keyMap}
+          handlers={this.handlers}
+          focused={true}
+          attach={window}
+        />
         {!this.contentsEditable() && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
