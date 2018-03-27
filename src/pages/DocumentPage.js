@@ -15,12 +15,15 @@ import Schema from '../models/Schema'
 
 import ContentsEditor from './DocumentPage/ContentsEditor'
 import DocumentPageHeader from './DocumentPage/DocumentPageHeader'
+import LeaveModal from './DocumentPage/LeaveModal'
 import LockContentsModal from './DocumentPage/LockContentsModal'
 import LockSchemaModal from './DocumentPage/LockSchemaModal'
 import SchemaEditor from './DocumentPage/SchemaEditor'
 import ShareModal from './DocumentPage/ShareModal'
 
 import {} from './DocumentPage.css'
+
+const CONFIRM_TEXT = 'Your document has unsaved changes. Are you sure you want to leave?'
 
 class DocumentPage extends Component {
   state = {
@@ -32,6 +35,7 @@ class DocumentPage extends Component {
     lockdownContentsModalVisible: false,
     lockdownSchemaModalVisible: false,
     modalActionInProgress: false,
+    modalCallback: null,
     openModalName: null,
     originalContents: '',
     originalSchema: '',
@@ -64,15 +68,30 @@ class DocumentPage extends Component {
   }
 
   validationsHandlerId = null
+  beforeNavListener = null
 
   componentDidMount() {
     this.loadDocument(this.props.params.documentToken)
     this.validationsHandlerId = setInterval(this.runValidations, 100)
+
+    this.beforeNavListener = this.props.router.listenBefore((location, done) => {
+      if (this.hasSaved()) {
+        done()
+      } else {
+        this.setOpenModal('leave', () => done())
+      }
+    })
+
+    window.onbeforeunload = (e) => {
+      e.returnValue = CONFIRM_TEXT
+      return CONFIRM_TEXT
+    };
   }
 
   componentWillUnmount() {
     // TODO(azirbel): Confirm that this stops running on client-side transitions
     clearInterval(this.validationsHandlerId)
+    this.beforeNavListener()
   }
 
   componentWillReceiveProps(newProps) {
@@ -266,8 +285,8 @@ class DocumentPage extends Component {
     })
   }
 
-  setOpenModal = openModalName => {
-    this.setState({ openModalName })
+  setOpenModal = (openModalName, modalCallback) => {
+    this.setState({ openModalName, modalCallback })
   }
 
   keyMap = {
@@ -293,12 +312,12 @@ class DocumentPage extends Component {
     this.titleEditable() && !this.state.document.contentsLocked
   schemaEditable = () =>
     this.contentsEditable() && !this.state.document.schemaLocked
+  hasSaved = () => {
+    return this.state.originalContents === this.state.savedOriginalContents &&
+      this.state.originalSchema === this.state.savedOriginalSchema
+  }
 
   render() {
-    let hasSaved =
-      this.state.originalContents === this.state.savedOriginalContents &&
-      this.state.originalSchema === this.state.savedOriginalSchema
-
     let overallErrorMessage =
       (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
       (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
@@ -332,11 +351,17 @@ class DocumentPage extends Component {
           isOpen={this.state.openModalName === 'share'}
           onClose={() => this.setOpenModal(null)}
         />
+        <LeaveModal
+          document={this.state.document}
+          isOpen={this.state.openModalName === 'leave'}
+          onClose={() => this.setOpenModal(null)}
+          onDiscard={() => this.state.modalCallback()}
+        />
         <DocumentPageHeader
           contentsEditable={this.contentsEditable()}
           document={this.state.document}
           errorMessage={overallErrorMessage}
-          hasSaved={hasSaved}
+          hasSaved={this.hasSaved()}
           isSavingDocument={this.state.isSaving}
           onLoadDocument={this.onLoadDocument}
           onOpenShareModal={() => this.setOpenModal('share')}
