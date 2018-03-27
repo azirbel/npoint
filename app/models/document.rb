@@ -3,23 +3,23 @@ class Document < ActiveRecord::Base
 
   validate :contents_must_match_schema
 
-  # TODO(azirbel): Allow storing ECMA-404-valid JSON here, not just
-  # arrays and objects
-
-  # TODO(azirbel): Allow "null" values in the JSON
-
   belongs_to :user
 
-  # TODO(azirbel): Test for collision case
+  # 5 years to guess a specific token at 10k attempts/second:
+  # log(16, 10000 * 60 * 60 * 24 * 365 * 5) ~= 10.13
+  #
+  # That's not actually right, because we want something like "number of
+  # attempts between guesses which produce ANY document" - you shouldn't be
+  # able to brute force and get interesting documents quickly.
+  #
+  # But it's ok for now. Token-based security is only so strong anyway,
+  # since URLs show up in logs and can't be rolled back if leaked.
+  TOKEN_LENGTH = 10
+
+  # TODO(azirbel): DB or rails-level uniqueness validation
   def create_unique_identifier
     begin
-      # 5 years to guess at 10k attempts/second:
-      # log(16, 10000 * 60 * 60 * 24 * 365 * 5) ~= 10.13
-      #
-      # TODO(azirbel): Yeah, that ^ is not actually right because we want something like
-      # "number of attempts between guesses which produce ANY document" - you shouldn't
-      # be able to brute force and get interesting documents quickly
-      self.token = SecureRandom.hex(10)
+      self.token = SecureRandom.hex(TOKEN_LENGTH)
     end while self.class.exists?(:token => token)
   end
 
