@@ -107,21 +107,21 @@ button {
     background-color: var(--gray) !important;
     cursor: default;
   }
-}
 
-.button-loading {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  padding: 5px;
-  background-color: inherit;
-  opacity: 0;
+  & .button-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    background-color: inherit;
+    opacity: 0;
 
-  &.visible {
-    opacity: 1;
-    transition: opacity var(--transitionTiming) ease-in;
+    &.visible {
+      opacity: 1;
+      transition: opacity var(--transitionTiming) ease-in;
+    }
   }
 }
 
