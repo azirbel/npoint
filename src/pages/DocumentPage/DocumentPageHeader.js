@@ -60,7 +60,7 @@ export default class DocumentPageHeader extends Component {
             trigger={['click', 'hover']}
             overlay="Only you can edit this document"
           >
-            <div className="badge primary cursor-default">Yours</div>
+            <div className="badge primary">Yours</div>
           </Tooltip>
         ) : (
           <Tooltip
@@ -68,7 +68,7 @@ export default class DocumentPageHeader extends Component {
             trigger={['click', 'hover']}
             overlay="Anyone with the URL can edit this document"
           >
-            <div className="badge dark-gray cursor-default">Public</div>
+            <div className="badge dark-gray">Public</div>
           </Tooltip>
         )}
         <div className="flex-spring" />

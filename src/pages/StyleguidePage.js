@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import Logo from '../components/Logo'
 import Input from '../components/Input'
-import Badge from '../components/Badge'
 import Button from '../components/Button'
 import { Tabs, Tab } from '../components/Tabs'
 import {} from './StyleguidePage.css'
@@ -36,9 +35,14 @@ export default class StyleguidePage extends Component {
         </div>
         <div className="section">
           <div className="container">
-            <h1 className="prose">Badge</h1>
-            <Badge label="Beta" />
-            <Badge label="Beta" classNames="warning" />
+            <h1 className="prose">Badges</h1>
+            <div className="badge-group">
+              <div className="badge">.badge</div>
+              <div className="badge warning">.badge.warning</div>
+              <div className="badge danger">.badge.danger</div>
+              <div className="badge dark-gray">.badge.dark-gray</div>
+              <div className="badge primary">.badge.primary</div>
+            </div>
           </div>
         </div>
         <div className="section">

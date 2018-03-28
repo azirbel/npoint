@@ -11,6 +11,7 @@
   display: inline-flex;
   font-size: 14px;
   padding: 3px 8px;
+  cursor: default;
 
   &.full-width {
     display: flex;

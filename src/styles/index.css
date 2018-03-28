@@ -26,10 +26,6 @@ body {
   cursor: pointer;
 }
 
-.cursor-default {
-  cursor: default;
-}
-
 .overlay {
   z-index: 4;
 }
