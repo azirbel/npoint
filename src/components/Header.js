@@ -13,24 +13,24 @@ import SlideDown from '../components/animations/SlideDown'
 import {} from './Header.css'
 
 class Header extends Component {
-  // TODO(azirbel): Add more proptypes
   static propTypes = {
     className: PropTypes.string,
+    session: PropTypes.object,
+    fullWidth: PropTypes.bool,
+    fullLogo: PropTypes.bool,
   }
 
   render() {
-    let { className, session, children, fullWidth, fullLogo } = this.props
-
     let headerClass =
       'header-container container' +
-      (fullWidth ? ' full-width' : '') +
-      (children ? ' small-logo' : '')
+      (this.props.fullWidth ? ' full-width' : '') +
+      (this.props.children ? ' small-logo' : '')
 
     return (
-      <div className={className}>
+      <div className={this.props.className}>
         <header className="header">
           <div className={headerClass}>
-            {fullLogo ? (
+            {this.props.fullLogo ? (
               <Logo />
             ) : (
               <Link to="/" className="unstyled">
@@ -39,11 +39,11 @@ class Header extends Component {
                 </div>
               </Link>
             )}
-            {children}
+            {this.props.children}
             <div className="user-info-container">
-              {session.loaded && (
+              {this.props.session.loaded && (
                 <SlideDown>
-                  {session.loggedIn ? (
+                  {this.props.session.loggedIn ? (
                     <AccountDropdown key="acc" />
                   ) : (
                     <LoginDropdown key="login" />

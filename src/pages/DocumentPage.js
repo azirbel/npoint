@@ -94,7 +94,6 @@ class DocumentPage extends Component {
   }
 
   componentWillUnmount() {
-    // TODO(azirbel): Confirm that this stops running on client-side transitions
     clearInterval(this.validationsHandlerId)
     this.unmountBeforeNavigation()
     window.onbeforeunload = null
@@ -243,7 +242,6 @@ class DocumentPage extends Component {
       this.state.schemaErrorMessage ||
       this.state.validationErrorMessage
     ) {
-      // TODO(azirbel): Maybe show a warning / popup
       console.warn('Document has errors; not saving')
       return
     }

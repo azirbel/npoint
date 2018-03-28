@@ -1,5 +1,4 @@
 class ResetPasswordController < ApplicationController
-  # TODO(azirbel): Rate limit
   def send_reset_password_email
     user = User.find_by!(email: params.require(:email))
     token = set_reset_password_token(user)

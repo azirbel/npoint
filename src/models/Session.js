@@ -9,6 +9,6 @@ export default {
     }),
   logout: () =>
     axios.delete('/users/sign_out', {
-      data: {}, // TODO(azirbel): Workaround for axios bug https://github.com/mzabriskie/axios/issues/362
+      data: {}, // Workaround for axios bug https://github.com/mzabriskie/axios/issues/362
     }),
 }
