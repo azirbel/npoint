@@ -55,6 +55,16 @@ class DocumentPage extends Component {
     Document.get(token).then(({ data }) => this.onLoadDocument(data))
   }
 
+  loadCachedThinDocument(token) {
+    let thinDocument = _.find(this.props.thinDocumentsCache, (doc) => {
+      return doc.token === this.props.params.documentToken
+    })
+
+    if (thinDocument) {
+      this.setState({ document: thinDocument })
+    }
+  }
+
   onLoadDocument = data => {
     this.setState({
       contents: data.contents,
@@ -72,6 +82,7 @@ class DocumentPage extends Component {
   unmountBeforeNavigation = null
 
   componentDidMount() {
+    this.loadCachedThinDocument(this.props.params.documentToken)
     this.loadDocument(this.props.params.documentToken)
     this.validationsHandlerId = setInterval(this.runValidations, 100)
 
@@ -477,4 +488,10 @@ class DocumentPage extends Component {
   }
 }
 
-export default connect()(DocumentPage)
+let mapStateToProps = state => {
+  return {
+    thinDocumentsCache: state.thinDocumentsCache,
+  }
+}
+
+export default connect(mapStateToProps)(DocumentPage)

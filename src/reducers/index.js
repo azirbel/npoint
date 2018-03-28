@@ -2,7 +2,7 @@
 
 import { combineReducers } from 'redux'
 import { routerReducer as routing } from 'react-router-redux'
-import { LOG_IN, LOG_OUT } from '../actions'
+import { CACHE_THIN_DOCUMENTS, LOG_IN, LOG_OUT } from '../actions'
 
 function session(
   state = {
@@ -30,9 +30,22 @@ function session(
   }
 }
 
+function thinDocumentsCache(
+  state = [],
+  action
+) {
+  switch (action.type) {
+    case CACHE_THIN_DOCUMENTS:
+      return action.documents
+    default:
+      return state
+  }
+}
+
 let rootReducer = combineReducers({
   routing,
   session,
+  thinDocumentsCache,
 })
 
 export default rootReducer

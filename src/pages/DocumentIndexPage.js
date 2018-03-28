@@ -7,12 +7,13 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 import { push } from 'react-router-redux'
+import { MdDelete, MdLock, MdLockOutline } from 'react-icons/lib/md'
 import _ from 'lodash'
 
 import Button from '../components/Button'
 import Document from '../models/Document'
 import Header from '../components/Header'
-import { MdDelete, MdLock, MdLockOutline } from 'react-icons/lib/md'
+import { cacheThinDocuments } from '../actions'
 
 import {} from './DocumentIndexPage.css'
 
@@ -27,6 +28,7 @@ class DocumentIndexPage extends Component {
     this.setState({ isLoading: true })
     Document.query().then(
       response => {
+        this.props.dispatch(cacheThinDocuments(response.data))
         this.setState({ documents: response.data, isLoading: false })
       },
       error => {}
@@ -125,6 +127,7 @@ class DocumentIndexPage extends Component {
 let mapStateToProps = state => {
   return {
     session: state.session,
+    documents: state.documents,
   }
 }
 
