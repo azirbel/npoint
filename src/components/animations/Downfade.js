@@ -12,7 +12,7 @@ export default class Downfade extends Component {
   }
 
   render() {
-    let className=`downfade-component ${this.props.className || ''}`
+    let className = `downfade-component ${this.props.className || ''}`
 
     return (
       <CSSTransitionGroup

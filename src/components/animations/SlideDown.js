@@ -13,7 +13,7 @@ export default class SlideDown extends Component {
 
   render() {
     return (
-      <div className='slide-down-component'>
+      <div className="slide-down-component">
         <CSSTransitionGroup
           component="div"
           className={this.props.className}

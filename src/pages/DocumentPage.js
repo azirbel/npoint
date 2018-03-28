@@ -56,7 +56,7 @@ class DocumentPage extends Component {
   }
 
   loadCachedThinDocument(token) {
-    let thinDocument = _.find(this.props.thinDocumentsCache, (doc) => {
+    let thinDocument = _.find(this.props.thinDocumentsCache, doc => {
       return doc.token === this.props.params.documentToken
     })
 
@@ -113,7 +113,10 @@ class DocumentPage extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.params.documentToken !== this.props.params.documentToken) {
       this.loadDocument(newProps.params.documentToken)
-    } else if (this.props.session.loaded && (newProps.session.loggedIn !== this.props.session.loggedIn)) {
+    } else if (
+      this.props.session.loaded &&
+      newProps.session.loggedIn !== this.props.session.loggedIn
+    ) {
       this.loadDocument(this.props.params.documentToken)
     }
   }

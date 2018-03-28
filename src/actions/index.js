@@ -20,6 +20,6 @@ export function logOut() {
 export function cacheThinDocuments(documents) {
   return {
     type: CACHE_THIN_DOCUMENTS,
-    documents
+    documents,
   }
 }

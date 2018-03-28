@@ -77,13 +77,19 @@ class AccountPage extends Component {
         <Helmet>
           <title>Account</title>
         </Helmet>
-        {this.props.session.loaded ? this.renderMain() : <PageLoadingPlaceholder />}
+        {this.props.session.loaded ? (
+          this.renderMain()
+        ) : (
+          <PageLoadingPlaceholder />
+        )}
       </div>
     )
   }
 
   renderMain() {
-    if (!this.props.session.loggedIn) { return <div /> }
+    if (!this.props.session.loggedIn) {
+      return <div />
+    }
 
     return (
       <div className="container">
@@ -124,8 +130,8 @@ class AccountPage extends Component {
             </Button>
             {this.state.errorResettingPassword && (
               <div className="text-error password-reset-confirmation">
-                Could not send an email to {this.props.session.user.email}. Please try
-                again later.
+                Could not send an email to {this.props.session.user.email}.
+                Please try again later.
               </div>
             )}
             {this.state.resetPasswordEmailSent && (

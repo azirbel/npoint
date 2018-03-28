@@ -49,9 +49,7 @@ export default class SchemaEditor extends Component {
       <div className="schema-editor">
         {this.props.contentsEditable && (
           <div className="toolbar-container">
-            <SlideDown>
-              {this.renderToolbar()}
-            </SlideDown>
+            <SlideDown>{this.renderToolbar()}</SlideDown>
           </div>
         )}
         <JsonEditor

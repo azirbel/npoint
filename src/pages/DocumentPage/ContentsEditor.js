@@ -47,9 +47,7 @@ export default class ContentsEditor extends Component {
       <div className="contents-editor">
         {!this.props.readOnly && (
           <div className="toolbar-container">
-            <SlideDown>
-              {this.renderToolbar()}
-            </SlideDown>
+            <SlideDown>{this.renderToolbar()}</SlideDown>
           </div>
         )}
         <JsonEditor

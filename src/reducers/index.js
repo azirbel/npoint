@@ -30,10 +30,7 @@ function session(
   }
 }
 
-function thinDocumentsCache(
-  state = [],
-  action
-) {
+function thinDocumentsCache(state = [], action) {
   switch (action.type) {
     case CACHE_THIN_DOCUMENTS:
       return action.documents
