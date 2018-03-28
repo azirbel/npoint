@@ -63,13 +63,15 @@ export default class DocumentPageHeader extends Component {
             <div className="badge primary">Yours</div>
           </Tooltip>
         ) : (
-          <Tooltip
-            placement="bottom"
-            trigger={['click', 'hover']}
-            overlay="Anyone with the URL can edit this document"
-          >
-            <div className="badge dark-gray">Public</div>
-          </Tooltip>
+          this.props.document.editable && (
+            <Tooltip
+              placement="bottom"
+              trigger={['click', 'hover']}
+              overlay="Anyone with the URL can edit this document"
+            >
+              <div className="badge dark-gray">Public</div>
+            </Tooltip>
+          )
         )}
         <div className="flex-spring" />
         {this.props.contentsEditable && this.renderSaveButton()}

@@ -6,7 +6,6 @@ import { MdArrowDropDown } from 'react-icons/lib/md'
 import { findDOMNode } from 'react-dom'
 import Overlay from 'react-overlays/lib/Overlay'
 import { Link } from 'react-router'
-import { push } from 'react-router-redux'
 import _ from 'lodash'
 
 import Session from '../../models/Session'
@@ -24,9 +23,7 @@ class AccountDropdown extends Component {
   logOut() {
     let { dispatch } = this.props
     Session.logout().then(() => {
-      // TODO(azirbel): Put the redirect dispatch inside the logOut one
       dispatch(logOut())
-      dispatch(push('/'))
     })
   }
 

@@ -245,8 +245,7 @@ class Login extends Component {
       <Downfade className="text-small text-error">
         {errors.map((err, idx) => (
           <div className="flex align-center" key={idx}>
-            <MdReportProblem />
-            &nbsp;
+            <MdReportProblem className="icon margin-right" />
             {err}
           </div>
         ))}

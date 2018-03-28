@@ -113,6 +113,8 @@ class DocumentPage extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.params.documentToken !== this.props.params.documentToken) {
       this.loadDocument(newProps.params.documentToken)
+    } else if (this.props.session.loaded && (newProps.session.loggedIn !== this.props.session.loggedIn)) {
+      this.loadDocument(this.props.params.documentToken)
     }
   }
 
@@ -490,6 +492,7 @@ class DocumentPage extends Component {
 
 let mapStateToProps = state => {
   return {
+    session: state.session,
     thinDocumentsCache: state.thinDocumentsCache,
   }
 }

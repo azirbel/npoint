@@ -3,8 +3,4 @@
 .login-dropdown-component {
   display: flex;
   justify-content: flex-end;
-
-  & .login-dropdown-button {
-    margin-right: -8px; /* eyeball align with right side of container */
-  }
 }

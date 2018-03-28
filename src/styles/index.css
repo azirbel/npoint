@@ -33,3 +33,11 @@ body {
 .hidden-iframe {
   display: none;
 }
+
+.icon {
+  flex-shrink: 0;
+
+  &.margin-right {
+    margin-right: 6px; /* better than nbsp */
+  }
+}

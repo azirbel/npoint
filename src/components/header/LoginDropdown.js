@@ -21,7 +21,7 @@ export default class LoginDropdown extends Component {
     return (
       <div className="login-dropdown-component">
         <button
-          className="button subtle login-dropdown-button"
+          className="button subtle"
           ref="target"
           onClick={() => this.setState({ show: !this.state.show })}
         >

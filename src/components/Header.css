@@ -42,7 +42,8 @@
   }
 
   & .user-info-container {
-    min-width: 80px; /* No jitter on page load before login state is known */
+    min-width: 88px; /* No jitter on page load before login state is known */
+    margin-right: -8px; /* eyeball align with right side of container */
   }
 }
 

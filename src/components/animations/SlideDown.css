@@ -4,7 +4,7 @@
 
 .slide-down-component {
   position: relative;
-  overflow: hidden;
+  overflow-y: hidden;
 
   & .slide-down-enter {
     transform: translateY(-100%);
