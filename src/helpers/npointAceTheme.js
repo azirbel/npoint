@@ -10,7 +10,7 @@ ace.define(
   function(acequire, exports, module) {
     exports.isDark = false
     exports.cssClass = 'ace-npoint'
-    exports.cssText = require('./npoint-ace-theme.css')
+    exports.cssText = require('./npointAceTheme.css')
 
     var dom = acequire('../lib/dom')
     dom.importCssString(exports.cssText, exports.cssClass)

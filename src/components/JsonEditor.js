@@ -9,7 +9,7 @@ import _ from 'lodash'
 import 'brace/mode/javascript'
 import 'brace/snippets/javascript'
 import 'brace/ext/language_tools'
-import '../helpers/npoint-ace-theme'
+import '../helpers/npointAceTheme'
 
 import {} from './JsonEditor.css'
 
