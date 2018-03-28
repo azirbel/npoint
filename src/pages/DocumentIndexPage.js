@@ -1,41 +1,51 @@
 // @format
 
 import React, { Component } from 'react'
-import { isEmpty } from 'lodash'
-import { Link } from 'react-router'
-import { Helmet } from 'react-helmet'
 import Tooltip from 'rc-tooltip'
-import {} from './DocumentIndexPage.css'
+import { Helmet } from 'react-helmet'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { isEmpty } from 'lodash'
+import { push } from 'react-router-redux'
+import _ from 'lodash'
+
+import Button from '../components/Button'
 import Document from '../models/Document'
 import Header from '../components/Header'
-import Button from '../components/Button'
 import { MdDelete, MdLock, MdLockOutline } from 'react-icons/lib/md'
-import { without } from 'lodash'
 
-export default class DocumentIndexPage extends Component {
+import {} from './DocumentIndexPage.css'
+
+class DocumentIndexPage extends Component {
   state = {
     documents: [],
     isLoading: true,
-    needsAuth: false,
   }
 
   componentDidMount() {
+    this.maybeRedirectToHomepage(this.props)
     this.setState({ isLoading: true })
     Document.query().then(
       response => {
         this.setState({ documents: response.data, isLoading: false })
       },
-      error => {
-        if (error.response && error.response.status === 401) {
-          this.setState({ needsAuth: true, isLoading: false })
-        }
-      }
+      error => {}
     )
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.maybeRedirectToHomepage(newProps)
+  }
+
+  maybeRedirectToHomepage(props) {
+    if (props.session.loaded && !props.session.loggedIn) {
+      this.props.dispatch(push('/'))
+    }
   }
 
   deleteDocument(doc) {
     Document.delete(doc.token).then(() => {
-      this.setState({ documents: without(this.state.documents, doc) })
+      this.setState({ documents: _.without(this.state.documents, doc) })
     })
   }
 
@@ -57,9 +67,6 @@ export default class DocumentIndexPage extends Component {
                 <p>Try creating one with the "New" button in the header!</p>
               </div>
             )}
-          {this.state.needsAuth && (
-            <div>Please sign in to view your documents.</div>
-          )}
           {this.state.documents.map(doc => this.renderDocumentRow(doc))}
         </div>
       </div>
@@ -114,3 +121,11 @@ export default class DocumentIndexPage extends Component {
     }
   }
 }
+
+let mapStateToProps = state => {
+  return {
+    session: state.session,
+  }
+}
+
+export default connect(mapStateToProps)(DocumentIndexPage)

@@ -3,42 +3,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import User from '../models/User'
-import Header from '../components/Header'
-import ClickToEdit from '../components/ClickToEdit'
-import Button from '../components/Button'
 import { push } from 'react-router-redux'
+
+import Button from '../components/Button'
+import ClickToEdit from '../components/ClickToEdit'
+import Header from '../components/Header'
+import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
+import User from '../models/User'
+import { logIn } from '../actions'
+
 import {} from './AccountPage.css'
 
 class AccountPage extends Component {
   state = {
-    name: '',
-    email: '',
-    avatarUrl: '',
     isSavingName: false,
     isResettingPassword: false,
     resetPasswordEmailSent: false,
     errorResettingPassword: '',
   }
 
-  // TODO(azirbel): Use data from the redux store
   componentDidMount() {
-    User.me().then(({ data }) => {
-      if (!data.email) {
-        this.props.dispatch(push('/'))
-        return
-      }
-
-      this.onFetchUser(data)
-    })
+    this.maybeRedirectToHomepage(this.props)
   }
 
-  onFetchUser = userData => {
-    this.setState({
-      name: userData.name,
-      email: userData.email,
-      avatarUrl: userData.avatarUrl,
-    })
+  componentWillReceiveProps(newProps) {
+    this.maybeRedirectToHomepage(newProps)
+  }
+
+  maybeRedirectToHomepage(props) {
+    if (props.session.loaded && !props.session.loggedIn) {
+      this.props.dispatch(push('/'))
+    }
   }
 
   saveNewName = newName => {
@@ -46,7 +41,7 @@ class AccountPage extends Component {
     User.update({
       name: newName,
     }).then(({ data }) => {
-      this.onFetchUser(data)
+      this.props.dispatch(logIn(data))
       this.setState({ isSavingName: false })
     })
   }
@@ -57,7 +52,7 @@ class AccountPage extends Component {
       errorResettingPassword: false,
       resetPasswordEmailSent: false,
     })
-    User.sendResetPasswordEmail({ email: this.state.email })
+    User.sendResetPasswordEmail({ email: this.props.session.user.email })
       .then(() => {
         this.setState({
           isResettingPassword: false,
@@ -82,54 +77,62 @@ class AccountPage extends Component {
         <Helmet>
           <title>Account</title>
         </Helmet>
-        <div className="container">
-          <div className="account-info">
-            <div className="account-info-section">
-              <h5>Name</h5>
-              <ClickToEdit
-                value={this.state.name}
-                onChange={this.saveNewName}
-                isLoading={this.state.isSavingName}
-              />
+        {this.props.session.loaded ? this.renderMain() : <PageLoadingPlaceholder />}
+      </div>
+    )
+  }
+
+  renderMain() {
+    if (!this.props.session.loggedIn) { return <div /> }
+
+    return (
+      <div className="container">
+        <div className="account-info">
+          <div className="account-info-section">
+            <h5>Name</h5>
+            <ClickToEdit
+              value={this.props.session.user.name}
+              onChange={this.saveNewName}
+              isLoading={this.state.isSavingName}
+            />
+          </div>
+          <div className="account-info-section prose">
+            <h5>Email</h5>
+            {this.props.session.user.email}
+          </div>
+          <div className="account-info-section prose">
+            <h5>Avatar</h5>
+            <img
+              className="avatar"
+              role="presentation"
+              src={this.props.session.user.avatarUrl}
+            />
+            <div>
+              Change your image on&nbsp;
+              <a target="_blank" href="http://en.gravatar.com/">
+                Gravatar
+              </a>.
             </div>
-            <div className="account-info-section prose">
-              <h5>Email</h5>
-              {this.state.email}
-            </div>
-            <div className="account-info-section prose">
-              <h5>Avatar</h5>
-              <img
-                className="avatar"
-                alt={this.state.name}
-                src={this.state.avatarUrl}
-              />
-              <div>
-                Change your image on&nbsp;
-                <a target="_blank" href="http://en.gravatar.com/">
-                  Gravatar
-                </a>.
+          </div>
+          <div className="account-info-section prose">
+            <h5>Password</h5>
+            <Button
+              isLoading={this.state.isResettingPassword}
+              onClick={this.sendPasswordResetEmail}
+            >
+              Send a password reset email
+            </Button>
+            {this.state.errorResettingPassword && (
+              <div className="text-error password-reset-confirmation">
+                Could not send an email to {this.props.session.user.email}. Please try
+                again later.
               </div>
-            </div>
-            <div className="account-info-section prose">
-              <h5>Password</h5>
-              <Button
-                isLoading={this.state.isResettingPassword}
-                onClick={this.sendPasswordResetEmail}
-              >
-                Send a password reset email
-              </Button>
-              {this.state.errorResettingPassword && (
-                <div className="text-error password-reset-confirmation">
-                  Could not send an email to {this.state.email}. Please try
-                  again later.
-                </div>
-              )}
-              {this.state.resetPasswordEmailSent && (
-                <div className="text-success password-reset-confirmation">
-                  Sent! Check your email to set a new password.
-                </div>
-              )}
-            </div>
+            )}
+            {this.state.resetPasswordEmailSent && (
+              <div className="text-success password-reset-confirmation">
+                Sent! Check your email to set a new password.
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -137,4 +140,10 @@ class AccountPage extends Component {
   }
 }
 
-export default connect()(AccountPage)
+let mapStateToProps = state => {
+  return {
+    session: state.session,
+  }
+}
+
+export default connect(mapStateToProps)(AccountPage)

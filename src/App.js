@@ -13,13 +13,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let { dispatch } = this.props
     User.me().then(
       response => {
         if (response.data && response.data.name) {
-          dispatch(logIn(response.data))
+          this.props.dispatch(logIn(response.data))
         } else {
-          dispatch(logOut())
+          this.props.dispatch(logOut())
         }
       },
       error => {}
