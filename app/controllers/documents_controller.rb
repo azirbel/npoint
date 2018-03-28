@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   before_action :check_document_edit_rights!, :only => [:update, :destroy]
 
   def index
-    render json: current_user.documents, each_serializer: SERIALIZER
+    render json: current_user.documents, each_serializer: DocumentIndexSerializer
   end
 
   def show
