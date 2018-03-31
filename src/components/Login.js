@@ -52,8 +52,8 @@ class Login extends Component {
         return
       }
 
-      let { name, email, avatarUrl } = response.data
-      this.props.dispatch(logIn({ name, email, avatarUrl }))
+      let user = response.data
+      this.props.dispatch(logIn(user))
       this.props.onLogin()
     })
   }
@@ -67,8 +67,8 @@ class Login extends Component {
       .then(response => {
         this.setState({ isLoggingIn: false })
 
-        let { name, email, avatarUrl } = response.data
-        this.props.dispatch(logIn({ name, email, avatarUrl }))
+        let user = response.data
+        this.props.dispatch(logIn(user))
         this.props.onLogin()
       })
       .catch(error => {

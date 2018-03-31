@@ -32,7 +32,6 @@ class ResetPasswordPage extends Component {
       reset_token: resetToken,
     }).then(response => {
       let { name, email, avatarUrl } = response
-      debugger
       dispatch(logIn({ name, email, avatarUrl }))
       dispatch(push('/docs'))
     })

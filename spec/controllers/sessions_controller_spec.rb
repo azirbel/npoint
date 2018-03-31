@@ -17,11 +17,21 @@ RSpec.describe SessionsController do
         get :info
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq(serialize_one(user))
+        expect(parsed_response['has_documents']).to be(false)
       end
 
       it 'does not return the user id' do
         get :info
         expect(parsed_response['id']).to be_nil
+      end
+
+      context 'with documents' do
+        let!(:doc) { create :document, user: user }
+
+        it 'returns that the user has documents' do
+          get :info
+          expect(parsed_response['has_documents']).to be(true)
+        end
       end
     end
 
