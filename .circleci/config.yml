@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-       - image: circleci/ruby:2.3.4-node-browsers
+      - image: circleci/ruby:2.3.4-node-browsers
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
