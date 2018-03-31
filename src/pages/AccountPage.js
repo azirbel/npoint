@@ -10,6 +10,7 @@ import ClickToEdit from '../components/ClickToEdit'
 import Header from '../components/Header'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import User from '../models/User'
+import createNewDocument from '../helpers/createNewDocument'
 import { logIn } from '../actions'
 
 import {} from './AccountPage.css'
@@ -73,6 +74,9 @@ class AccountPage extends Component {
         <Header>
           <h1 className="page-title">Account</h1>
           <div className="flex-spring" />
+          <Button onClick={() => createNewDocument(this.props.router)}>
+            + New Document
+          </Button>
         </Header>
         <Helmet>
           <title>Account</title>

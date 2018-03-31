@@ -1,11 +1,14 @@
 // @format
 
 import React, { Component } from 'react'
+import { MdFlashOn, MdEdit, MdLock } from 'react-icons/lib/md'
+
+import Button from '../components/Button'
 import JsonEditor from '../components/JsonEditor'
-import Document from '../models/Document'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { MdFlashOn, MdEdit, MdLock } from 'react-icons/lib/md'
+import createNewDocument from '../helpers/createNewDocument'
+
 import {} from './IndexPage.css'
 
 export default class IndexPage extends Component {
@@ -20,23 +23,14 @@ export default class IndexPage extends Component {
     ),
   }
 
-  createNewDocument = () => {
-    Document.create({
-      title: 'Untitled',
-      contents: this.state.newDocumentContents,
-    }).then(response => {
-      this.props.router.push(`/docs/${response.data.token}`)
-    })
-  }
-
   render() {
     return (
       <div className="index-page">
         <Header fullLogo={true}>
           <div className="flex-spring" />
-          <button className="button primary" onClick={this.createNewDocument}>
+          <Button className="primary" onClick={() => createNewDocument(this.props.router)}>
             + New
-          </button>
+          </Button>
         </Header>
         <div className="section dark-white index-splash">
           <div className="container prose text-center">
@@ -59,12 +53,12 @@ export default class IndexPage extends Component {
                 }
               />
               <div className="index-editor-buttons flex justify-center">
-                <button
-                  className="button cta large"
-                  onClick={() => this.createNewDocument()}
+                <Button
+                  className="cta large"
+                  onClick={() => createNewDocument(this.props.router, this.state.newDocumentContents)}
                 >
                   Save
-                </button>
+                </Button>
               </div>
             </div>
           </div>

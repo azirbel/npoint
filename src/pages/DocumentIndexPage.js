@@ -14,6 +14,7 @@ import Button from '../components/Button'
 import Document from '../models/Document'
 import Header from '../components/Header'
 import { cacheThinDocuments } from '../actions'
+import createNewDocument from '../helpers/createNewDocument'
 
 import {} from './DocumentIndexPage.css'
 
@@ -57,6 +58,9 @@ class DocumentIndexPage extends Component {
         <Header>
           <h1 className="page-title">My Documents</h1>
           <div className="flex-spring" />
+          <Button onClick={() => createNewDocument(this.props.router)}>
+            + New
+          </Button>
         </Header>
         <Helmet>
           <title>My Documents</title>
