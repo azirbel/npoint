@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
 import { Helmet } from 'react-helmet'
 import { HotKeys } from 'react-hotkeys'
+import { push } from 'react-router-redux'
 import _ from 'lodash'
 
 import { IFRAME_SRC_DOC, evalParseObject } from '../helpers/sandboxedEval'
@@ -26,29 +27,31 @@ import {} from './DocumentPage.css'
 const CONFIRM_TEXT =
   'Your document has unsaved changes. Are you sure you want to leave?'
 
+const INITIAL_STATE = {
+  contents: null,
+  contentsErrorMessage: '',
+  document: {},
+  isLoading: false,
+  isSaving: false,
+  lockdownContentsModalVisible: false,
+  lockdownSchemaModalVisible: false,
+  modalActionInProgress: false,
+  modalCallback: null,
+  openModalName: null,
+  originalContents: '',
+  originalSchema: '',
+  savedOriginalContents: '',
+  savedOriginalSchema: '',
+  schema: null,
+  schemaErrorMessage: '',
+  serverErrors: [],
+  showContentsErrorMessage: false,
+  showSchemaErrorMessage: false,
+  validationErrorMessage: '',
+}
+
 class DocumentPage extends Component {
-  state = {
-    contents: null,
-    contentsErrorMessage: '',
-    document: {},
-    isLoading: false,
-    isSaving: false,
-    lockdownContentsModalVisible: false,
-    lockdownSchemaModalVisible: false,
-    modalActionInProgress: false,
-    modalCallback: null,
-    openModalName: null,
-    originalContents: '',
-    originalSchema: '',
-    savedOriginalContents: '',
-    savedOriginalSchema: '',
-    schema: null,
-    schemaErrorMessage: '',
-    serverErrors: [],
-    showContentsErrorMessage: false,
-    showSchemaErrorMessage: false,
-    validationErrorMessage: '',
-  }
+  state = INITIAL_STATE
 
   loadDocument(token) {
     this.setState({ isLoading: true })
@@ -288,6 +291,23 @@ class DocumentPage extends Component {
     })
   }
 
+  requestCloneDocument = () => {
+    if (this.hasSaved()) {
+      this.cloneDocument()
+    } else {
+      this.setOpenModal('leave', () => this.cloneDocument())
+    }
+
+  }
+
+  cloneDocument = () => {
+    return Document.clone(this.props.params.documentToken)
+    .then(({ data }) => {
+      this.setState(INITIAL_STATE)
+      this.props.dispatch(push(`/docs/${data.token}`))
+    })
+  }
+
   handleLockContents = () => {
     this.setState({ modalActionInProgress: true })
 
@@ -388,6 +408,7 @@ class DocumentPage extends Component {
           errorMessage={overallErrorMessage}
           hasSaved={this.hasSaved()}
           isSavingDocument={this.state.isSaving}
+          onClone={this.requestCloneDocument}
           onLoadDocument={this.onLoadDocument}
           onOpenShareModal={() => this.setOpenModal('share')}
           onSaveDocument={() => this.saveDocument()}

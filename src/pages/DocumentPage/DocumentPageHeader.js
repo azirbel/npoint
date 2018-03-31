@@ -19,6 +19,7 @@ export default class DocumentPageHeader extends Component {
     errorMessage: PropTypes.string,
     hasSaved: PropTypes.bool.isRequired,
     isSavingDocument: PropTypes.bool,
+    onClone: PropTypes.func.isRequired,
     onLoadDocument: PropTypes.func.isRequired,
     onOpenShareModal: PropTypes.func.isRequired,
     onSaveDocument: PropTypes.func.isRequired,
@@ -75,9 +76,12 @@ export default class DocumentPageHeader extends Component {
         )}
         <div className="flex-spring" />
         {this.props.contentsEditable && this.renderSaveButton()}
-        <button className="button subtle" onClick={this.props.onOpenShareModal}>
+        <Button onClick={this.props.onClone}>
+          Clone
+        </Button>
+        <Button className="subtle" onClick={this.props.onOpenShareModal}>
           Share
-        </button>
+        </Button>
       </Header>
     )
   }

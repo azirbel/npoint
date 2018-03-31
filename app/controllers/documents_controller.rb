@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   before_action :check_document_edit_rights!, :only => [:update, :destroy]
 
   def index
-    render json: current_user.documents, each_serializer: DocumentIndexSerializer
+    render json: current_user.documents.order(:title, :created_at), each_serializer: DocumentIndexSerializer
   end
 
   def show
@@ -46,6 +46,20 @@ class DocumentsController < ApplicationController
       document.destroy!
       head :ok
     end
+  end
+
+  def clone
+    new_title = document.title.ends_with?(" (Copy)") ? document.title : "#{document.title} (Copy)"
+    new_document = Document.create!(
+      title: new_title,
+      contents: document.contents,
+      user: current_user,
+      original_contents: document.original_contents,
+      schema: document.schema,
+      original_schema: document.original_schema
+    )
+
+    render json: new_document, serializer: SERIALIZER
   end
 
   private

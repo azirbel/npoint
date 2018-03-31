@@ -11,6 +11,10 @@ RSpec.describe DocumentsController do
   end
 
   describe '#index' do
+    def serializer
+      DocumentIndexSerializer
+    end
+
     context 'with no logged in user' do
       it 'returns a 401' do
         get :index
@@ -404,6 +408,60 @@ RSpec.describe DocumentsController do
         expect(parsed_response['example_subproperty_url']).to eq(
           "http://api.test.com/#{unowned_document.token}/0/a"
         )
+      end
+    end
+  end
+
+  describe '#clone' do
+    context 'with no logged in user' do
+      it 'clones a document' do
+        expect {
+          post :clone, token: owned_document1.token
+        }.to change(Document, :count).by(1)
+
+        expect(Document.last.contents).to eq(owned_document1.contents)
+        expect(Document.last.token).not_to eq(owned_document1.token)
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response['title']).to eq("#{owned_document1.title} (Copy)")
+        expect(parsed_response['token']).not_to eq(owned_document1.token)
+      end
+    end
+
+    context 'with a logged in user' do
+      before { sign_in user }
+
+      it 'copies an unowned document to one owned by the user' do
+        expect {
+          post :clone, token: unowned_document.token
+        }.to change(Document, :count).by(1)
+
+        expect(Document.last.user).not_to eq(unowned_document.user)
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response['owned_by_current_user']).to be(true)
+      end
+
+      it 'copies an owned document' do
+        expect {
+          post :clone, token: owned_document1.token
+        }.to change(Document, :count).by(1)
+
+        expect(Document.last.user).to eq(owned_document1.user)
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response['owned_by_current_user']).to be(true)
+      end
+
+      it 'copies a document owned by a different user' do
+        expect {
+          post :clone, token: user2_document.token
+        }.to change(Document, :count).by(1)
+
+        expect(Document.last.user).not_to eq(user2_document.user)
+
+        expect(response).to have_http_status(200)
+        expect(parsed_response['owned_by_current_user']).to be(true)
       end
     end
   end

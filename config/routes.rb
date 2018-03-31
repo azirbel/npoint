@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   get 'faq', to: 'app#index'
   get 'reset-password', to: 'app#index'
 
-  resources :documents, param: :token, only: [:index, :create, :show, :update, :destroy]
+  resources :documents, param: :token, only: [:index, :create, :show, :update, :destroy] do
+    member do
+      post :clone
+    end
+  end
 
   resources :schema, only: [] do
     collection do

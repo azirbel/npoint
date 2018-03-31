@@ -10,4 +10,5 @@ export default {
   create: params => axios.post(BASE_URL, params),
   update: (token, params) => axios.patch(`${BASE_URL}/${token}`, params),
   delete: token => axios.delete(`${BASE_URL}/${token}`),
+  clone: token => axios.post(`${BASE_URL}/${token}/clone`),
 }
