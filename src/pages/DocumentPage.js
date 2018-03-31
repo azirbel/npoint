@@ -68,6 +68,11 @@ class DocumentPage extends Component {
     }
   }
 
+  onSaveTitle = newTitle => {
+    // Need to update the saved title but keep other WIP edits the user may have
+    this.setState({ document: _.merge({}, this.state.document, { title: newTitle }) })
+  }
+
   onLoadDocument = data => {
     this.setState({
       contents: data.contents,
@@ -409,7 +414,7 @@ class DocumentPage extends Component {
           hasSaved={this.hasSaved()}
           isSavingDocument={this.state.isSaving}
           onClone={this.requestCloneDocument}
-          onLoadDocument={this.onLoadDocument}
+          onSaveTitle={this.onSaveTitle}
           onOpenShareModal={() => this.setOpenModal('share')}
           onSaveDocument={() => this.saveDocument()}
           title={this.state.document.title}
@@ -438,7 +443,7 @@ class DocumentPage extends Component {
               <MdLock className="locked-icon" />
               &nbsp;
               {this.state.document.contentsLocked
-                ? 'This document is locked, but you can make a copy.'
+                ? 'This document is locked, but you can clone it.'
                 : 'This document belongs to another user. Log in to make changes, or make a copy.'}
             </div>
           </div>

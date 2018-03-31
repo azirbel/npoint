@@ -20,7 +20,7 @@ export default class DocumentPageHeader extends Component {
     hasSaved: PropTypes.bool.isRequired,
     isSavingDocument: PropTypes.bool,
     onClone: PropTypes.func.isRequired,
-    onLoadDocument: PropTypes.func.isRequired,
+    onSaveTitle: PropTypes.func.isRequired,
     onOpenShareModal: PropTypes.func.isRequired,
     onSaveDocument: PropTypes.func.isRequired,
     title: PropTypes.string,
@@ -37,7 +37,7 @@ export default class DocumentPageHeader extends Component {
     return Document.update(this.props.document.token, {
       title: newTitle,
     }).then(({ data }) => {
-      this.props.onLoadDocument(data)
+      this.props.onSaveTitle(newTitle)
       this.setState({
         isSavingTitle: false,
       })
