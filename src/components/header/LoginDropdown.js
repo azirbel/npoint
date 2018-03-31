@@ -23,7 +23,11 @@ class LoginDropdown extends Component {
   }
 
   onLogin = () => {
-    let pathname = _.get(this.props, ['routing', 'locationBeforeTransitions', 'pathname'])
+    let pathname = _.get(this.props, [
+      'routing',
+      'locationBeforeTransitions',
+      'pathname',
+    ])
     let hasDocs = _.get(this.props, ['session', 'user', 'hasDocuments'])
     if (pathname === '/' && hasDocs) {
       // Timeout so the login animation can finish

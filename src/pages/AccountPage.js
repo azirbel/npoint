@@ -133,8 +133,8 @@ class AccountPage extends Component {
           </Button>
           {this.state.errorResettingPassword && (
             <div className="text-error password-reset-confirmation">
-              Could not send an email to {this.props.session.user.email}.
-              Please try again later.
+              Could not send an email to {this.props.session.user.email}. Please
+              try again later.
             </div>
           )}
           {this.state.resetPasswordEmailSent && (

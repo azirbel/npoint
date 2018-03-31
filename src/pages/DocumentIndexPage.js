@@ -71,7 +71,12 @@ class DocumentIndexPage extends Component {
               <div className="section text-center form spaced-children">
                 <div>Looks like you don{"'"}t have any documents yet.</div>
                 <div className="flex justify-center">
-                  <Button className="primary" onClick={() => createNewDocument(this.props.router)}>Create one now!</Button>
+                  <Button
+                    className="primary"
+                    onClick={() => createNewDocument(this.props.router)}
+                  >
+                    Create one now!
+                  </Button>
                 </div>
               </div>
             )}
