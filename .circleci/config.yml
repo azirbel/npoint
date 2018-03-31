@@ -12,6 +12,10 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:10.3-alpine-ram
+        environment:
+          POSTGRES_USER: npoint
+          POSTGRES_DB: npoint_test
+          POSTGRES_PASSWORD: ""
 
     working_directory: ~/repo
 
@@ -33,7 +37,10 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Wait for DB
+      # From https://robots.thoughtbot.com/circleci-2-rails
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
         
       # Database setup
       - run: bundle exec rake db:create
