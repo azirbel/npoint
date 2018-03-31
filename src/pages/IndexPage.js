@@ -28,7 +28,10 @@ export default class IndexPage extends Component {
       <div className="index-page">
         <Header fullLogo={true}>
           <div className="flex-spring" />
-          <Button className="primary" onClick={() => createNewDocument(this.props.router)}>
+          <Button
+            className="primary"
+            onClick={() => createNewDocument(this.props.router)}
+          >
             + New
           </Button>
         </Header>
@@ -55,7 +58,12 @@ export default class IndexPage extends Component {
               <div className="index-editor-buttons flex justify-center">
                 <Button
                   className="cta large"
-                  onClick={() => createNewDocument(this.props.router, this.state.newDocumentContents)}
+                  onClick={() =>
+                    createNewDocument(
+                      this.props.router,
+                      this.state.newDocumentContents
+                    )
+                  }
                 >
                   Save
                 </Button>

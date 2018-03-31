@@ -70,7 +70,9 @@ class DocumentPage extends Component {
 
   onSaveTitle = newTitle => {
     // Need to update the saved title but keep other WIP edits the user may have
-    this.setState({ document: _.merge({}, this.state.document, { title: newTitle }) })
+    this.setState({
+      document: _.merge({}, this.state.document, { title: newTitle }),
+    })
   }
 
   onLoadDocument = data => {
@@ -302,12 +304,10 @@ class DocumentPage extends Component {
     } else {
       this.setOpenModal('leave', () => this.cloneDocument())
     }
-
   }
 
   cloneDocument = () => {
-    return Document.clone(this.props.params.documentToken)
-    .then(({ data }) => {
+    return Document.clone(this.props.params.documentToken).then(({ data }) => {
       this.setState(INITIAL_STATE)
       this.props.dispatch(push(`/docs/${data.token}`))
     })
@@ -367,8 +367,14 @@ class DocumentPage extends Component {
 
   render() {
     let overallErrorMessage = null
-    if (this.state.showContentsErrorMessage || this.state.showSchemaErrorMessage) {
-      overallErrorMessage = (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
+    if (
+      this.state.showContentsErrorMessage ||
+      this.state.showSchemaErrorMessage
+    ) {
+      overallErrorMessage =
+        (this.state.contentsErrorMessage
+          ? 'Syntax error in JSON data'
+          : null) ||
         (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
         (this.state.validationErrorMessage
           ? 'JSON data does not match schema'

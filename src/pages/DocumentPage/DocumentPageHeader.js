@@ -76,9 +76,7 @@ export default class DocumentPageHeader extends Component {
         )}
         <div className="flex-spring" />
         {this.props.contentsEditable && this.renderSaveButton()}
-        <Button onClick={this.props.onClone}>
-          Clone
-        </Button>
+        <Button onClick={this.props.onClone}>Clone</Button>
         <Button className="subtle" onClick={this.props.onOpenShareModal}>
           Share
         </Button>

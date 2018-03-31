@@ -38,7 +38,8 @@ class AccountDropdown extends Component {
 
   render() {
     let avatarUrl =
-      _.get(this.props, ['session', 'user', 'avatarUrl']) || this.state.lastAvatarUrl
+      _.get(this.props, ['session', 'user', 'avatarUrl']) ||
+      this.state.lastAvatarUrl
 
     return (
       <div className="account-dropdown-component">
