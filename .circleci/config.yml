@@ -37,6 +37,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Wait for DB
       # From https://robots.thoughtbot.com/circleci-2-rails
