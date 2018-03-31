@@ -26,5 +26,6 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
   gem 'spring'
+  gem 'rspec_junit_formatter'
 end
 
