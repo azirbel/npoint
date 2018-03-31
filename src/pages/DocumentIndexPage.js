@@ -65,12 +65,14 @@ class DocumentIndexPage extends Component {
         <Helmet>
           <title>My Documents</title>
         </Helmet>
-        <div className="container">
+        <div className="container main-body">
           {!this.state.isLoading &&
             isEmpty(this.state.documents) && (
-              <div className="section text-center">
-                <p>Looks like you don't have any documents yet.</p>
-                <p>Try creating one with the "New" button in the header!</p>
+              <div className="section text-center form spaced-children">
+                <div>Looks like you don{"'"}t have any documents yet.</div>
+                <div className="flex justify-center">
+                  <Button className="primary" onClick={() => createNewDocument(this.props.router)}>Create one now!</Button>
+                </div>
               </div>
             )}
           {this.state.documents.map(doc => this.renderDocumentRow(doc))}

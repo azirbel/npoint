@@ -3,10 +3,6 @@
 @import '../styles/variables.css';
 
 .account-page {
-  & .account-info {
-    margin-top: 30px;
-  }
-
   & .account-info-section {
     margin-top: 20px;
   }

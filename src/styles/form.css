@@ -4,8 +4,4 @@
   &.padded {
     padding: 12px 16px;
   }
-
-  &.spaced-children > * + * {
-    margin-top: 12px;
-  }
 }

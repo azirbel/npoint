@@ -39,16 +39,14 @@ export default class FaqPage extends Component {
         <Helmet>
           <title>Frequently Asked Questions</title>
         </Helmet>
-        <div className="section">
-          <div className="container">
-            {this.state.faqs.map(faq => (
-              <Faq
-                key={faq.question}
-                question={faq.question}
-                answer={faq.answer}
-              />
-            ))}
-          </div>
+        <div className="container main-body">
+          {this.state.faqs.map(faq => (
+            <Faq
+              key={faq.question}
+              question={faq.question}
+              answer={faq.answer}
+            />
+          ))}
         </div>
       </div>
     )

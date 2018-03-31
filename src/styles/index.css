@@ -22,6 +22,10 @@ body {
   max-width: 100%;
 }
 
+.main-body {
+  margin-top: 30px;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -40,4 +44,8 @@ body {
   &.margin-right {
     margin-right: 6px; /* better than nbsp */
   }
+}
+
+.spaced-children > * + * {
+  margin-top: 12px;
 }

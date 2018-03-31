@@ -96,54 +96,52 @@ class AccountPage extends Component {
     }
 
     return (
-      <div className="container">
-        <div className="account-info">
-          <div className="account-info-section">
-            <h5>Name</h5>
-            <ClickToEdit
-              value={this.props.session.user.name}
-              onChange={this.saveNewName}
-              isLoading={this.state.isSavingName}
-            />
+      <div className="container main-body">
+        <div className="account-info-section">
+          <h5>Name</h5>
+          <ClickToEdit
+            value={this.props.session.user.name}
+            onChange={this.saveNewName}
+            isLoading={this.state.isSavingName}
+          />
+        </div>
+        <div className="account-info-section prose">
+          <h5>Email</h5>
+          {this.props.session.user.email}
+        </div>
+        <div className="account-info-section prose">
+          <h5>Avatar</h5>
+          <img
+            className="avatar"
+            role="presentation"
+            src={this.props.session.user.avatarUrl}
+          />
+          <div>
+            Change your image on&nbsp;
+            <a target="_blank" href="http://en.gravatar.com/">
+              Gravatar
+            </a>.
           </div>
-          <div className="account-info-section prose">
-            <h5>Email</h5>
-            {this.props.session.user.email}
-          </div>
-          <div className="account-info-section prose">
-            <h5>Avatar</h5>
-            <img
-              className="avatar"
-              role="presentation"
-              src={this.props.session.user.avatarUrl}
-            />
-            <div>
-              Change your image on&nbsp;
-              <a target="_blank" href="http://en.gravatar.com/">
-                Gravatar
-              </a>.
+        </div>
+        <div className="account-info-section prose">
+          <h5>Password</h5>
+          <Button
+            isLoading={this.state.isResettingPassword}
+            onClick={this.sendPasswordResetEmail}
+          >
+            Send a password reset email
+          </Button>
+          {this.state.errorResettingPassword && (
+            <div className="text-error password-reset-confirmation">
+              Could not send an email to {this.props.session.user.email}.
+              Please try again later.
             </div>
-          </div>
-          <div className="account-info-section prose">
-            <h5>Password</h5>
-            <Button
-              isLoading={this.state.isResettingPassword}
-              onClick={this.sendPasswordResetEmail}
-            >
-              Send a password reset email
-            </Button>
-            {this.state.errorResettingPassword && (
-              <div className="text-error password-reset-confirmation">
-                Could not send an email to {this.props.session.user.email}.
-                Please try again later.
-              </div>
-            )}
-            {this.state.resetPasswordEmailSent && (
-              <div className="text-success password-reset-confirmation">
-                Sent! Check your email to set a new password.
-              </div>
-            )}
-          </div>
+          )}
+          {this.state.resetPasswordEmailSent && (
+            <div className="text-success password-reset-confirmation">
+              Sent! Check your email to set a new password.
+            </div>
+          )}
         </div>
       </div>
     )

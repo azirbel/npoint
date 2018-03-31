@@ -27,19 +27,17 @@ export default class ChangelogPage extends Component {
         <Helmet>
           <title>Changelog</title>
         </Helmet>
-        <div className="section">
-          <div className="container">
-            {this.state.changes.map(change => (
-              <div key={change.date}>
-                <h3>{change.date}</h3>
-                <ul className="ul">
-                  {change.description.map(item => {
-                    return <li key={item}>{item}</li>
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
+        <div className="container main-body prose spaced-children">
+          {this.state.changes.map(change => (
+            <div key={change.date}>
+              <h3>{change.date}</h3>
+              <ul className="ul">
+                {change.description.map(item => {
+                  return <li key={item}>{item}</li>
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     )
