@@ -6,7 +6,14 @@ version: 2
 jobs:
   build:
     docker:
+      # https://discuss.circleci.com/t/rails-app-cant-connect-to-postgres-server/13059/7
       - image: circleci/ruby:2.3.4-node-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: npoint
+          PG_HOST: 127.0.0.1
+          PG_USER: npoint
+          RAILS_ENV: test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
