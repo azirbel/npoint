@@ -341,12 +341,14 @@ class DocumentPage extends Component {
   }
 
   render() {
-    let overallErrorMessage =
-      (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
-      (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
-      (this.state.validationErrorMessage
-        ? 'JSON data does not match schema'
-        : null)
+    let overallErrorMessage = null
+    if (this.state.showContentsErrorMessage || this.state.showSchemaErrorMessage) {
+      overallErrorMessage = (this.state.contentsErrorMessage ? 'Syntax error in JSON data' : null) ||
+        (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
+        (this.state.validationErrorMessage
+          ? 'JSON data does not match schema'
+          : null)
+    }
 
     return (
       <div className="document-page">
