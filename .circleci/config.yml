@@ -40,7 +40,7 @@ jobs:
 
       # Wait for DB
       # From https://robots.thoughtbot.com/circleci-2-rails
-      - run: dockerize -wait tcp://localhost:5432 -timeout 1m         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
         
       # Database setup
       - run: bundle exec rake db:create
