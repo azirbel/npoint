@@ -93,27 +93,36 @@ export default class IndexPage extends Component {
                 <div className="usage-step-number">1.</div>
                 <h3>Store JSON online</h3>
                 <p>
-                  Use n:point as a lightweight<br/>backend while you prototype<br/>your
+                  Use n:point as a lightweight<br />backend while you prototype<br />your
                   app or website.
                 </p>
               </div>
               <div>
-                <img className="usage-illustration" src="img/step-1.png" role="presentation" />
+                <img
+                  className="usage-illustration"
+                  src="img/step-1.png"
+                  role="presentation"
+                />
               </div>
             </div>
             <div className="usage-row">
               <div>
-                <img className="usage-illustration" src="img/step-2.png" role="presentation" />
+                <img
+                  className="usage-illustration"
+                  src="img/step-2.png"
+                  role="presentation"
+                />
               </div>
               <div>
                 <div className="usage-step-number">2.</div>
                 <h3>Lock the schema</h3>
                 <p>
-                  Define the structure of your data with {' '}
+                  Define the structure of your data with{' '}
                   <a target="_blank" href="http://json-schema.org/">
                     JSON Schema
-                  </a>{' '}. When you{"'"}re ready,
-                  lock the schema so it can never change again.
+                  </a>{' '}
+                  . When you{"'"}re ready, lock the schema so it can never
+                  change again.
                 </p>
               </div>
             </div>
@@ -122,12 +131,17 @@ export default class IndexPage extends Component {
                 <div className="usage-step-number">3.</div>
                 <h3>Edit with a friend</h3>
                 <p>
-                  Let others make changes to the<br/>saved data. With the schema<br/>
-                  locked, you can be sure edits<br/>won{"'"}t break your app.
+                  Let others make changes to the<br />saved data. With the
+                  schema<br />
+                  locked, you can be sure edits<br />won{"'"}t break your app.
                 </p>
               </div>
               <div>
-                <img className="usage-illustration" src="img/step-3.png" role="presentation" />
+                <img
+                  className="usage-illustration"
+                  src="img/step-3.png"
+                  role="presentation"
+                />
               </div>
             </div>
           </div>
@@ -144,7 +158,11 @@ export default class IndexPage extends Component {
                 <p>Lock the schema</p>
               </div>
               <div className="col-xs-12 col-sm-8">
-                <img alt="Demo screenshot" width="100%" src="img/demo-screenshot.png" />
+                <img
+                  alt="Demo screenshot"
+                  width="100%"
+                  src="img/demo-screenshot.png"
+                />
               </div>
             </div>
           </div>
@@ -155,7 +173,7 @@ export default class IndexPage extends Component {
             <div className="prose">
               <h2>Features</h2>
               <p className="text-italic">
-                This list is built on n:point!<br/>Check it out at{' '}
+                This list is built on n:point!<br />Check it out at{' '}
                 <a target="_blank" href="https://www.npoint.io/docs/features">
                   npoint.io/docs/features
                 </a>, or via the API at{' '}
@@ -166,13 +184,11 @@ export default class IndexPage extends Component {
               </p>
             </div>
             <ul>
-              {this.state.features.map((feature) => (
+              {this.state.features.map(feature => (
                 <li key={feature.slug} className="feature">
-                  <MdDone className='feature-icon' />
+                  <MdDone className="feature-icon" />
                   <div>
-                    <h3>
-   {feature.title}
-                    </h3>
+                    <h3>{feature.title}</h3>
                     <ReactMarkdown source={feature.description} />
                   </div>
                 </li>
@@ -186,19 +202,18 @@ export default class IndexPage extends Component {
             <div className="prose">
               <h2>Premium Features</h2>
               <p className="text-italic">
-                Want any of the features below? Let us know via the chat widget in the bottom right!
+                Want any of the features below? Let us know via the chat widget
+                in the bottom right!
               </p>
             </div>
             <ul>
-              {this.state.premiumFeatures.map((feature) => (
+              {this.state.premiumFeatures.map(feature => (
                 <li key={feature.title} className="feature">
-                  <MdStarOutline className='feature-icon' />
-                <div>
-                  <h3>
- {feature.title}
-                  </h3>
-                  <ReactMarkdown source={feature.description} />
-                </div>
+                  <MdStarOutline className="feature-icon" />
+                  <div>
+                    <h3>{feature.title}</h3>
+                    <ReactMarkdown source={feature.description} />
+                  </div>
                 </li>
               ))}
             </ul>
