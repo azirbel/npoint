@@ -65,11 +65,42 @@
     border: 2px dashed var(--white);
   }
 
-  & .feature-row {
-    margin-top: 40px;
+  & .usage-row {
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
 
-    & + .feature-row {
+    & > * + * {
+      margin-left: 40px;
+    }
+
+    & + .usage-row {
       margin-top: 60px;
     }
+  }
+
+  & .usage-step-number {
+    font-size: 72px;
+    font-weight: bold;
+    font-family: var(--sansFontFamily);
+    color: var(--pink);
+  }
+
+  & .usage-illustration {
+    width: 300px;
+    height: 300px;
+  }
+
+  & .feature {
+    display: flex;
+    margin-top: 30px;
+  }
+
+  & .feature-icon {
+    color: var(--primaryColor);
+    font-size: 40px;
+    margin-right: 10px;
+    flex-shrink: 0;
   }
 }

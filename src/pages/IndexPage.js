@@ -1,7 +1,10 @@
 // @format
 
+/* global axios */
+
 import React, { Component } from 'react'
-import { MdFlashOn, MdEdit, MdLock } from 'react-icons/lib/md'
+import ReactMarkdown from 'react-markdown'
+import { MdDone, MdStarOutline } from 'react-icons/lib/md'
 
 import Button from '../components/Button'
 import JsonEditor from '../components/JsonEditor'
@@ -21,6 +24,18 @@ export default class IndexPage extends Component {
       null,
       2
     ),
+    features: [],
+    premiumFeatures: [],
+  }
+
+  componentDidMount() {
+    axios.get('https://api.npoint.io/features').then(({ data }) => {
+      this.setState({ features: data })
+    })
+
+    axios.get('https://api.npoint.io/premium-features').then(({ data }) => {
+      this.setState({ premiumFeatures: data })
+    })
   }
 
   render() {
@@ -36,7 +51,7 @@ export default class IndexPage extends Component {
           </Button>
         </Header>
         <div className="section dark-white index-splash">
-          <div className="container prose text-center">
+          <div className="container prose">
             <h1 className="title index-title">
               JSON Storage That Won{"'"}t Break Your App
             </h1>
@@ -73,119 +88,142 @@ export default class IndexPage extends Component {
         </div>
         <div className="section">
           <div className="container prose">
-            <h2>Prototype Safely</h2>
-            <p>
-              n:point is a lightweight data store for your app or prototype.
-            </p>
-            <p>
-              Save FAQ answers, customer stories, configuration data, or
-              anything else that will fit in a JSON blob. Then access your data
-              directly via API.
-            </p>
-            <p>
-              Once your app is live, come back later to edit your saved JSON
-              without having to redeploy. Or share edit permissions with a
-              friend so they can help you experiment! Features like [lockdown]
-              and [schemas] mean you can make these changes confidently, without
-              breaking your app.
-            </p>
-          </div>
-        </div>
-        <div className="section">
-          <div className="container prose">
-            <div className="row">
-              <div className="col-xs-6">
-                <img width="100%" src="img/step-1.png" role="presentation" />
-              </div>
-              <div className="col-xs-6">
+            <div className="usage-row">
+              <div className="text-right">
+                <div className="usage-step-number">1.</div>
                 <h3>Store JSON online</h3>
                 <p>
-                  Use n:point as a lightweight backend while you prototype your
-                  app
+                  Use n:point as a lightweight<br/>backend while you prototype<br/>your
+                  app or website.
                 </p>
               </div>
+              <div>
+                <img className="usage-illustration" src="img/step-1.png" role="presentation" />
+              </div>
             </div>
-            <div className="row">
-              <div className="col-xs-6">
+            <div className="usage-row">
+              <div>
+                <img className="usage-illustration" src="img/step-2.png" role="presentation" />
+              </div>
+              <div>
+                <div className="usage-step-number">2.</div>
                 <h3>Lock the schema</h3>
                 <p>
-                  Add{' '}
+                  Define the structure of your data with {' '}
                   <a target="_blank" href="http://json-schema.org/">
                     JSON Schema
-                  </a>{' '}
-                  to enforce the structure of your data. When you{"'"}re ready,
+                  </a>{' '}. When you{"'"}re ready,
                   lock the schema so it can never change again.
                 </p>
               </div>
-              <div className="col-xs-6">
-                <img width="100%" src="img/step-2.png" role="presentation" />
-              </div>
             </div>
-            <div className="row">
-              <div className="col-xs-6">
-                <img width="100%" src="img/step-3.png" role="presentation" />
-              </div>
-              <div className="col-xs-6">
+            <div className="usage-row">
+              <div className="text-right">
+                <div className="usage-step-number">3.</div>
                 <h3>Edit with a friend</h3>
                 <p>
-                  Let others make changes to the saved JSON data. With the
-                  schema locked, you can be sure their edits won{"'"}t break
-                  your app.
+                  Let others make changes to the<br/>saved data. With the schema<br/>
+                  locked, you can be sure edits<br/>won{"'"}t break your app.
                 </p>
               </div>
+              <div>
+                <img className="usage-illustration" src="img/step-3.png" role="presentation" />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="section">Features</div>
-
-        <div className="section dark-white">Demo video</div>
+        <div className="section dark-white">
+          <div className="container prose">
+            <h2>Edit effortlessly</h2>
+            <div className="row">
+              <div className="col-xs-12 col-sm-4">
+                <p>Javascript object syntax is allowed</p>
+                <p>Quickly catch syntax errors</p>
+                <p>Add a schema</p>
+                <p>Lock the schema</p>
+              </div>
+              <div className="col-xs-12 col-sm-8">
+                <img alt="Demo screenshot" width="100%" src="img/demo-screenshot.png" />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="section">
-          <div className="container prose">
-            <div className="row">
-              <div className="col-xs-4">
-                <div className="flex column align-center text-center">
-                  <div className="icon-benefit">
-                    <MdFlashOn />
+          <div className="container">
+            <div className="prose">
+              <h2>Features</h2>
+              <p className="text-italic">
+                This list is built on n:point!<br/>Check it out at{' '}
+                <a target="_blank" href="https://www.npoint.io/docs/features">
+                  npoint.io/docs/features
+                </a>, or via the API at{' '}
+                <a target="_blank" href="https://api.npoint.io/features">
+                  api.npoint.io/features
+                </a>
+                .
+              </p>
+            </div>
+            <ul>
+              {this.state.features.map((feature) => (
+                <li key={feature.slug} className="feature">
+                  <MdDone className='feature-icon' />
+                  <div>
+                    <h3>
+   {feature.title}
+                    </h3>
+                    <ReactMarkdown source={feature.description} />
                   </div>
-                  <h3>Set up fast</h3>
-                  <p>
-                    Quickly set up JSON data to power your app. Don't even worry
-                    about formal JSON syntax - n:point can infer missing quotes
-                    and more.
-                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="section dark-white">
+          <div className="container">
+            <div className="prose">
+              <h2>Premium Features</h2>
+              <p className="text-italic">
+                Want any of the features below? Let us know via the chat widget in the bottom right!
+              </p>
+            </div>
+            <ul>
+              {this.state.premiumFeatures.map((feature) => (
+                <li key={feature.title} className="feature">
+                  <MdStarOutline className='feature-icon' />
+                <div>
+                  <h3>
+ {feature.title}
+                  </h3>
+                  <ReactMarkdown source={feature.description} />
                 </div>
-              </div>
-              <div className="col-xs-4">
-                <div className="flex column align-center text-center">
-                  <div className="icon-benefit">
-                    <MdEdit />
-                  </div>
-                  <h3>Edit anytime</h3>
-                  <p>
-                    Come back later to edit your data. If you've saved your data
-                    under your n:point account, others can use it via API but
-                    only you can edit it.
-                  </p>
-                </div>
-              </div>
-              <div className="col-xs-4">
-                <div className="flex column align-center text-center">
-                  <div className="icon-benefit">
-                    <MdLock />
-                  </div>
-                  <h3>Lock the schema</h3>
-                  <p>
-                    n:point can infer a schema from your existing data. Lock the
-                    schema to make sure the structure of your data never changes
-                    (so your app won't break).
-                  </p>
-                </div>
-              </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="section">
+          <div className="container prose text-center">
+            <h2>Ready to try it out?</h2>
+            <div className="flex justify-center">
+              <Button
+                className="cta large"
+                onClick={() =>
+                  createNewDocument(
+                    this.props.router,
+                    this.state.newDocumentContents
+                  )
+                }
+              >
+                Edit a sample document
+              </Button>
             </div>
           </div>
         </div>
+
         <Footer />
       </div>
     )

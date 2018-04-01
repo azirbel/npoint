@@ -33,6 +33,10 @@
   color: var(--errorTextColor);
 }
 
+.text-italic {
+  font-style: italic;
+}
+
 p,
 h1,
 h2,
@@ -67,6 +71,10 @@ h5 {
 
 p {
   font-size: 18px;
+
+  & code {
+    font-size: 16px;
+  }
 
   &.medium {
     font-size: 16px;
@@ -111,4 +119,10 @@ p.prose {
 .prose ul + .button-group,
 .prose .button-group + ul {
   margin-top: 1em;
+}
+
+code {
+  background-color: var(--darkWhite);
+  padding: 2px 6px;
+  border-radius: var(--borderRadius);
 }

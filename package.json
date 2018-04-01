@@ -62,6 +62,7 @@
     "react-helmet": "^5.2.0",
     "react-hotkeys": "^1.0.3",
     "react-icons": "^2.2.3",
+    "react-markdown": "^3.3.0",
     "react-modal": "^3.3.2",
     "react-overlays": "0.8.3",
     "react-redux": "^5.0.2",
