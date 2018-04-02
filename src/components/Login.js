@@ -82,14 +82,15 @@ class Login extends Component {
   }
 
   cancelForgotPassword = () => {
-    this.setState({ showResetPasswordForm: false })
+    this.setState({ showResetPasswordForm: false, resetPasswordErrors: [] })
   }
 
   sendResetLink = () => {
     this.setState({
-      resetPasswordSentToEmail: this.state.email,
       isResettingPassword: true,
+      resetPasswordEmailSent: false,
       resetPasswordErrors: [],
+      resetPasswordSentToEmail: this.state.email,
     })
 
     User.sendResetPasswordEmail({ email: this.state.email })
@@ -127,12 +128,6 @@ class Login extends Component {
             ? this.renderForgotPasswordForm()
             : this.renderLogInForm()
           : this.renderSignUpForm()}
-        {this.state.resetPasswordEmailSent && (
-          <div className="text-success">
-            Sent password reset email to
-            {this.state.resetPasswordSentToEmail}. Check your inbox!
-          </div>
-        )}
       </div>
     )
   }
@@ -222,6 +217,14 @@ class Login extends Component {
           link to set a new password.
         </p>
         {this.renderErrors(this.state.resetPasswordErrors)}
+        <Downfade className="text-small text-success">
+          {this.state.resetPasswordEmailSent && (
+            <div key='sent'>
+              Ok, we sent a password reset email to{' '}
+              {this.state.resetPasswordSentToEmail}. Check your inbox!
+            </div>
+          )}
+        </Downfade>
         <div className="flex justify-end">
           <div className="button-group">
             <Button className="link" onClick={this.cancelForgotPassword}>
@@ -244,7 +247,7 @@ class Login extends Component {
     return (
       <Downfade className="text-small text-error">
         {errors.map((err, idx) => (
-          <div className="flex align-center" key={idx}>
+          <div className="flex align-center login-error" key={idx}>
             <MdReportProblem className="icon margin-right" />
             {err}
           </div>

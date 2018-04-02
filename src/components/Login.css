@@ -1,5 +1,9 @@
 /* @format */
 
 .login-component {
-  min-width: 18em;
+  width: 18em;
+
+  & .login-error + .login-error {
+    margin-top: 10px;
+  }
 }
