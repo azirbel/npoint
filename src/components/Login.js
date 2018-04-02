@@ -219,7 +219,7 @@ class Login extends Component {
         {this.renderErrors(this.state.resetPasswordErrors)}
         <Downfade className="text-small text-success">
           {this.state.resetPasswordEmailSent && (
-            <div key='sent'>
+            <div key="sent">
               Ok, we sent a password reset email to{' '}
               {this.state.resetPasswordSentToEmail}. Check your inbox!
             </div>
