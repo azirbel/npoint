@@ -36,22 +36,26 @@ class ResetPasswordPage extends Component {
     User.resetPassword({
       password: this.state.password,
       reset_token: resetToken,
-    }).then(response => {
-      if (response.data.errors) {
-        this.setState({ resetError: response.data.errors.join(', ') })
-        return
-      }
-
-      let { name, email, avatarUrl } = response.data
-      dispatch(logIn({ name, email, avatarUrl }))
-
-      // Timeout so the login animation can finish
-      setTimeout(() => {
-        dispatch(push('/docs'))
-      }, 400)
-    }).catch(() => {
-      this.setState({ resetError: 'Error setting password - link may be expired.' })
     })
+      .then(response => {
+        if (response.data.errors) {
+          this.setState({ resetError: response.data.errors.join(', ') })
+          return
+        }
+
+        let { name, email, avatarUrl } = response.data
+        dispatch(logIn({ name, email, avatarUrl }))
+
+        // Timeout so the login animation can finish
+        setTimeout(() => {
+          dispatch(push('/docs'))
+        }, 400)
+      })
+      .catch(() => {
+        this.setState({
+          resetError: 'Error setting password - link may be expired.',
+        })
+      })
   }
 
   render() {
@@ -88,7 +92,9 @@ class ResetPasswordPage extends Component {
             </button>
             <Downfade>
               {this.state.resetError && (
-                <div key={this.state.resetError} className="text-error">{this.state.resetError}</div>
+                <div key={this.state.resetError} className="text-error">
+                  {this.state.resetError}
+                </div>
               )}
             </Downfade>
           </div>
