@@ -19,5 +19,5 @@
   https://github.com/ajaxorg/ace/blob/v1.2.3/lib/ace/layer/font_metrics.js#L151
 */
 .ace_editor {
-  line-height: 20px;
+  line-height: 20px !important;
 }
