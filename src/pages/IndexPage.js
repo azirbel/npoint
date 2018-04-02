@@ -53,12 +53,12 @@ export default class IndexPage extends Component {
         <div className="section dark-white index-splash">
           <div className="container prose">
             <h1 className="title index-title">
-              JSON storage bins <br className="hidden-xs-down"/>
+              JSON storage bins <br className="hidden-xs-down" />
               that won{"'"}t break your app
             </h1>
             <p>
               Set up a lightweight JSON endpoint in seconds,
-              <br/>
+              <br />
               then add a{' '}
               <a target="_blank" href="http://json-schema.org/">
                 schema
@@ -159,7 +159,9 @@ export default class IndexPage extends Component {
               <div className="col-xs-2">
                 <div className="screenshot-notes">
                   <p className="screenshot-note-1">Quickly catch errors</p>
-                  <p className="screenshot-note-2">Javascript object syntax is allowed</p>
+                  <p className="screenshot-note-2">
+                    Javascript object syntax is allowed
+                  </p>
                 </div>
               </div>
               <div className="col-xs-8">
@@ -172,7 +174,10 @@ export default class IndexPage extends Component {
               <div className="col-xs-2">
                 <div className="screenshot-notes">
                   <p className="screenshot-note-3">Add a schema</p>
-                  <p className="screenshot-note-4">Lock the schema to guarantee the JSON structure will never change</p>
+                  <p className="screenshot-note-4">
+                    Lock the schema to guarantee the JSON structure will never
+                    change
+                  </p>
                 </div>
               </div>
             </div>
@@ -189,7 +194,10 @@ export default class IndexPage extends Component {
                   <li>Quickly catch errors</li>
                   <li>Javascript sytax is allowed</li>
                   <li>Add a schema</li>
-                  <li>Lock the schema to guarantee the JSON structure will never change</li>
+                  <li>
+                    Lock the schema to guarantee the JSON structure will never
+                    change
+                  </li>
                 </ol>
               </div>
             </div>
