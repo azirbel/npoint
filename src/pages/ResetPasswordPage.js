@@ -3,26 +3,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { push } from 'react-router-redux'
+import _ from 'lodash'
+
+import Downfade from '../components/animations/Downfade'
 import User from '../models/User'
 import Header from '../components/Header'
 import Input from '../components/Input'
 import { logIn } from '../actions'
-import { push } from 'react-router-redux'
+
 import {} from './ResetPasswordPage.css'
-import _ from 'lodash'
 
 class ResetPasswordPage extends Component {
   state = {
     password: '',
     confirmPassword: '',
-    attemptedReset: false,
+    resetError: '',
   }
 
   resetPassword = () => {
     let { dispatch } = this.props
 
-    if (this.state.password !== this.state.confirmPassword) {
-      this.setState({ attemptedReset: true })
+    if (_.isEmpty(this.state.password)) {
+      this.setState({ resetError: 'Please set a new password.' })
+      return
+    } else if (this.state.password !== this.state.confirmPassword) {
+      this.setState({ resetError: 'Passwords must match.' })
       return
     }
 
@@ -31,15 +37,24 @@ class ResetPasswordPage extends Component {
       password: this.state.password,
       reset_token: resetToken,
     }).then(response => {
-      let { name, email, avatarUrl } = response
+      if (response.data.errors) {
+        this.setState({ resetError: response.data.errors.join(', ') })
+        return
+      }
+
+      let { name, email, avatarUrl } = response.data
       dispatch(logIn({ name, email, avatarUrl }))
-      dispatch(push('/docs'))
+
+      // Timeout so the login animation can finish
+      setTimeout(() => {
+        dispatch(push('/docs'))
+      }, 400)
+    }).catch(() => {
+      this.setState({ resetError: 'Error setting password - link may be expired.' })
     })
   }
 
   render() {
-    let passwordsMatch = this.state.password === this.state.confirmPassword
-
     return (
       <div className="reset-password-page">
         <Header>
@@ -62,6 +77,7 @@ class ResetPasswordPage extends Component {
               type="password"
               value={this.state.confirmPassword}
               onChange={confirmPassword => this.setState({ confirmPassword })}
+              onEnter={this.resetPassword}
             />
             <button
               className="button primary"
@@ -70,10 +86,11 @@ class ResetPasswordPage extends Component {
             >
               Reset
             </button>
-            {this.state.attemptedReset &&
-              !passwordsMatch && (
-                <div className="text-error">Passwords must match.</div>
+            <Downfade>
+              {this.state.resetError && (
+                <div key={this.state.resetError} className="text-error">{this.state.resetError}</div>
               )}
+            </Downfade>
           </div>
         </div>
       </div>

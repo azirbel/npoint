@@ -33,6 +33,8 @@ class ResetPasswordController < ApplicationController
     end
 
     render json: user, serializer: UserSerializer
+  rescue ActiveRecord::RecordInvalid
+    render json: { errors: user.errors.full_messages }
   rescue ActiveRecord::RecordNotFound
     head :bad_request
   end
