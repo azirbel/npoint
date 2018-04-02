@@ -53,14 +53,17 @@ export default class IndexPage extends Component {
         <div className="section dark-white index-splash">
           <div className="container prose">
             <h1 className="title index-title">
-              JSON Storage That Won{"'"}t Break Your App
+              JSON storage bins <br className="hidden-xs-down"/>
+              that won{"'"}t break your app
             </h1>
             <p>
-              Set up a lightweight JSON endpoint in seconds, then add schema
-              validation
-              <br />
-              so that you don{"'"}t accidentally break your app as you edit the
-              data.
+              Set up a lightweight JSON endpoint in seconds,
+              <br/>
+              then add a{' '}
+              <a target="_blank" href="http://json-schema.org/">
+                schema
+              </a>{' '}
+              to edit your data safely at any time
             </p>
             <div className="index-editor-container">
               <JsonEditor
@@ -148,21 +151,46 @@ export default class IndexPage extends Component {
         </div>
 
         <div className="section dark-white">
-          <div className="container prose">
-            <h2>Edit effortlessly</h2>
-            <div className="row">
-              <div className="col-xs-12 col-sm-4">
-                <p>Javascript object syntax is allowed</p>
-                <p>Quickly catch syntax errors</p>
-                <p>Add a schema</p>
-                <p>Lock the schema</p>
+          <div className="container">
+            <h2 className="prose">Edit effortlessly</h2>
+          </div>
+          <div className="container large">
+            <div className="row hidden-xs-down">
+              <div className="col-xs-2">
+                <div className="screenshot-notes">
+                  <p className="screenshot-note-1">Quickly catch errors</p>
+                  <p className="screenshot-note-2">Javascript object syntax is allowed</p>
+                </div>
               </div>
-              <div className="col-xs-12 col-sm-8">
+              <div className="col-xs-8">
+                <img
+                  alt="Demo screenshot"
+                  width="100%"
+                  src="img/demo-screenshot-lines.png"
+                />
+              </div>
+              <div className="col-xs-2">
+                <div className="screenshot-notes">
+                  <p className="screenshot-note-3">Add a schema</p>
+                  <p className="screenshot-note-4">Lock the schema to guarantee the JSON structure will never change</p>
+                </div>
+              </div>
+            </div>
+            <div className="row hidden-sm-up">
+              <div className="col-xs-12">
                 <img
                   alt="Demo screenshot"
                   width="100%"
                   src="img/demo-screenshot.png"
                 />
+              </div>
+              <div className="col-xs-12">
+                <ol className="prose">
+                  <li>Quickly catch errors</li>
+                  <li>Javascript sytax is allowed</li>
+                  <li>Add a schema</li>
+                  <li>Lock the schema to guarantee the JSON structure will never change</li>
+                </ol>
               </div>
             </div>
           </div>

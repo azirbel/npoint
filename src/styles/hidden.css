@@ -1,0 +1,15 @@
+/* @format */
+
+@import './variables.css';
+
+@media only screen and (--screenSmMin) {
+  .hidden-sm-up {
+    display: none;
+  }
+}
+
+@media only screen and (--screenXsMax) {
+  .hidden-xs-down {
+    display: none;
+  }
+}

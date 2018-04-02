@@ -15,3 +15,7 @@ ul {
     }
   }
 }
+
+ol.prose, ul.prose {
+  font-size: 18px;
+}

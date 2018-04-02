@@ -13,15 +13,6 @@ body {
   color: var(--textColor);
 }
 
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--mediumGutter);
-  padding-right: var(--mediumGutter);
-  width: var(--containerWidth);
-  max-width: 100%;
-}
-
 .main-body {
   margin-top: 30px;
 }

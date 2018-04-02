@@ -23,6 +23,11 @@
 
 .text-white {
   color: var(--white);
+
+  & a {
+    color: var(--white);
+    text-decoration: underline;
+  }
 }
 
 .text-success {

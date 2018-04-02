@@ -47,6 +47,7 @@
   --borderRadius: 3px;
 
   --containerWidth: 800px;
+  --largeContainerWidth: 1200px;
   --headerHeight: 60px;
 
   --sansFontFamily: 'Source Sans Pro', sans-serif;

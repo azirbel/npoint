@@ -71,6 +71,11 @@
     margin-left: 10%;
     margin-right: 10%;
 
+    @media only screen and (--screenXsMax) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     & > * + * {
       margin-left: 40px;
     }
@@ -90,6 +95,51 @@
   & .usage-illustration {
     width: 300px;
     height: 300px;
+
+    @media only screen and (--screenXsMax) {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  & .screenshot-notes {
+    position: relative;
+    height: 100%;
+    color: var(--primaryColor);
+  }
+
+  & .screenshot-note-1 {
+    position: absolute;
+    width: 100%;
+    top: 6%;
+    right: 0;
+    text-align: right;
+    margin-right: -24px;
+  }
+
+  & .screenshot-note-2 {
+    position: absolute;
+    width: 100%;
+    top: 50.5%;
+    right: 0;
+    text-align: right;
+    margin-right: -24px;
+  }
+
+  & .screenshot-note-3 {
+    position: absolute;
+    width: 100%;
+    top: 2.6%;
+    left: 0;
+    margin-left: -26px;
+  }
+
+  & .screenshot-note-4 {
+    position: absolute;
+    width: 100%;
+    top: 34.5%;
+    left: 0;
+    margin-left: -28px;
   }
 
   & .feature {
