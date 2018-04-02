@@ -106,6 +106,7 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     public_suffix (3.0.2)
+    puma (3.11.3)
     rack (1.6.9)
     rack-cors (1.0.2)
     rack-protection (1.5.5)
@@ -216,6 +217,7 @@ DEPENDENCIES
   json-schema-generator
   pg (~> 0.21)
   pry-rails
+  puma
   rack-cors
   rails (~> 4.2.7)
   rails_12factor
