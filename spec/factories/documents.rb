@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :document do
     sequence(:title) { |n| "Monograph #{n}" }
     contents do
