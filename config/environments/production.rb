@@ -77,8 +77,9 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # https://github.com/rspec/rspec-rails/issues/1275
-  config.action_controller.default_url_options= { host: ENV['HOST'] }
+  config.action_controller.default_url_options= { host: ENV['HOST'], protocol: 'https' }
 end
 
 # https://github.com/rspec/rspec-rails/issues/1275
 Rails.application.routes.default_url_options[:host] = ENV['HOST']
+Rails.application.routes.default_url_options[:protocol] = 'https'
