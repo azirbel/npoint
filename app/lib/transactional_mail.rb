@@ -9,7 +9,7 @@ class TransactionalMail
     reset_url = "#{url_for(controller: 'app', port: port)}reset-password?token=#{token}"
 
     mail = SendGrid::Mail.new
-    mail.from = SendGrid::Email.new(email: 'support@npoint.io')
+    mail.from = SendGrid::Email.new(email: 'n:point <support@npoint.io>')
     personalization = SendGrid::Personalization.new
     personalization.add_to(SendGrid::Email.new(email: user.email))
     personalization.add_substitution(SendGrid::Substitution.new(key: '%name%', value: user.name))
