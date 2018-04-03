@@ -5,7 +5,7 @@ include Rails.application.routes.url_helpers
 class TransactionalMail
   # Currently returns true on success, false on error
   def self.reset_password(user, token)
-    port = if Rails.env.development? then 3000 else 80 end
+    port = if Rails.env.development? then 3000 else nil end
     reset_url = "#{url_for(controller: 'app', port: port)}reset-password?token=#{token}"
 
     mail = SendGrid::Mail.new
