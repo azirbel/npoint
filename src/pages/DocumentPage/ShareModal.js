@@ -23,7 +23,7 @@ export default class ShareModal extends Component {
       >
         <div className="modal-header">Share</div>
         <div className="modal-body prose">
-          <p className="medium">Access this document via the API at:</p>
+          <p className="medium">Access this bin via the API at:</p>
           <p className="medium">
             <a target="_blank" href={this.props.document.apiUrl}>
               {this.props.document.apiUrl}
@@ -60,25 +60,25 @@ export default class ShareModal extends Component {
 
     if (document.ownedByCurrentUser) {
       if (document.editable) {
-        return `Anyone with the link is able to view this document. Only you
+        return `Anyone with the link is able to view this JSON bin. Only you
         can edit the title and data.`
       } else {
-        return `Anyone with the link is able to view this document. You have
+        return `Anyone with the link is able to view this JSON bin. You have
         locked it for editing, so it can't be deleted and the data can't be
         changed. Only you can edit the title.`
       }
     } else {
       if (document.editable) {
         if (document.contentsLocked) {
-          return `This document is public, but the data is locked. Anyone with
+          return `This JSON bin is public, but the data is locked. Anyone with
           the link can edit the title.`
         } else {
-          return `This document is public: anyone with the link can edit the title
+          return `This JSON bin is public: anyone with the link can edit the title
           and data.`
         }
       } else {
-        return `Anyone with the link is able to view this document. Only the
-        user who owns this document is able to edit it.`
+        return `Anyone with the link is able to view this JSON bin. Only the
+        user who owns this bin is able to edit it.`
       }
     }
   }

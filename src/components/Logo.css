@@ -10,6 +10,7 @@
   transition: all ease-in-out var(--transitionTiming);
   user-select: none;
   cursor: default;
+  margin-bottom: 1px; /* eyeball to align with page title */
 }
 
 a.logo,

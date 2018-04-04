@@ -25,7 +25,7 @@ export default class LeaveModal extends Component {
         <div className="modal-header">Unsaved Changes</div>
         <div className="modal-body prose">
           <p className="medium">
-            Warning: your document has unsaved changes, which will be lost if
+            Warning: your bin has unsaved changes, which will be lost if
             you leave.
           </p>
           <div className="button-group">

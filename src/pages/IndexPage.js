@@ -194,7 +194,7 @@ export default class IndexPage extends Component {
               <div className="col-xs-12">
                 <ol className="prose">
                   <li>Quickly catch errors</li>
-                  <li>Javascript sytax is allowed</li>
+                  <li>Javascript syntax is allowed</li>
                   <li>Add a schema</li>
                   <li>
                     Lock the schema to guarantee the JSON structure will never
@@ -277,7 +277,7 @@ export default class IndexPage extends Component {
                   )
                 }
               >
-                Edit a sample document
+                Create a JSON bin
               </Button>
             </div>
           </div>

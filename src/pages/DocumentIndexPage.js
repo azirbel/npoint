@@ -57,14 +57,14 @@ class DocumentIndexPage extends Component {
     return (
       <div className="document-index-page page">
         <Header>
-          <h1 className="page-title">My Documents</h1>
+          <h1 className="page-title">My JSON Bins</h1>
           <div className="flex-spring" />
           <Button onClick={() => createNewDocument(this.props.router)}>
             + New
           </Button>
         </Header>
         <Helmet>
-          <title>My Documents</title>
+          <title>My JSON Bins</title>
         </Helmet>
         <div className="container main-body">
           {!this.state.isLoading &&
@@ -107,7 +107,7 @@ class DocumentIndexPage extends Component {
         <Tooltip
           placement="bottom"
           trigger={['click', 'hover']}
-          overlay="This document is locked"
+          overlay="This bin is locked"
         >
           <div className="badge dark-gray">
             <MdLock />
@@ -119,7 +119,7 @@ class DocumentIndexPage extends Component {
         <Tooltip
           placement="bottom"
           trigger={['click', 'hover']}
-          overlay="The schema for this document is locked"
+          overlay="The schema for this bin is locked"
         >
           <div className="badge dark-gray">
             <MdLockOutline />

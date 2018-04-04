@@ -25,7 +25,7 @@ import ShareModal from './DocumentPage/ShareModal'
 import {} from './DocumentPage.css'
 
 const CONFIRM_TEXT =
-  'Your document has unsaved changes. Are you sure you want to leave?'
+  'Your bin has unsaved changes. Are you sure you want to leave?'
 
 const INITIAL_STATE = {
   contents: null,
@@ -449,8 +449,8 @@ class DocumentPage extends Component {
               <MdLock className="locked-icon" />
               &nbsp;
               {this.state.document.contentsLocked
-                ? 'This document is locked, but you can clone it.'
-                : 'This document belongs to another user. Log in to make changes, or make a copy.'}
+                ? 'This bin is locked, but you can clone it.'
+                : 'This bin belongs to another user. Log in to make changes, or make a copy.'}
             </div>
           </div>
         )}
@@ -473,7 +473,7 @@ class DocumentPage extends Component {
         <div className="flex-spring" />
         <div className="section dark-white">
           <p className="medium text-center">
-            This document is available at&nbsp;
+            This bin is available at&nbsp;
             <a target="_blank" href={this.state.document.apiUrl}>
               {this.state.document.apiUrl}
             </a>

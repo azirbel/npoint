@@ -59,7 +59,7 @@ export default class DocumentPageHeader extends Component {
           <Tooltip
             placement="bottom"
             trigger={['click', 'hover']}
-            overlay="Only you can edit this document"
+            overlay="Only you can edit this bin"
           >
             <div className="badge primary">Yours</div>
           </Tooltip>
@@ -68,7 +68,7 @@ export default class DocumentPageHeader extends Component {
             <Tooltip
               placement="bottom"
               trigger={['click', 'hover']}
-              overlay="Anyone with the URL can edit this document"
+              overlay="Anyone with the URL can edit this bin"
             >
               <div className="badge dark-gray">Public</div>
             </Tooltip>
