@@ -141,6 +141,8 @@ class Login extends Component {
             type="email"
             value={this.state.email}
             onChange={email => this.setState({ email })}
+            autoFocus={true}
+            onEnter={this.handleLogin}
           />
           <Input
             label="Password"
@@ -176,6 +178,8 @@ class Login extends Component {
           label="First name"
           value={this.state.name}
           onChange={name => this.setState({ name })}
+          autoFocus={true}
+          onEnter={this.handleSignup}
         />
         <form className="spaced-children">
           <Input
@@ -183,6 +187,7 @@ class Login extends Component {
             type="email"
             value={this.state.email}
             onChange={email => this.setState({ email })}
+            onEnter={this.handleSignup}
           />
           <Input
             label="Choose a password"
@@ -215,6 +220,7 @@ class Login extends Component {
           value={this.state.email}
           onChange={email => this.setState({ email })}
           onEnter={this.sendResetLink}
+          autoFocus={true}
         />
         <p className="medium">
           No worries, just fill in your email and hit "reset" - we'll send you a

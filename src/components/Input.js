@@ -15,6 +15,15 @@ export default class Input extends Component {
     placeholder: PropTypes.string,
     className: PropTypes.string,
     inputClassName: PropTypes.string,
+    autoFocus: PropTypes.bool,
+  }
+
+  inputEl = null
+
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      this.inputEl.focus()
+    }
   }
 
   handleChange = e => {
@@ -45,6 +54,8 @@ export default class Input extends Component {
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           placeholder={this.props.placeholder}
+          ref={(el) => this.inputEl = el}
+          onFocus={(event) => event.target.select()}
         />
       </label>
     )
