@@ -23,7 +23,7 @@ export const IFRAME_SRC_DOC = `
          } catch (e) {
            result = { original: objStr, data: null, errorMessage: e.message };
          }
-         mainWindow.postMessage(result, event.origin);
+         mainWindow.postMessage(result, e.origin);
        });
      </script>
    </head>
