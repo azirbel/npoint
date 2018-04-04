@@ -25,13 +25,13 @@ export default class LockSchemaModal extends Component {
         <div className="modal-header">Lock schema</div>
         <div className="modal-body">
           <p className="medium">
-            Once a schema is locked, the bin cannot be deleted and the
-            schema cannot be changed again. The JSON data can still be edited,
-            but can only be saved if it matches the schema.
+            Once a schema is locked, the bin cannot be deleted and the schema
+            cannot be changed again. The JSON data can still be edited, but can
+            only be saved if it matches the schema.
           </p>
           <p className="medium">
-            You can always copy the bin later to make a version with a
-            different schema.
+            You can always copy the bin later to make a version with a different
+            schema.
           </p>
           <p className="medium">
             <strong>This action cannot be undone.</strong>

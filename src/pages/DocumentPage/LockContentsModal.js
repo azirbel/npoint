@@ -25,12 +25,12 @@ export default class LockContentsModal extends Component {
         <div className="modal-header">Lock JSON data</div>
         <div className="modal-body prose">
           <p className="medium">
-            Once a bin is locked, it cannot be deleted and none of its data
-            can ever be changed.
+            Once a bin is locked, it cannot be deleted and none of its data can
+            ever be changed.
           </p>
           <p className="medium">
-            You can always copy the bin later to keep editing under a
-            different ID.
+            You can always copy the bin later to keep editing under a different
+            ID.
           </p>
           <p className="medium">
             <strong>This action cannot be undone.</strong>

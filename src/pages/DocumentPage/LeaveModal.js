@@ -25,8 +25,8 @@ export default class LeaveModal extends Component {
         <div className="modal-header">Unsaved Changes</div>
         <div className="modal-body prose">
           <p className="medium">
-            Warning: your bin has unsaved changes, which will be lost if
-            you leave.
+            Warning: your bin has unsaved changes, which will be lost if you
+            leave.
           </p>
           <div className="button-group">
             <Button className="danger" onClick={this.props.onDiscard}>

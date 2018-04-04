@@ -222,9 +222,7 @@ export default class IndexPage extends Component {
               </p>
             </div>
             <ul>
-              {_.isEmpty(this.state.features) && (
-                <PageLoadingPlaceholder />
-              )}
+              {_.isEmpty(this.state.features) && <PageLoadingPlaceholder />}
               {this.state.features.map(feature => (
                 <li key={feature.slug} className="feature">
                   <MdDone className="feature-icon" />

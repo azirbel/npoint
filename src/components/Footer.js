@@ -12,7 +12,9 @@ export default class Footer extends Component {
   }
 
   render() {
-    let sectionClassName = `section ${this.props.light ? ' dark-white less-padding' : ' blue'}`
+    let sectionClassName = `section ${
+      this.props.light ? ' dark-white less-padding' : ' blue'
+    }`
 
     return (
       <footer className="footer">
@@ -34,15 +36,11 @@ export default class Footer extends Component {
               </div>
               <div className="col-xs-6 text-right">
                 <div className="footer-line-1">
-                  <Link to="/faq">
-                    Frequently Asked Questions
-                  </Link>
+                  <Link to="/faq">Frequently Asked Questions</Link>
                 </div>
                 <div>
                   More questions?{' '}
-                  <a href="mailto:support@npoint.io">
-                    support@npoint.io
-                  </a>
+                  <a href="mailto:support@npoint.io">support@npoint.io</a>
                 </div>
               </div>
             </div>

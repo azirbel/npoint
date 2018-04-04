@@ -54,8 +54,8 @@ export default class Input extends Component {
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           placeholder={this.props.placeholder}
-          ref={(el) => this.inputEl = el}
-          onFocus={(event) => event.target.select()}
+          ref={el => (this.inputEl = el)}
+          onFocus={event => event.target.select()}
         />
       </label>
     )
