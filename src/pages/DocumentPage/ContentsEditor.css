@@ -8,6 +8,7 @@
     overflow: hidden;
     margin-top: var(--smallGutter);
     margin-bottom: var(--mediumGutter);
+    height: 28px;
   }
 
   & .toolbar-icon {
