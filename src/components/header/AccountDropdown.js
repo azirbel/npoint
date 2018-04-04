@@ -27,10 +27,18 @@ class AccountDropdown extends Component {
     })
   }
 
+  componentDidMount() {
+    this.setLastAvatarUrl(this.props)
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setLastAvatarUrl(newProps)
+  }
+
   // Make sure this component can still render as a user is logging out (it will still be rendered
   // to show the logout animation)
-  componentWillReceiveProps(newProps) {
-    let avatarUrl = _.get(newProps, ['user', 'avatarUrl'])
+  setLastAvatarUrl(props) {
+    let avatarUrl = _.get(props, ['session', 'user', 'avatarUrl'])
     if (avatarUrl) {
       this.setState({ lastAvatarUrl: avatarUrl })
     }

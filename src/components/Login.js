@@ -135,19 +135,21 @@ class Login extends Component {
   renderLogInForm() {
     return (
       <div className="form padded spaced-children">
-        <Input
-          label="Email"
-          type="email"
-          value={this.state.email}
-          onChange={email => this.setState({ email })}
-        />
-        <Input
-          label="Password"
-          type="password"
-          value={this.state.password}
-          onChange={password => this.setState({ password })}
-          onEnter={this.handleLogin}
-        />
+        <form className="spaced-children">
+          <Input
+            label="Email"
+            type="email"
+            value={this.state.email}
+            onChange={email => this.setState({ email })}
+          />
+          <Input
+            label="Password"
+            type="password"
+            value={this.state.password}
+            onChange={password => this.setState({ password })}
+            onEnter={this.handleLogin}
+          />
+        </form>
         {this.renderErrors(this.state.loginErrors)}
         <div className="flex justify-end">
           <div className="button-group">
@@ -175,19 +177,21 @@ class Login extends Component {
           value={this.state.name}
           onChange={name => this.setState({ name })}
         />
-        <Input
-          label="Email"
-          type="email"
-          value={this.state.email}
-          onChange={email => this.setState({ email })}
-        />
-        <Input
-          label="Choose a password"
-          type="password"
-          value={this.state.password}
-          onChange={password => this.setState({ password })}
-          onEnter={this.handleSignup}
-        />
+        <form className="spaced-children">
+          <Input
+            label="Email"
+            type="email"
+            value={this.state.email}
+            onChange={email => this.setState({ email })}
+          />
+          <Input
+            label="Choose a password"
+            type="password"
+            value={this.state.password}
+            onChange={password => this.setState({ password })}
+            onEnter={this.handleSignup}
+          />
+        </form>
         {this.renderErrors(this.state.signUpErrors)}
         <div className="flex justify-end">
           <Button

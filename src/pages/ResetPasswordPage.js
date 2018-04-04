@@ -70,19 +70,21 @@ class ResetPasswordPage extends Component {
         </Helmet>
         <div className="container">
           <div className="reset-form form spaced-children">
-            <Input
-              label="New password"
-              type="password"
-              value={this.state.password}
-              onChange={password => this.setState({ password })}
-            />
-            <Input
-              label="Confirm new password"
-              type="password"
-              value={this.state.confirmPassword}
-              onChange={confirmPassword => this.setState({ confirmPassword })}
-              onEnter={this.resetPassword}
-            />
+            <form className="spaced-children">
+              <Input
+                label="New password"
+                type="password"
+                value={this.state.password}
+                onChange={password => this.setState({ password })}
+              />
+              <Input
+                label="Confirm new password"
+                type="password"
+                value={this.state.confirmPassword}
+                onChange={confirmPassword => this.setState({ confirmPassword })}
+                onEnter={this.resetPassword}
+              />
+            </form>
             <button
               className="button primary"
               type="submit"
