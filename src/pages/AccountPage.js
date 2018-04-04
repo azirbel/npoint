@@ -8,6 +8,7 @@ import { push } from 'react-router-redux'
 import Button from '../components/Button'
 import ClickToEdit from '../components/ClickToEdit'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import User from '../models/User'
 import createNewDocument from '../helpers/createNewDocument'
@@ -70,7 +71,7 @@ class AccountPage extends Component {
 
   render() {
     return (
-      <div className="account-page">
+      <div className="account-page page">
         <Header>
           <h1 className="page-title">Account</h1>
           <div className="flex-spring" />
@@ -86,6 +87,9 @@ class AccountPage extends Component {
         ) : (
           <PageLoadingPlaceholder />
         )}
+
+        <div className="flex-spring" />
+        <Footer light={true} />
       </div>
     )
   }

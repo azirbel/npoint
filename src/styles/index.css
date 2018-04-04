@@ -17,6 +17,12 @@ body {
   margin-top: 30px;
 }
 
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

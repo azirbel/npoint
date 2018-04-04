@@ -1,16 +1,23 @@
 // @format
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {} from './Footer.css'
 
 export default class Footer extends Component {
+  static propTypes = {
+    light: PropTypes.bool,
+  }
+
   render() {
+    let sectionClassName = `section ${this.props.light ? ' dark-white less-padding' : ' blue'}`
+
     return (
       <footer className="footer">
-        <div className="section blue">
+        <div className={sectionClassName}>
           <div className="container">
-            <div className="text-white text-center">n:point &copy; 2018</div>
-            <div className="text-white text-center">
+            <div className="text-center footer-line-1">n:point &copy; 2018</div>
+            <div className="text-center">
               Made by{' '}
               <a target="_blank" href="https://twitter.com/alexzirbel">
                 Alex Zirbel

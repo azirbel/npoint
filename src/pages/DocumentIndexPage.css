@@ -2,25 +2,27 @@
 
 @import '../styles/variables.css';
 
-.form-label {
-  display: block;
-}
+.document-index-page {
+  & .form-label {
+    display: block;
+  }
 
-.logo-first-letter {
-  color: var(--primaryColor);
-}
+  & .logo-first-letter {
+    color: var(--primaryColor);
+  }
 
-.document-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all ease-in-out var(--transitionTiming);
-  padding: 10px 16px;
-  margin-left: -16px;
-  margin-right: -16px;
-}
+  & .document-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all ease-in-out var(--transitionTiming);
+    padding: 10px 16px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
 
-.document-row:hover {
-  background-color: var(--darkWhite);
-  text-decoration: none;
+  & .document-row:hover {
+    background-color: var(--darkWhite);
+    text-decoration: none;
+  }
 }

@@ -8,9 +8,20 @@
 
   &.blue {
     background-color: var(--blue);
+    color: var(--white);
+
+    & a {
+      color: var(--white);
+      text-decoration: underline;
+    }
   }
 
   &.dark-white {
     background-color: var(--darkWhite);
+  }
+
+  &.less-padding {
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 }

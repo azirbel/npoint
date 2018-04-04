@@ -40,7 +40,7 @@ export default class IndexPage extends Component {
 
   render() {
     return (
-      <div className="index-page">
+      <div className="index-page page">
         <Header fullLogo={true}>
           <div className="flex-spring" />
           <Button

@@ -3,4 +3,7 @@
 @import '../styles/variables.css';
 
 .footer {
+  & .footer-line-1 {
+    margin-bottom: 4px;
+  }
 }

@@ -13,6 +13,7 @@ import _ from 'lodash'
 import Button from '../components/Button'
 import Document from '../models/Document'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { cacheThinDocuments } from '../actions'
 import createNewDocument from '../helpers/createNewDocument'
 
@@ -54,7 +55,7 @@ class DocumentIndexPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="document-index-page page">
         <Header>
           <h1 className="page-title">My Documents</h1>
           <div className="flex-spring" />
@@ -82,6 +83,9 @@ class DocumentIndexPage extends Component {
             )}
           {this.state.documents.map(doc => this.renderDocumentRow(doc))}
         </div>
+
+        <div className="flex-spring" />
+        <Footer />
       </div>
     )
   }
