@@ -1,1 +1,7 @@
 /* @format */
+
+.faq-page {
+  & .faq + .faq {
+    margin-top: 40px;
+  }
+}

@@ -4,15 +4,21 @@
 
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
+import ReactMarkdown from 'react-markdown'
+import _ from 'lodash'
+
 import Header from '../components/Header'
+import Footer from '../components/Footer'
+import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
+
 import {} from './FaqPage.css'
 
 class Faq extends Component {
   render() {
     return (
-      <div className="faq">
+      <div className="faq prose">
         <h3>{this.props.question}</h3>
-        <p>{this.props.answer}</p>
+        <ReactMarkdown source={this.props.answer} />
       </div>
     )
   }
@@ -31,7 +37,7 @@ export default class FaqPage extends Component {
 
   render() {
     return (
-      <div className="faq-page">
+      <div className="faq-page page">
         <Header>
           <h1 className="page-title">Frequently Asked Questions</h1>
           <div className="flex-spring" />
@@ -39,15 +45,22 @@ export default class FaqPage extends Component {
         <Helmet>
           <title>Frequently Asked Questions</title>
         </Helmet>
-        <div className="container main-body">
-          {this.state.faqs.map(faq => (
-            <Faq
-              key={faq.question}
-              question={faq.question}
-              answer={faq.answer}
-            />
-          ))}
-        </div>
+        {_.isEmpty(this.state.faqs) ? (
+          <PageLoadingPlaceholder />
+        ) : (
+          <div className="container main-body">
+            {this.state.faqs.map(faq => (
+              <Faq
+                key={faq.question}
+                question={faq.question}
+                answer={faq.answer}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="flex-spring" />
+        <Footer light={true} />
       </div>
     )
   }
