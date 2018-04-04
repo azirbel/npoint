@@ -131,21 +131,16 @@ class DocumentsController < ApplicationController
   end
 
   def random_title
-    "Untitled (#{Faker::App.name})"
+    "Untitled (#{Faker::Food.dish})"
   end
 
   def random_contents
     {
       'next_steps' => [
-        'Edit this JSON document',
-        'Make an account so you can edit it later',
-        'Try accessing it via the API!'
-      ],
-      'data' => {
-        'advice' => Faker::Hacker.say_something_smart,
-        Faker::Hacker.noun => Faker::Hacker.adjective,
-        Faker::Hacker.noun => Faker::Hacker.adjective
-      }
+        'Edit this JSON bin',
+        'Sign up to make bins only you can edit',
+        "Access this bin via the API (see the footer)"
+      ]
     }
   end
 end

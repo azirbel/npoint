@@ -5,11 +5,13 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { MdDone, MdStarOutline } from 'react-icons/lib/md'
+import _ from 'lodash'
 
 import Button from '../components/Button'
 import JsonEditor from '../components/JsonEditor'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import PageLoadingPlaceholder from '../components/PageLoadingPlaceholder'
 import createNewDocument from '../helpers/createNewDocument'
 
 import {} from './IndexPage.css'
@@ -19,7 +21,7 @@ export default class IndexPage extends Component {
     newDocumentContents: JSON.stringify(
       {
         what: 'a simple JSON data store',
-        why: ['quick setup', 'easy editing', '(coming soon) validation'],
+        why: ['quick setup', 'easy editing', 'schema validation'],
       },
       null,
       2
@@ -83,7 +85,7 @@ export default class IndexPage extends Component {
                     )
                   }
                 >
-                  Save
+                  Create JSON Bin
                 </Button>
               </div>
             </div>
@@ -220,6 +222,9 @@ export default class IndexPage extends Component {
               </p>
             </div>
             <ul>
+              {_.isEmpty(this.state.features) && (
+                <PageLoadingPlaceholder />
+              )}
               {this.state.features.map(feature => (
                 <li key={feature.slug} className="feature">
                   <MdDone className="feature-icon" />
@@ -238,11 +243,14 @@ export default class IndexPage extends Component {
             <div className="prose">
               <h2>Premium Features</h2>
               <p className="text-italic">
-                Want any of the features below? Let us know via the chat widget
-                in the bottom right!
+                Want any of the features below? Say so using the chat widget in
+                the bottom right!
               </p>
             </div>
             <ul>
+              {_.isEmpty(this.state.premiumFeatures) && (
+                <PageLoadingPlaceholder />
+              )}
               {this.state.premiumFeatures.map(feature => (
                 <li key={feature.title} className="feature">
                   <MdStarOutline className="feature-icon" />

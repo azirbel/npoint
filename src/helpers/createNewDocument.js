@@ -7,7 +7,7 @@ import Document from '../models/Document'
 export default function(router, contents) {
   let params = _.isEmpty(contents) ? { generateContents: true } : { contents }
 
-  Document.create(_.merge(params, { title: 'Untitled' })).then(response => {
+  Document.create(_.merge(params)).then(response => {
     router.push(`/docs/${response.data.token}`)
   })
 }
