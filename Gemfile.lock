@@ -215,7 +215,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   json-schema
   json-schema-generator
-  pg (~> 0.21)
+  pg (~> 0.20)
   pry-rails
   puma
   rack-cors
@@ -231,7 +231,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
 
 RUBY VERSION
-   ruby 2.3.4p301
+   ruby 2.3.5p376
 
 BUNDLED WITH
    1.16.1

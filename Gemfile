@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.4'
+ruby '2.3.5'
 
 gem 'active_model_serializers'
 gem 'bcrypt'
@@ -10,7 +10,7 @@ gem 'faker'
 gem 'jbuilder', '~> 2.0'
 gem 'json-schema'
 gem 'json-schema-generator'
-gem 'pg', '~> 0.21'
+gem 'pg', '~> 0.20'
 gem 'puma'
 gem 'rack-cors'
 gem 'rails', '~> 4.2.7'
