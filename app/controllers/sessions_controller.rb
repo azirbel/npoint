@@ -1,7 +1,7 @@
 class SessionsController < Devise::SessionsController
   clear_respond_to
   respond_to :json
-  after_filter :set_csrf_headers, only: [:create, :destroy]
+  after_action :set_csrf_headers, only: [:create, :destroy]
 
   def info
     if user_signed_in?
@@ -9,18 +9,6 @@ class SessionsController < Devise::SessionsController
     else
       render json: {}
     end
-  end
-
-  def create
-    binding.pry
-    self.resource = warden.authenticate!(auth_options)
-    binding.pry
-    set_flash_message!(:notice, :signed_in)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
-  rescue Exception => e
-    binding.pry
   end
 
   def update

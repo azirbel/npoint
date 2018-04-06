@@ -3,7 +3,7 @@ class Document < ActiveRecord::Base
 
   validate :contents_must_match_schema
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # 5 years to guess a specific token at 10k attempts/second:
   # log(16, 10000 * 60 * 60 * 24 * 365 * 5) ~= 10.13

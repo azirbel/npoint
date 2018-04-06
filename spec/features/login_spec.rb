@@ -11,8 +11,6 @@ RSpec.describe 'login', type: :feature, js: true do
   let!(:user) { create :user, email: 'good@example.com', password: GOOD_PASSWORD }
 
   it 'works for a valid user' do
-    binding.pry
-
     visit '/'
     expect(page).to have_content 'JSON storage bins'
     expect(page).not_to have_css '.js-account-dropdown'
@@ -25,7 +23,6 @@ RSpec.describe 'login', type: :feature, js: true do
       click_button 'Log in'
     end
 
-    binding.pry
     expect(page).to have_css '.js-account-dropdown'
     expect(page).to have_content 'My JSON Bins'
   end
