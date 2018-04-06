@@ -25,7 +25,24 @@ RSpec.describe 'login', type: :feature, js: true do
 
     expect(page).to have_css '.js-account-dropdown'
     expect(page).to have_content 'My JSON Bins'
+    expect(page).not_to have_content 'Invalid username or password'
   end
 
-  it 'shows an error for an incorrect password'
+  it 'shows an error for an incorrect password' do
+    visit '/'
+    expect(page).to have_content 'JSON storage bins'
+    expect(page).not_to have_css '.js-account-dropdown'
+
+    click_button 'Log in'
+
+    within '.js-login' do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: BAD_PASSWORD
+      click_button 'Log in'
+    end
+
+    expect(page).not_to have_css '.js-account-dropdown'
+    expect(page).not_to have_content 'My JSON Bins'
+    expect(page).to have_content 'Invalid username or password'
+  end
 end
