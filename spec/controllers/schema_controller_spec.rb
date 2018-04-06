@@ -1,7 +1,7 @@
 RSpec.describe SchemaController do
   describe '#validate' do
     it 'is valid for an empty schema' do
-      post :validate, contents: '{}', schema: '{}'
+      post :validate, params: { contents: '{}', schema: '{}' }
 
       expect(response).to have_http_status(200)
       expect(parsed_response).to eq({
@@ -11,7 +11,7 @@ RSpec.describe SchemaController do
     end
 
     it 'is invalid for a type mismatch' do
-      post :validate, contents: '[]', schema: '{ "type": "object" }'
+      post :validate, params: { contents: '[]', schema: '{ "type": "object" }' }
 
       expect(response).to have_http_status(200)
       expect(parsed_response).to eq({
@@ -28,7 +28,7 @@ RSpec.describe SchemaController do
       }
 
       it 'is invalid for a missing param' do
-        post :validate, contents: '{}', schema: schema
+        post :validate, params: { contents: '{}', schema: schema }
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq({
@@ -40,7 +40,7 @@ RSpec.describe SchemaController do
       end
 
       it 'is valid when the param is provided' do
-        post :validate, contents: '{ "a": 3 }', schema: schema
+        post :validate, params: { contents: '{ "a": 3 }', schema: schema }
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq({
@@ -56,7 +56,7 @@ RSpec.describe SchemaController do
       }
 
       it 'is invalid for a missing param' do
-        post :validate, contents: '{ "b": { "c": 3 } }', schema: schema
+        post :validate, params: { contents: '{ "b": { "c": 3 } }', schema: schema }
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq({
@@ -68,7 +68,7 @@ RSpec.describe SchemaController do
       end
 
       it 'is valid when the param is provided' do
-        post :validate, contents: '{ "b": { "a": 3 } }', schema: schema
+        post :validate, params: { contents: '{ "b": { "a": 3 } }', schema: schema }
 
         expect(response).to have_http_status(200)
         expect(parsed_response).to eq({

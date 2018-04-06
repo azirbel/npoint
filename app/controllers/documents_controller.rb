@@ -125,7 +125,7 @@ class DocumentsController < ApplicationController
   def fetch_json_or_nil(param)
     begin
       JSON.parse(params.try(:[], param))
-    rescue TypeError
+    rescue TypeError, JSON::ParserError
       nil
     end
   end

@@ -13,7 +13,7 @@ RSpec.describe RegistrationsController do
     context 'with a valid email and password' do
       it 'registers a new user' do
         expect {
-          post :create, email: 'good@npoint.io', password: 'password123'
+          post :create, params: { email: 'good@npoint.io', password: 'password123' }
         }.to change(User, :count).by(1)
 
         expect(response).to have_http_status(200)
@@ -24,7 +24,7 @@ RSpec.describe RegistrationsController do
     context 'with a valid email and invalid password' do
       it 'registers a new user' do
         expect {
-          post :create, email: 'good@npoint.io', password: 'bad'
+          post :create, params: { email: 'good@npoint.io', password: 'bad' }
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(200)
@@ -37,7 +37,7 @@ RSpec.describe RegistrationsController do
     context 'with an invalid email and valid password' do
       it 'registers a new user' do
         expect {
-          post :create, email: 'bad', password: 'password123'
+          post :create, params: { email: 'bad', password: 'password123' }
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(200)
@@ -48,7 +48,7 @@ RSpec.describe RegistrationsController do
     context 'with an invalid email and invalid password' do
       it 'registers a new user' do
         expect {
-          post :create, email: 'bad', password: 'bad'
+          post :create, params: { email: 'bad', password: 'bad' }
         }.not_to change(User, :count)
 
         expect(response).to have_http_status(200)

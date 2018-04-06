@@ -39,10 +39,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  # https://github.com/rspec/rspec-rails/issues/1275
-  config.action_controller.default_url_options= { host: 'test.com' }
 end
-
-# https://github.com/rspec/rspec-rails/issues/1275
-Rails.application.routes.default_url_options[:host] = 'test.com'

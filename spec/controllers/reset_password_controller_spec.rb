@@ -15,7 +15,7 @@ RSpec.describe ResetPasswordController do
           .with(user, RAW_TOKEN)
           .and_return(true)
 
-        post :send_reset_password_email, email: user.email
+        post :send_reset_password_email, params: { email: user.email }
         expect(response).to have_http_status(200)
       end
     end
@@ -24,7 +24,7 @@ RSpec.describe ResetPasswordController do
       it 'returns 404' do
         allow(TransactionalMail).to receive(:reset_password).and_return(true)
 
-        post :send_reset_password_email, email: 'bad.email@npoint.io'
+        post :send_reset_password_email, params: { email: 'bad.email@npoint.io' }
         expect(response).to have_http_status(404)
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe ResetPasswordController do
           .with(user, RAW_TOKEN)
           .and_return(false)
 
-        post :send_reset_password_email, email: user.email
+        post :send_reset_password_email, params: { email: user.email }
         expect(response).to have_http_status(503)
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe ResetPasswordController do
           .and_return(true)
 
         expect {
-          post :send_reset_password_email, email: user.email
+          post :send_reset_password_email, params: { email: user.email }
         }.to change { user.reload.reset_password_token }.to(ENC_TOKEN)
 
         expect(response).to have_http_status(200)
@@ -59,7 +59,7 @@ RSpec.describe ResetPasswordController do
           .and_return(ENC_TOKEN)
 
         expect {
-          post :reset_password, reset_token: RAW_TOKEN, password: 'NEW_PASSWORD'
+          post :reset_password, params: { reset_token: RAW_TOKEN, password: 'NEW_PASSWORD' }
         }.to change { user.reload.reset_password_token }.to(nil)
           .and(change { user.reload.encrypted_password })
 
@@ -77,14 +77,14 @@ RSpec.describe ResetPasswordController do
           .and_return(true)
 
         expect {
-          post :send_reset_password_email, email: user.email
+          post :send_reset_password_email, params: { email: user.email }
         }.to change { user.reload.reset_password_token }.to(ENC_TOKEN)
 
         expect(response).to have_http_status(200)
 
         expect {
           expect {
-            post :reset_password, reset_token: 'BAD_TOKEN', password: 'NEW_PASSWORD'
+            post :reset_password, params: { reset_token: 'BAD_TOKEN', password: 'NEW_PASSWORD' }
           }.not_to change { user.reload.reset_password_token }
         }.not_to change { user.reload.encrypted_password }
 
@@ -99,14 +99,14 @@ RSpec.describe ResetPasswordController do
           .and_return(true)
 
         expect {
-          post :send_reset_password_email, email: user.email
+          post :send_reset_password_email, params: { email: user.email }
         }.to change { user.reload.reset_password_token }.to(ENC_TOKEN)
 
         expect(response).to have_http_status(200)
 
         expect {
           expect {
-            post :reset_password, password: 'NEW_PASSWORD'
+            post :reset_password, params: { password: 'NEW_PASSWORD' }
           }.not_to change { user.reload.reset_password_token }
         }.not_to change { user.reload.encrypted_password }
 
