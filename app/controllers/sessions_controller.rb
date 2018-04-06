@@ -11,6 +11,18 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def create
+    binding.pry
+    self.resource = warden.authenticate!(auth_options)
+    binding.pry
+    set_flash_message!(:notice, :signed_in)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
+  rescue Exception => e
+    binding.pry
+  end
+
   def update
     if user_signed_in?
       current_user.update!(name: params[:name]) if params[:name].present?

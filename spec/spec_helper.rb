@@ -6,6 +6,32 @@ abort("Rails is running in production mode!") if Rails.env.production?
 
 require 'rspec/rails' # Must go before other requires
 require 'devise'
+require 'capybara/rails'
+require 'capybara/rspec'
+require 'selenium/webdriver'
+
+# https://robots.thoughtbot.com/headless-feature-specs-with-chrome
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+    browser: :chrome,
+    desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :headless_chrome
+
+# May be useful for testing against a locally running webpack build
+# https://stackoverflow.com/questions/8662554/how-to-use-the-test-database-with-capybara
+#Capybara.run_server = true
+#Capybara.server_port = 7000
+#Capybara.app_host = "http://localhost:#{Capybara.server_port}"
 
 # Load all files in support/. Note: don't give these files names ending
 # in _spec, or else they will also be run as specs.

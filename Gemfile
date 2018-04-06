@@ -10,7 +10,7 @@ gem 'faker'
 gem 'jbuilder', '~> 2.0'
 gem 'json-schema'
 gem 'json-schema-generator'
-gem 'pg', '~> 0.20'
+gem 'pg', '0.20'
 gem 'puma'
 gem 'rack-cors'
 gem 'rails', '~> 4.2.7'
@@ -23,6 +23,8 @@ gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'capybara'
+  gem 'capybara-selenium'
   gem 'pry-rails'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'

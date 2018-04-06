@@ -37,6 +37,11 @@ yarn start
 
 #### Testing
 
+Setup:
+
+1. Install Chrome
+2. Install chromedriver (`brew install chromedriver` on mac)
+
 ```bash
 rspec
 yarn test

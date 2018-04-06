@@ -134,7 +134,7 @@ class Login extends Component {
 
   renderLogInForm() {
     return (
-      <div className="form padded spaced-children">
+      <div className="form padded spaced-children js-login">
         <form className="spaced-children">
           <Input
             label="Email"
@@ -173,7 +173,7 @@ class Login extends Component {
 
   renderSignUpForm() {
     return (
-      <div className="form padded spaced-children">
+      <div className="form padded spaced-children js-sign-up">
         <Input
           label="First name"
           value={this.state.name}
@@ -213,7 +213,7 @@ class Login extends Component {
 
   renderForgotPasswordForm() {
     return (
-      <div className="form padded spaced-children">
+      <div className="form padded spaced-children js-forgot-password">
         <Input
           label="Email"
           type="email"

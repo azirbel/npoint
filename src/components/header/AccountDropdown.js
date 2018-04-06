@@ -50,7 +50,7 @@ class AccountDropdown extends Component {
       this.state.lastAvatarUrl
 
     return (
-      <div className="account-dropdown-component">
+      <div className="account-dropdown-component js-account-dropdown">
         <button
           className="button subtle account-dropdown-button"
           ref="accountDropdownTarget"
