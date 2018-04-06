@@ -47,6 +47,10 @@ rspec
 yarn test
 ```
 
+**Important note**: Rspec integration tests run against the compiled version of the
+app in `app/assets`. Build with `npm run build` first, or set up capybara to run against
+your live webpack version (I haven't done this yet, but have ideas in `spec_helper.rb`).
+
 ## Maintaining
 
 #### Production build
