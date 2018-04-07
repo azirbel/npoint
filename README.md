@@ -99,6 +99,7 @@ heroku run rake db:migrate --app npoint-io
 
 * Add sentry or similar error collection service (search: `TODO(sentry)`)
 * Self-host and use privacy-respecting analytics (search: `TODO(self-host)`)
+* More testing (search: `TODO(test)`)
 
 ## Copyright & License
 

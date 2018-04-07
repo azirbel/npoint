@@ -207,7 +207,6 @@ class DocumentPage extends Component {
           validationErrorMessage: null,
         })
 
-        // TODO(azirbel): I'm sure there can be simpler show logic
         if (_.isEmpty(this.state.contentsErrorMessage)) {
           this.setState({ showContentsErrorMessage: false })
         }

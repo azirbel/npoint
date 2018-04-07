@@ -24,13 +24,5 @@ module Npoint
     # config.i18n.default_locale = :de
 
     config.autoload_paths << Rails.root.join('lib')
-
-    # TODO(azirbel): Enable for the API
-    # config.middleware.insert_before 0, "Rack::Cors" do
-    #   allow do
-    #     origins '*'
-    #     resource '*', :headers => :any, :methods => [:get, :post, :options, :patch, :delete]
-    #   end
-    # end
   end
 end

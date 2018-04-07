@@ -22,7 +22,7 @@ class ResetPasswordController < ApplicationController
     user = User.find_by!(reset_password_token: reset_password_token)
 
     if user.persisted?
-      # TODO(azirbel): Test timeout
+      # TODO(test): Test timeout period
       if user.reset_password_period_valid?
         user.reset_password(params.require(:password), params.require(:password))
         user.update!(reset_password_token: nil)

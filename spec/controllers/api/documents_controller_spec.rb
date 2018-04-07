@@ -2,7 +2,7 @@ RSpec.describe Api::DocumentsController do
   let(:contents) { {} }
   let!(:document) { create :document, contents: contents }
 
-  # TODO(azirbel): Tests for not-found / failure cases
+  # TODO(test): Not-found / failure cases
 
   describe '#show' do
     it 'handles empty JSON documents' do

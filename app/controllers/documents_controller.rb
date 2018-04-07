@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
     @document.save!
     render json: @document, serializer: SERIALIZER
   rescue ActiveRecord::RecordInvalid
-    # TODO(azirbel): test this
+    # TODO(test)
     head :bad_request
   end
 
@@ -35,7 +35,7 @@ class DocumentsController < ApplicationController
     document.update!(update_params)
     render json: document, serializer: SERIALIZER
   rescue ActiveRecord::RecordInvalid
-    # TODO(azirbel): test this
+    # TODO(test)
     head :bad_request
   end
 

@@ -1,3 +1,9 @@
+# TODO(test): Could use a few more integration tests:
+# * Create document while logged out
+# * Create document whie logged in, log out, verify you can't edit
+# * Lock schema, go to list of documents, verify you can't delete
+# * Lock data, go to list of documents, verify you can't delete
+
 RSpec.describe 'login', type: :feature, js: true do
   include Devise::Test::IntegrationHelpers
   include Warden::Test::Helpers
