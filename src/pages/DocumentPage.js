@@ -98,7 +98,7 @@ class DocumentPage extends Component {
 
     this.unmountBeforeNavigation = this.props.router.listenBefore(
       (location, done) => {
-        if (this.hasSaved()) {
+        if (this.hasSaved) {
           done()
         } else {
           this.setOpenModal('leave', () => done())
@@ -107,7 +107,7 @@ class DocumentPage extends Component {
     )
 
     window.onbeforeunload = e => {
-      if (!this.hasSaved()) {
+      if (!this.hasSaved) {
         e.returnValue = CONFIRM_TEXT
         return CONFIRM_TEXT
       }
@@ -129,6 +129,20 @@ class DocumentPage extends Component {
     ) {
       this.loadDocument(this.props.params.documentToken)
     }
+  }
+
+  get titleEditable() { return this.state.document.editable }
+  get contentsEditable() {
+    return this.titleEditable && !this.state.document.contentsLocked
+  }
+  get schemaEditable() {
+    return this.contentsEditable && !this.state.document.schemaLocked
+  }
+  get hasSaved() {
+    return (
+      this.state.originalContents === this.state.savedOriginalContents &&
+      this.state.originalSchema === this.state.savedOriginalSchema
+    )
   }
 
   // Ace editor is picky and gets upset when we try to kick off a validation job
@@ -298,7 +312,7 @@ class DocumentPage extends Component {
   }
 
   requestCloneDocument = () => {
-    if (this.hasSaved()) {
+    if (this.hasSaved) {
       this.cloneDocument()
     } else {
       this.setOpenModal('leave', () => this.cloneDocument())
@@ -334,34 +348,21 @@ class DocumentPage extends Component {
     this.setState({ openModalName, modalCallback })
   }
 
-  keyMap = {
+  hotKeyMap = {
     save: ['meta+s', 'ctrl+s'],
   }
 
-  handlers = {
-    save: e => {
+  hotKeyHandlers = {
+    save: event => {
       this.saveDocument()
 
-      if (e.preventDefault) {
-        e.preventDefault()
+      if (event.preventDefault) {
+        event.preventDefault()
       } else {
         // internet explorer
-        e.returnValue = false
+        event.returnValue = false
       }
     },
-  }
-
-  // TODO(azirbel): Getters?
-  titleEditable = () => this.state.document.editable
-  contentsEditable = () =>
-    this.titleEditable() && !this.state.document.contentsLocked
-  schemaEditable = () =>
-    this.contentsEditable() && !this.state.document.schemaLocked
-  hasSaved = () => {
-    return (
-      this.state.originalContents === this.state.savedOriginalContents &&
-      this.state.originalSchema === this.state.savedOriginalSchema
-    )
   }
 
   render() {
@@ -413,17 +414,17 @@ class DocumentPage extends Component {
           onDiscard={() => this.state.modalCallback()}
         />
         <DocumentPageHeader
-          contentsEditable={this.contentsEditable()}
+          contentsEditable={this.contentsEditable}
           document={this.state.document}
           errorMessage={overallErrorMessage}
-          hasSaved={this.hasSaved()}
+          hasSaved={this.hasSaved}
           isSavingDocument={this.state.isSaving}
           onClone={this.requestCloneDocument}
           onSaveTitle={this.onSaveTitle}
           onOpenShareModal={() => this.setOpenModal('share')}
           onSaveDocument={() => this.saveDocument()}
           title={this.state.document.title}
-          titleEditable={this.titleEditable()}
+          titleEditable={this.titleEditable}
         />
         {this.state.isLoading ? <PageLoadingPlaceholder /> : this.renderMain()}
       </div>
@@ -437,12 +438,12 @@ class DocumentPage extends Component {
           <title>{this.state.document.title}</title>
         </Helmet>
         <HotKeys
-          keyMap={this.keyMap}
-          handlers={this.handlers}
+          keyMap={this.hotKeyMap}
+          handlers={this.hotKeyHandlers}
           focused={true}
           attach={window}
         />
-        {!this.contentsEditable() && (
+        {!this.contentsEditable && (
           <div className="banner dark-gray">
             <div className="container flex align-center justify-center">
               <MdLock className="locked-icon" />
@@ -497,7 +498,7 @@ class DocumentPage extends Component {
           onSave={this.saveDocument}
           onTypingBreakpoint={this.handleContentsTypingBreakpoint}
           originalContents={this.state.originalContents}
-          readOnly={!this.contentsEditable()}
+          readOnly={!this.contentsEditable}
           showErrorMessage={this.state.showContentsErrorMessage}
         />
       </div>
@@ -508,7 +509,7 @@ class DocumentPage extends Component {
     return (
       <div>
         <SchemaEditor
-          contentsEditable={this.contentsEditable()}
+          contentsEditable={this.contentsEditable}
           document={this.state.document}
           errorMessage={this.state.schemaErrorMessage}
           onAutoformatSchema={this.autoformatSchema}
@@ -518,7 +519,7 @@ class DocumentPage extends Component {
           onSave={this.saveDocument}
           onTypingBreakpoint={this.handleSchemaTypingBreakpoint}
           originalSchema={this.state.originalSchema}
-          readOnly={!this.schemaEditable()}
+          readOnly={!this.schemaEditable}
           showErrorMessage={this.state.showSchemaErrorMessage}
         />
       </div>
