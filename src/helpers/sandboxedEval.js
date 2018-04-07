@@ -4,6 +4,39 @@ import { readableEvalError, readableParseError } from './readableJsonError'
 
 // Following https://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/
 
+const IFRAME_EVENT_LISTENER = function(event) {
+  let mainWindow = event.source
+  let objStr = event.data
+  let result = ''
+
+  try {
+    // NOTE: Use Function() rather than eval() to deny access to context
+    // variables like `event` and `window`
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
+    let data = Function('"use strict";return (' + event.data + ')')(); // eslint-disable-line no-new-func
+    result = { original: objStr, data: data };
+  } catch (error) {
+    result = { original: objStr, data: null, errorMessage: error.message };
+  }
+
+  mainWindow.postMessage(result, event.origin);
+}
+
+function naiveParseJson(jsonStr) {
+  // Fallback to naive JSON parse - old browsers can still use this
+  let json = null
+  let errorMessage = null
+
+  try {
+    json = JSON.parse(jsonStr)
+  } catch (e) {
+    errorMessage = readableParseError(jsonStr, e)
+  }
+
+  return { json, errorMessage }
+}
+
 // Important to use via srcdoc, and not src: see
 // https://stackoverflow.com/a/30507852. This means the sandboxing is still
 // secure in legacy browsers.
@@ -13,25 +46,11 @@ export const IFRAME_SRC_DOC = `
    <head>
      <title>npoint eval iframe</title>
      <script>
-       window.addEventListener('message', function(e) {
-         var mainWindow = e.source;
-         var objStr = e.data;
-         var result = '';
-         try {
-           var data = Function('"use strict";return (' + e.data + ')')();
-           result = { original: objStr, data: data };
-         } catch (e) {
-           result = { original: objStr, data: null, errorMessage: e.message };
-         }
-         mainWindow.postMessage(result, e.origin);
-       });
+       window.addEventListener('message', ${IFRAME_EVENT_LISTENER.toString()});
      </script>
    </head>
   </html>
 `
-
-// TODO(azirbel): Pull out the above JS into a function, then stringify it
-// into IFRAME_HTML. Change "e" to "event".
 
 // Uses the given iframe to parse a JS object string into a JS object.
 // Example input:
@@ -77,18 +96,4 @@ export function evalParseObject(objStr, iframe) {
     window.addEventListener('message', handleIframeMessage)
     iframe.contentWindow.postMessage(objStr, '*')
   })
-}
-
-function naiveParseJson(jsonStr) {
-  // Fallback to naive JSON parse - old browsers can still use this
-  let json = null
-  let errorMessage = null
-
-  try {
-    json = JSON.parse(jsonStr)
-  } catch (e) {
-    errorMessage = readableParseError(jsonStr, e)
-  }
-
-  return { json, errorMessage }
 }
