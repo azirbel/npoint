@@ -51,6 +51,11 @@ yarn test
 app in `app/assets`. Build with `npm run build` first, or set up capybara to run against
 your live webpack version (I haven't done this yet, but have ideas in `spec_helper.rb`).
 
+Testing in IE: Use BrowserStack, which generously provides an [open
+source](https://www.browserstack.com/open-source) plan. (Contact Alex for setup details)
+
+[![BrowserStack logo](browserstack-logo.png)](https://www.browserstack.com)
+
 ## Maintaining
 
 #### Production build
