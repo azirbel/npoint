@@ -57,7 +57,8 @@ class DocumentIndexPage extends Component {
     return (
       <div className="document-index-page page">
         <Header>
-          <h1 className="page-title">My JSON Bins</h1>
+          <h1 className="page-title hidden-xs-down">My JSON Bins</h1>
+          <h1 className="page-title hidden-sm-up">My Bins</h1>
           <div className="flex-spring" />
           <Button onClick={() => createNewDocument(this.props.router)}>
             + New
