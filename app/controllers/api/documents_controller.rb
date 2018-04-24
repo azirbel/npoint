@@ -2,8 +2,6 @@ class Api::DocumentsController < ApplicationController
   class InvalidPathError < StandardError
   end
 
-  after_action :cors_set_access_control_headers
-
   def show
     contents = document.contents
 
@@ -54,5 +52,16 @@ class Api::DocumentsController < ApplicationController
     headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, X-CSRF-Token'
+  end
+
+  def cors_preflight_check
+    if request.method == 'OPTIONS'
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+      headers['Access-Control-Request-Method'] = '*'
+      headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, X-CSRF-Token'
+
+      render :text => '', :content_type => 'text/plain'
+    end
   end
 end
