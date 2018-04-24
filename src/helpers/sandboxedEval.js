@@ -14,13 +14,13 @@ const IFRAME_EVENT_LISTENER = function(event) {
     // variables like `event` and `window`
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
-    let data = Function('"use strict";return (' + event.data + ')')(); // eslint-disable-line no-new-func
-    result = { original: objStr, data: data };
+    let data = Function('"use strict";return (' + event.data + ')')() // eslint-disable-line no-new-func
+    result = { original: objStr, data: data }
   } catch (error) {
-    result = { original: objStr, data: null, errorMessage: error.message };
+    result = { original: objStr, data: null, errorMessage: error.message }
   }
 
-  mainWindow.postMessage(result, event.origin);
+  mainWindow.postMessage(result, event.origin)
 }
 
 function naiveParseJson(jsonStr) {

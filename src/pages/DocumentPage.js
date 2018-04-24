@@ -131,7 +131,9 @@ class DocumentPage extends Component {
     }
   }
 
-  get titleEditable() { return this.state.document.editable }
+  get titleEditable() {
+    return this.state.document.editable
+  }
   get contentsEditable() {
     return this.titleEditable && !this.state.document.contentsLocked
   }

@@ -39,7 +39,9 @@ export default class FaqPage extends Component {
     return (
       <div className="faq-page page">
         <Header>
-          <h1 className="page-title hidden-xs-down">Frequently Asked Questions</h1>
+          <h1 className="page-title hidden-xs-down">
+            Frequently Asked Questions
+          </h1>
           <h1 className="page-title hidden-sm-up">FAQ</h1>
           <div className="flex-spring" />
         </Header>

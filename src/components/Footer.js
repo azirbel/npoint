@@ -31,7 +31,7 @@ export default class Footer extends Component {
                 GitHub
               </a>
             </div>
-            <br/>
+            <br />
             <div className="footer-line-xs">
               <Link to="/faq">Frequently Asked Questions</Link>
             </div>

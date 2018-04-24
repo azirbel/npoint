@@ -98,10 +98,8 @@ export default class IndexPage extends Component {
                 <div className="usage-step-number">1.</div>
                 <h3>Store JSON online</h3>
                 <p>
-                  Use n:point as a lightweight{' '}
-                  <br className="hidden-xs-down" />
-                  backend while you prototype{' '}
-                  <br className="hidden-xs-down" />
+                  Use n:point as a lightweight <br className="hidden-xs-down" />
+                  backend while you prototype <br className="hidden-xs-down" />
                   your app or website.
                 </p>
               </div>
@@ -141,8 +139,7 @@ export default class IndexPage extends Component {
                 <p>
                   Let others make changes to the{' '}
                   <br className="hidden-xs-down" />
-                  saved data. With the schema{' '}
-                  <br className="hidden-xs-down" />
+                  saved data. With the schema <br className="hidden-xs-down" />
                   locked, you can be sure edits{' '}
                   <br className="hidden-xs-down" />
                   won{"'"}t break your app.
