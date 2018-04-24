@@ -10,7 +10,7 @@ to redeploy. Or share edit permissions with a	friend so they can help you
 experiment! Features like schmema validation and locking mean you can make
 these changes confidently, without	breaking your app.
 
-![Demo screenshot](public/img/demo-screenshot.png)
+![Demo screenshot](public/img/demo-screenshot-locked.png)
 
 ## Contributing
 
