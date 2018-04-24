@@ -59,8 +59,8 @@ export default class IndexPage extends Component {
               that won{"'"}t break your app
             </h1>
             <p>
-              Set up a lightweight JSON endpoint in seconds,
-              <br />
+              Set up a lightweight JSON endpoint in seconds,{' '}
+              <br className="hidden-xs-down" />
               then add a{' '}
               <a target="_blank" href="http://json-schema.org/">
                 schema
@@ -98,8 +98,11 @@ export default class IndexPage extends Component {
                 <div className="usage-step-number">1.</div>
                 <h3>Store JSON online</h3>
                 <p>
-                  Use n:point as a lightweight<br />backend while you prototype<br />your
-                  app or website.
+                  Use n:point as a lightweight{' '}
+                  <br className="hidden-xs-down" />
+                  backend while you prototype{' '}
+                  <br className="hidden-xs-down" />
+                  your app or website.
                 </p>
               </div>
               <div>
@@ -136,9 +139,13 @@ export default class IndexPage extends Component {
                 <div className="usage-step-number">3.</div>
                 <h3>Edit with a friend</h3>
                 <p>
-                  Let others make changes to the<br />saved data. With the
-                  schema<br />
-                  locked, you can be sure edits<br />won{"'"}t break your app.
+                  Let others make changes to the{' '}
+                  <br className="hidden-xs-down" />
+                  saved data. With the schema{' '}
+                  <br className="hidden-xs-down" />
+                  locked, you can be sure edits{' '}
+                  <br className="hidden-xs-down" />
+                  won{"'"}t break your app.
                 </p>
               </div>
               <div>
@@ -188,19 +195,17 @@ export default class IndexPage extends Component {
                 <img
                   alt="Demo screenshot"
                   width="100%"
-                  src="img/demo-screenshot.png"
+                  src="img/demo-screenshot-dots.png"
                 />
               </div>
-              <div className="col-xs-12">
-                <ol className="prose">
-                  <li>Quickly catch errors</li>
-                  <li>Javascript syntax is allowed</li>
-                  <li>Add a schema</li>
-                  <li>
-                    Lock the schema to guarantee the JSON structure will never
-                    change
-                  </li>
-                </ol>
+              <div className="col-xs-12 prose">
+                <p>A. Quickly catch errors</p>
+                <p>B. Javascript syntax is allowed</p>
+                <p>C. Add a schema</p>
+                <p>
+                  D. Lock the schema to guarantee the JSON structure will never
+                  change
+                </p>
               </div>
             </div>
           </div>

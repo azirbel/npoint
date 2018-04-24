@@ -6,4 +6,8 @@
   & .footer-line-1 {
     margin-bottom: 4px;
   }
+
+  & .footer-line-xs {
+    margin-bottom: 10px;
+  }
 }

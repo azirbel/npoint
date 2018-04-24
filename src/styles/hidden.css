@@ -4,12 +4,12 @@
 
 @media only screen and (--screenSmMin) {
   .hidden-sm-up {
-    display: none;
+    display: none !important;
   }
 }
 
 @media only screen and (--screenXsMax) {
   .hidden-xs-down {
-    display: none;
+    display: none !important;
   }
 }

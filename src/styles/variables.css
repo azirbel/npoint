@@ -48,6 +48,10 @@
 
   --containerWidth: 800px;
   --largeContainerWidth: 1200px;
+
+  --maxContainerWidth: 1400px;
+  --maxContainerWidthRetina: 2000px;
+
   --headerHeight: 60px;
 
   --sansFontFamily: 'Source Sans Pro', sans-serif;

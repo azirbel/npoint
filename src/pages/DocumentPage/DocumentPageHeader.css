@@ -3,6 +3,11 @@
 @import '../../styles/variables.css';
 
 .document-page-header {
+  /* HACK for small screens */
+  & .header-container {
+    min-width: 1000px;
+  }
+
   & .edit-title-input {
     font-size: 28px;
     font-weight: bold;

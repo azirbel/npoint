@@ -460,7 +460,7 @@ class DocumentPage extends Component {
               <h5 className="data-header">JSON Data</h5>
               {this.renderContents()}
             </div>
-            <Downfade className="col-xs-12 col-sm-6">
+            <Downfade className="col-xs-12 col-sm-6 schema-section">
               {this.state.originalSchema && (
                 <div key="schema">
                   <h5 className="data-header">Schema</h5>
