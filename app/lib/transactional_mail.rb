@@ -6,7 +6,7 @@ class TransactionalMail
   # Currently returns true on success, false on error
   def self.reset_password(user, token)
     port = if Rails.env.development? then 3000 else nil end
-    reset_url = "#{url_for(controller: 'app', port: port)}reset-password?token=#{token}"
+    reset_url = "#{url_for(controller: 'app', subdomain: 'www', port: port)}reset-password?token=#{token}"
 
     mail = SendGrid::Mail.new
     mail.from = SendGrid::Email.new(email: 'n:point <support@npoint.io>')
