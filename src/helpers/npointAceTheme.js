@@ -1,5 +1,3 @@
-// @format
-
 /* global ace */
 
 /* Copied from brace/theme/github.js and modified */

@@ -1,5 +1,3 @@
-// @format
-
 /* global axios */
 
 export default {

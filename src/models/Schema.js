@@ -1,5 +1,3 @@
-// @format
-
 /* global axios */
 
 const BASE_URL = '/schema'

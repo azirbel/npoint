@@ -1,5 +1,3 @@
-// @format
-
 import _ from 'lodash'
 
 import Document from '../models/Document'

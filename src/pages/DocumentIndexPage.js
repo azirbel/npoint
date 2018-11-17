@@ -1,5 +1,3 @@
-// @format
-
 import React, { Component } from 'react'
 import Tooltip from 'rc-tooltip'
 import { Helmet } from 'react-helmet'

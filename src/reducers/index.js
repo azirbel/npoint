@@ -1,5 +1,3 @@
-// @format
-
 import { combineReducers } from 'redux'
 import { routerReducer as routing } from 'react-router-redux'
 import { CACHE_THIN_DOCUMENTS, LOG_IN, LOG_OUT } from '../actions'

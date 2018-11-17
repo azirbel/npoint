@@ -1,5 +1,3 @@
-// @format
-
 export const LOG_IN = 'LOG_IN'
 export const LOG_OUT = 'LOG_OUT'
 export const CACHE_THIN_DOCUMENTS = 'CACHE_THIN_DOCUMENTS'

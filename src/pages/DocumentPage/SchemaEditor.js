@@ -1,5 +1,3 @@
-// @format
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MdLockOutline, MdReportProblem } from 'react-icons/lib/md'

@@ -1,5 +1,3 @@
-// @format
-
 /*
  * COPIED FROM THE EXAMPLES AT
  * https://react-bootstrap.github.io/react-overlays/#overlay.

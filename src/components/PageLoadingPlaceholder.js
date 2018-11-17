@@ -1,5 +1,3 @@
-// @format
-
 import React, { Component } from 'react'
 import LoadingSpinner from './LoadingSpinner'
 import {} from './PageLoadingPlaceholder.css'

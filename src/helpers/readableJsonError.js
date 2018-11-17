@@ -1,5 +1,3 @@
-// @format
-
 import _ from 'lodash'
 
 const MATCH_UNEXPECTED_TOKEN = /^Unexpected token (.*) in JSON at position (.*)$/

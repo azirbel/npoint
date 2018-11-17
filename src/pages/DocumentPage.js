@@ -1,5 +1,3 @@
-// @format
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MdLock } from 'react-icons/lib/md'
