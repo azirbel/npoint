@@ -32,7 +32,7 @@ bundle
 
 ```bash
 rails s -p 3001
-yarn start
+yarn dev
 ```
 
 #### Testing
@@ -44,17 +44,16 @@ Setup:
 
 ```bash
 rspec
-yarn test
+yarn test  # no jest tests yet
 ```
 
 **Important note**: Rspec integration tests run against the compiled version of the
 app in `app/assets`. Build with `npm run build` first, or set up capybara to run against
 your live webpack version (I haven't done this yet, but have ideas in `spec_helper.rb`).
 
-Testing in IE: Use BrowserStack, which generously provides an [open
-source](https://www.browserstack.com/open-source) plan. (Contact Alex for setup details)
-
-[![BrowserStack logo](browserstack-logo.png)](https://www.browserstack.com)
+Testing in IE: Use BrowserStack, which provides an [open
+source](https://www.browserstack.com/open-source) plan. (Contact Alex for setup
+details)
 
 ## Maintaining
 
