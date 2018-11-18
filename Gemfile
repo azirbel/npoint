@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.5'
+ruby '2.5.3'
 
 gem 'active_model_serializers'
 gem 'bcrypt'
