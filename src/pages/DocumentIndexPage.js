@@ -69,7 +69,10 @@ class DocumentIndexPage extends Component {
           {!this.state.isLoading &&
             isEmpty(this.state.documents) && (
               <div className="section text-center form spaced-children">
-                <div>Looks like you don{"'"}t have any documents yet.</div>
+                <div>
+                  Looks like you don
+                  {"'"}t have any documents yet.
+                </div>
                 <div className="flex justify-center">
                   <Button
                     className="primary"
@@ -131,7 +134,8 @@ class DocumentIndexPage extends Component {
           className="danger small"
           onClick={() => this.deleteDocument(doc)}
         >
-          <MdDelete />&nbsp;Delete
+          <MdDelete />
+          &nbsp;Delete
         </Button>
       )
     }

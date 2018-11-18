@@ -60,7 +60,10 @@ export default class ClickToEdit extends Component {
           </div>
         ) : (
           <div className="flex align-stretch">
-            <div className={textClassName}>{this.props.value}&nbsp;</div>
+            <div className={textClassName}>
+              {this.props.value}
+              &nbsp;
+            </div>
             {!this.props.readOnly && (
               <Button
                 className="subtle square edit-name-button"

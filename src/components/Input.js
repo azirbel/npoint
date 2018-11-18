@@ -44,7 +44,12 @@ export default class Input extends Component {
     }`
     return (
       <label className={`input ${this.props.className}`}>
-        {this.props.label && <span>{this.props.label}&nbsp;</span>}
+        {this.props.label && (
+          <span>
+            {this.props.label}
+            &nbsp;
+          </span>
+        )}
         <input
           className={inputClassName}
           type={this.props.type || 'text'}

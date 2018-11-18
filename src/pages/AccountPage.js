@@ -122,7 +122,8 @@ class AccountPage extends Component {
             Change your image on&nbsp;
             <a target="_blank" href="http://en.gravatar.com/">
               Gravatar
-            </a>.
+            </a>
+            .
           </div>
         </div>
         <div className="account-info-section prose">

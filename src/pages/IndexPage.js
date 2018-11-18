@@ -54,7 +54,8 @@ export default class IndexPage extends Component {
           <div className="container prose">
             <h1 className="title index-title">
               JSON storage bins <br className="hidden-xs-down" />
-              that won{"'"}t break your app
+              that won
+              {"'"}t break your app
             </h1>
             <p>
               Set up a lightweight JSON endpoint in seconds,{' '}
@@ -125,8 +126,9 @@ export default class IndexPage extends Component {
                   <a target="_blank" href="http://json-schema.org/">
                     JSON Schema
                   </a>{' '}
-                  . When you{"'"}re ready, lock the schema so it can never
-                  change again.
+                  . When you
+                  {"'"}
+                  re ready, lock the schema so it can never change again.
                 </p>
               </div>
             </div>
@@ -140,7 +142,8 @@ export default class IndexPage extends Component {
                   saved data. With the schema <br className="hidden-xs-down" />
                   locked, you can be sure edits{' '}
                   <br className="hidden-xs-down" />
-                  won{"'"}t break your app.
+                  won
+                  {"'"}t break your app.
                 </p>
               </div>
               <div>
@@ -211,10 +214,13 @@ export default class IndexPage extends Component {
             <div className="prose">
               <h2>Features</h2>
               <p className="text-italic">
-                This list is built on n:point!<br />Check it out at{' '}
+                This list is built on n:point!
+                <br />
+                Check it out at{' '}
                 <a target="_blank" href="https://www.npoint.io/docs/features">
                   npoint.io/docs/features
-                </a>, or via the API at{' '}
+                </a>
+                , or via the API at{' '}
                 <a target="_blank" href="https://api.npoint.io/features">
                   api.npoint.io/features
                 </a>
