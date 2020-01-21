@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: npoint_production
-  username: npoint
-  password: <%= ENV['NPOINT_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
