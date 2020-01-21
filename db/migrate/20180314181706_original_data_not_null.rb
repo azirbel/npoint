@@ -1,4 +1,4 @@
-class OriginalDataNotNull < ActiveRecord::Migration
+class OriginalDataNotNull < ActiveRecord::Migration[5.1]
   def change
     change_column_null :documents, :original_contents, false, ''
     change_column_null :documents, :original_schema, false, ''
