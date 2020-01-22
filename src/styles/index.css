@@ -1,4 +1,5 @@
 @import './variables.css';
+/* @import './vendor/bootstrap.min.css'; */
 
 * {
   box-sizing: border-box;

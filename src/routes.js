@@ -7,6 +7,7 @@ import ChangelogPage from './pages/ChangelogPage'
 import DocumentIndexPage from './pages/DocumentIndexPage'
 import DocumentPage from './pages/DocumentPage'
 import FaqPage from './pages/FaqPage'
+import FormEditPage from './pages/FormEditPage'
 import IndexPage from './pages/IndexPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StyleguidePage from './pages/StyleguidePage'
@@ -18,6 +19,7 @@ export default (
     <Route path="/changelog" component={ChangelogPage} />
     <Route path="/docs" component={DocumentIndexPage} />
     <Route path="/docs/:documentToken" component={DocumentPage} />
+    <Route path="/edit/:documentToken" component={FormEditPage} />
     <Route path="/faq" component={FaqPage} />
     <Route path="/reset-password" component={ResetPasswordPage} />
     <Route path="/style" component={StyleguidePage} />

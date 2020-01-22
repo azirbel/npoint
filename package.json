@@ -44,6 +44,8 @@
     "whatwg-fetch": "3.0.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.8.3",
+    "@material-ui/icons": "^4.5.1",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "mousetrap": "^1.6.2",
@@ -54,6 +56,7 @@
     "react-helmet": "^5.2.0",
     "react-hotkeys": "^1.1.4",
     "react-icons": "^2.2.3",
+    "react-jsonschema-form": "^1.8.1",
     "react-markdown": "^4.0.3",
     "react-modal": "^3.6.1",
     "react-overlays": "0.8.3",
@@ -62,7 +65,8 @@
     "react-router-redux": "^4.0.8",
     "react-transition-group": "1.x",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "rjsf-material-ui": "^0.3.9"
   },
   "scripts": {
     "dev": "node scripts/start.js",
