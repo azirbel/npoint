@@ -17,7 +17,7 @@ import DocumentPageHeader from './DocumentPage/DocumentPageHeader'
 import LeaveModal from './DocumentPage/LeaveModal'
 import ShareModal from './DocumentPage/ShareModal'
 
-import {} from './DocumentPage.css'
+import {} from './FormEditPage.css'
 
 const JsonSchemaForm = withTheme(MuiTheme)
 
@@ -63,13 +63,6 @@ class FormEditPage extends Component {
     if (thinDocument) {
       this.setState({ document: thinDocument })
     }
-  }
-
-  onSaveTitle = newTitle => {
-    // Need to update the saved title but keep other WIP edits the user may have
-    this.setState({
-      document: _.merge({}, this.state.document, { title: newTitle }),
-    })
   }
 
   onLoadDocument = data => {
@@ -128,11 +121,8 @@ class FormEditPage extends Component {
     }
   }
 
-  get titleEditable() {
-    return this.state.document.editable
-  }
   get contentsEditable() {
-    return this.titleEditable && !this.state.document.contentsLocked
+    return this.state.document.editable && !this.state.document.contentsLocked
   }
   get schemaEditable() {
     return this.contentsEditable && !this.state.document.schemaLocked
@@ -407,11 +397,12 @@ class FormEditPage extends Component {
           hasSaved={this.hasSaved}
           isSavingDocument={this.state.isSaving}
           onClone={this.requestCloneDocument}
-          onSaveTitle={this.onSaveTitle}
+          onSaveTitle={() => {}}
           onOpenShareModal={() => this.setOpenModal('share')}
           onSaveDocument={() => this.saveDocument()}
           title={this.state.document.title}
-          titleEditable={this.titleEditable}
+          titleEditable={false}
+          hideAdminFeatures={true}
         />
         {this.state.isLoading ? <PageLoadingPlaceholder /> : this.renderMain()}
       </div>
@@ -443,11 +434,11 @@ class FormEditPage extends Component {
         )}
         <div className="main">
           {this.state.schema && (
-            <div className="twbs">
+            <div className="form-edit-namespace">
               <JsonSchemaForm
                 schema={this.state.schema}
                 formData={this.state.contents}
-                onChange={() => console.log('changed')}
+                onChange={data => console.log('changed', data)}
                 onSubmit={() => console.log('submitted')}
                 onError={() => console.log('errors')}
               />

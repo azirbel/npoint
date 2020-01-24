@@ -1,0 +1,36 @@
+@import '../styles/variables.css';
+
+.form-edit-page {
+  & .main {
+    padding: var(--largeGutter) var(--mediumGutter);
+  }
+
+  & .form-edit-namespace {
+    & .btn[type='submit'] {
+      display: none;
+    }
+
+    & .MuiTypography-h5 {
+      text-transform: none;
+      font-size: 18px;
+      font-family: var(--sansFontFamily);
+      color: var(--textColor);
+    }
+
+    & .MuiPaper-elevation2 {
+      box-shadow: 0 0 4px 0 var(--shadowColor);
+    }
+
+    & .MuiPaper-rounded {
+      border-radius: var(--borderRadius);
+    }
+
+    & .MuiDivider-root {
+      height: 0;
+    }
+
+    & .MuiInput-underline:before {
+      border: none;
+    }
+  }
+}

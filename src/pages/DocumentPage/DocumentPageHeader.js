@@ -21,6 +21,7 @@ export default class DocumentPageHeader extends Component {
     onSaveTitle: PropTypes.func.isRequired,
     onOpenShareModal: PropTypes.func.isRequired,
     onSaveDocument: PropTypes.func.isRequired,
+    hideAdminFeatures: PropTypes.bool,
     title: PropTypes.string,
     titleEditable: PropTypes.bool,
   }
@@ -74,10 +75,14 @@ export default class DocumentPageHeader extends Component {
         )}
         <div className="flex-spring" />
         {this.props.contentsEditable && this.renderSaveButton()}
-        <Button onClick={this.props.onClone}>Clone</Button>
-        <Button className="subtle" onClick={this.props.onOpenShareModal}>
-          Share
-        </Button>
+        {!this.props.hideAdminFeatures && (
+          <Button onClick={this.props.onClone}>Clone</Button>
+        )}
+        {!this.props.hideAdminFeatures && (
+          <Button className="subtle" onClick={this.props.onOpenShareModal}>
+            Share
+          </Button>
+        )}
       </Header>
     )
   }

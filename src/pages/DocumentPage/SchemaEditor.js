@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 import { MdLockOutline, MdReportProblem } from 'react-icons/lib/md'
 import _ from 'lodash'
 
@@ -88,6 +89,12 @@ export default class SchemaEditor extends Component {
           <Button className="small" onClick={this.props.onRemoveSchema}>
             Remove schema
           </Button>
+          <Link
+            className="button small"
+            to={`/edit/${this.props.document.token}`}
+          >
+            Edit as form
+          </Link>
         </div>
       )
     }
