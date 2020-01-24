@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'changelog', to: 'app#index'
   get 'docs', to: 'app#index'
   get 'docs/:id', to: 'app#index'
+  get 'edit/:id', to: 'app#index'
   get 'faq', to: 'app#index'
   get 'reset-password', to: 'app#index'
 
