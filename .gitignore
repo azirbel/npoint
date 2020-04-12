@@ -41,3 +41,4 @@ build
 .env
 npm-debug.log
 yarn-error.log
+.byebug_history
