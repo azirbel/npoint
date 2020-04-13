@@ -2,7 +2,10 @@ class Api::DocumentsController < ApplicationController
   class InvalidPathError < StandardError
   end
 
-  before_action :check_document_edit_rights!, :only => [:update]
+  class PathNotSupportedError < StandardError
+  end
+
+  before_action :check_api_update_rights!, :only => [:update]
 
   def show
     contents = document.contents
@@ -44,9 +47,15 @@ class Api::DocumentsController < ApplicationController
   end
 
   def update
-    new_contents = JSON.parse(request.body.read)
-    document.update!(contents: new_contents, original_contents: new_contents.as_json)
+    if params[:path]
+      raise PathNotSupportedError
+    end
+
+    new_contents = fetch_json_or_nil(request.body.read)
+    document.update!(contents: new_contents, original_contents: new_contents.as_json || '')
     render json: new_contents
+  rescue PathNotSupportedError
+    head :not_found
   end
 
   private
@@ -73,18 +82,35 @@ class Api::DocumentsController < ApplicationController
     end
   end
 
-  def user_can_edit_document
-    # Anonymous doc
-    return true unless document.user.present?
+  def check_api_update_rights!
+    if !document.user.present?
+      return
+    end
 
-    # User-owned doc
-    # TODO(api-update): Check token permissions
-    true
+    token = http_auth_token
+    if token.nil? || token != document.user.api_auth_token
+      return head :unauthorized
+    end
+
+    if !document.user.is_premium
+      return head :payment_required
+    end
   end
 
-  def check_document_edit_rights!
-    unless user_can_edit_document
-      head :unauthorized
+  def http_auth_token
+    if request.headers['Authorization'].present?
+      return request.headers['Authorization'].split(' ').last
+    else
+      return nil
+    end
+    nil
+  end
+
+  def fetch_json_or_nil(data)
+    begin
+      JSON.parse(data)
+    rescue TypeError, JSON::ParserError
+      nil
     end
   end
 end

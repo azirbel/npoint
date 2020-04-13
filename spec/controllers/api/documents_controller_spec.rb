@@ -1,6 +1,7 @@
 RSpec.describe Api::DocumentsController do
   let(:contents) { {} }
-  let!(:document) { create :document, contents: contents }
+  let(:owner) { nil }
+  let!(:document) { create :document, contents: contents, user: owner }
 
   # TODO(test): Not-found / failure cases
 
@@ -130,6 +131,81 @@ RSpec.describe Api::DocumentsController do
       it_behaves_like 'a text/plain response' do
         let(:contents) { { 'data' => 99 } }
       end
+    end
+  end
+
+  describe '#update' do
+    let(:contents) { { 'name' => 'John', 'age' => 45 } }
+    let(:new_contents) { { 'new' => 'contents' } }
+    let(:bearer_token) { nil }
+
+    before do
+      if bearer_token
+        request.headers["Authorization"] = "Bearer #{bearer_token}"
+      end
+    end
+
+    RSpec.shared_examples 'a valid request' do
+      it 'updates the document and returns the contents' do
+        expect {
+          post :update, params: { token: document.token }, body: new_contents.to_json
+
+          expect(response).to have_http_status(200)
+          expect(response.content_type).to eq('application/json')
+          expect(parsed_response).to eq(new_contents)
+        }.to change{ document.reload.contents }.from(contents).to(new_contents)
+      end
+    end
+
+    RSpec.shared_examples 'a denied request' do |error_code|
+      it 'returns an error and does not update the document' do
+        expect {
+          post :update, params: { token: document.token }, body: new_contents.to_json
+
+          expect(response).to have_http_status(error_code || 401)
+        }.not_to change{ document.reload.contents }
+      end
+    end
+
+    # Public document
+    it_behaves_like 'a valid request'
+
+    context 'with an unnecessary auth token' do
+      let!(:bearer_token) { 'WHY' }
+
+      it_behaves_like 'a valid request'
+    end
+
+    context 'with a private document' do
+      let(:owner_is_premium) { true }
+      let(:owner) { create :user, api_auth_token: '123', is_premium: owner_is_premium }
+
+      it_behaves_like 'a denied request'
+
+      it_behaves_like 'a valid request' do
+        let!(:bearer_token) { '123' }
+      end
+
+      it_behaves_like 'a denied request' do
+        let!(:bearer_token) { 'WRONG' }
+      end
+
+      it_behaves_like 'a denied request', 402 do
+        let!(:bearer_token) { '123' }
+        let(:owner_is_premium) { false }
+      end
+
+      it_behaves_like 'a denied request' do
+        let!(:non_owner) { create :user, api_auth_token: '456', is_premium: true }
+        let!(:bearer_token) { '456' }
+      end
+    end
+
+    it 'fails if a path is given' do
+      expect {
+        post :update, params: { token: document.token, path: 'name' }, body: new_contents.to_json
+        expect(response).to have_http_status(404)
+      }.not_to change{ document.reload.contents }
     end
   end
 end
