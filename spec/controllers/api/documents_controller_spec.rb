@@ -1,7 +1,8 @@
 RSpec.describe Api::DocumentsController do
   let(:contents) { {} }
   let(:owner) { nil }
-  let!(:document) { create :document, contents: contents, user: owner }
+  let(:schema) { nil }
+  let!(:document) { create :document, contents: contents, user: owner, schema: schema }
 
   # TODO(test): Not-found / failure cases
 
@@ -136,7 +137,7 @@ RSpec.describe Api::DocumentsController do
 
   describe '#update' do
     let(:contents) { { 'name' => 'John', 'age' => 45 } }
-    let(:new_contents) { { 'new' => 'contents' } }
+    let(:new_contents) { { 'name' => 'Rishab' } }
     let(:bearer_token) { nil }
 
     before do
@@ -170,6 +171,14 @@ RSpec.describe Api::DocumentsController do
     # Public document
     it_behaves_like 'a valid request'
 
+    it_behaves_like 'a valid request' do
+      let(:new_contents) { {} }
+    end
+
+    it_behaves_like 'a valid request' do
+      let(:new_contents) { ["abc"] }
+    end
+
     context 'with an unnecessary auth token' do
       let!(:bearer_token) { 'WHY' }
 
@@ -198,6 +207,28 @@ RSpec.describe Api::DocumentsController do
       it_behaves_like 'a denied request' do
         let!(:non_owner) { create :user, api_auth_token: '456', is_premium: true }
         let!(:bearer_token) { '456' }
+      end
+    end
+
+    context 'with a schema' do
+      let(:schema) {
+        {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+
+      it_behaves_like 'a valid request'
+
+      it_behaves_like 'a denied request', 400 do
+        let(:new_contents) { ["abc"] }
       end
     end
 

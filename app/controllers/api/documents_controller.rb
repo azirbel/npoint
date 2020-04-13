@@ -52,10 +52,12 @@ class Api::DocumentsController < ApplicationController
     end
 
     new_contents = fetch_json_or_nil(request.body.read)
-    document.update!(contents: new_contents, original_contents: new_contents.as_json || '')
+    document.update!(contents: new_contents, original_contents: new_contents.as_json.to_json || '')
     render json: new_contents
   rescue PathNotSupportedError
     head :not_found
+  rescue ActiveRecord::RecordInvalid
+    head :bad_request
   end
 
   private
@@ -83,6 +85,10 @@ class Api::DocumentsController < ApplicationController
   end
 
   def check_api_update_rights!
+    if !document.present?
+      return head :not_found
+    end
+
     if !document.user.present?
       return
     end

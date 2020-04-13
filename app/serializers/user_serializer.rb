@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :name, :email, :avatar_url, :has_documents
+  attributes :name, :email, :avatar_url, :has_documents, :is_premium, :api_auth_token
 
   def avatar_url
     hash = Digest::MD5.hexdigest(object.email)
@@ -10,5 +10,9 @@ class UserSerializer < ActiveModel::Serializer
     return false unless scope.present?
 
     !scope.documents.empty?
+  end
+
+  def api_auth_token
+    object.is_premium ? object.api_auth_token : nil
   end
 end
