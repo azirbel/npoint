@@ -124,6 +124,7 @@ p.prose {
   margin-top: 1em;
 }
 
+pre,
 code {
   background-color: var(--darkWhite);
   padding: 2px 6px;

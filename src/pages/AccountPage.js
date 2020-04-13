@@ -14,6 +14,15 @@ import { logIn } from '../actions'
 
 import {} from './AccountPage.css'
 
+let getCurlExample = token => {
+  return `
+curl -X POST \\
+  http://api.lvh.me:3001/f68a56191e60184bde5a \\
+  --data '{"new":"data"}' \\
+  --header "Authorization: Bearer ${token}"
+  `
+}
+
 class AccountPage extends Component {
   state = {
     isSavingName: false,
@@ -146,6 +155,34 @@ class AccountPage extends Component {
             </div>
           )}
         </div>
+        {this.props.session.user.isPremium && (
+          <React.Fragment>
+            <div className="account-info-section prose">
+              <h5>Account type</h5>
+              <div>Premium</div>
+            </div>
+            <div className="account-info-section prose">
+              <h5>API Token</h5>
+              <code>{this.props.session.user.apiAuthToken}</code>
+              <div style={{ marginTop: 18, marginBottom: 6 }}>
+                Add this header to your POST requests to edit JSON bins you own.
+              </div>
+              <code>
+                'Authorization': 'Bearer {this.props.session.user.apiAuthToken}'
+              </code>
+              <div style={{ marginTop: 18, marginBottom: -6 }}>
+                Curl example:
+              </div>
+              <pre>
+                curl -X POST \<br />
+                {'  '}http://api.lvh.me:3001/DOC_ID \<br />
+                {'  '}--data {`'{"new":"data"}'`} \<br />
+                {'  '}--header 'Authorization: Bearer{' '}
+                {this.props.session.user.apiAuthToken}'
+              </pre>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     )
   }
