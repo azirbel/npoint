@@ -175,7 +175,8 @@ class AccountPage extends Component {
               </div>
               <pre>
                 curl -X POST \<br />
-                {'  '}http://api.lvh.me:3001/DOC_ID \<br />
+                {'  '}
+                {this.props.session.user.sampleUpdateUrl} \<br />
                 {'  '}--data {`'{"new":"data"}'`} \<br />
                 {'  '}--header 'Authorization: Bearer{' '}
                 {this.props.session.user.apiAuthToken}'
