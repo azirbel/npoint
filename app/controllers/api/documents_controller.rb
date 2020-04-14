@@ -1,4 +1,6 @@
 class Api::DocumentsController < ApplicationController
+  protect_from_forgery with: :null_session # Disable CSRF
+
   class InvalidPathError < StandardError
   end
 
