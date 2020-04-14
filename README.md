@@ -69,23 +69,9 @@ git commit -a -m "Add build files"
 
 #### Deploying
 
-```bash
+Push to master. This deploys staging.
 
-# 1. Set up heroku branches
-heroku git:remote -a npoint-io-staging
-git remote rename heroku staging
-
-heroku git:remote -a npoint-io
-git remote rename heroku production
-
-# 2. Push
-git push staging master
-git push production master
-
-# 3. Maybe run migrations
-heroku run rake db:migrate --app npoint-io-staging
-heroku run rake db:migrate --app npoint-io
-```
+Deploy prod manually via render UI.
 
 ## Similar Tools
 
