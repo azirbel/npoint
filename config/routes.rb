@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     namespace :api, path: nil, defaults: { format: 'json' } do
       match '/:token(/*path)', to: 'documents#show', via: [:get, :options]
       match '/:token(/*path)', to: 'documents#update', via: [:post, :options]
+      root to: 'info#index'
     end
   end
 
