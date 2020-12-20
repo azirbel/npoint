@@ -25,3 +25,6 @@ class Rack::Attack
     end
   end
 end
+
+# Disable until there's time for the update email to go out
+Rack::Attack.enabled = false
