@@ -48,7 +48,7 @@ yarn test  # no jest tests yet
 ```
 
 **Important note**: Rspec integration tests run against the compiled version of the
-app in `app/assets`. Build with `npm run build` first, or set up capybara to run against
+app in `app/assets`. Build with `yarn build` first, or set up capybara to run against
 your live webpack version (I haven't done this yet, but have ideas in `spec_helper.rb`).
 
 ## Maintaining
@@ -57,7 +57,7 @@ your live webpack version (I haven't done this yet, but have ideas in `spec_help
 
 ```bash
 # 1. Build files
-npm run build
+yarn build
 
 # 2. Make an "Add build files" commit
 git commit -a -m "Add build files"

@@ -245,26 +245,58 @@ export default class IndexPage extends Component {
         <div className="section dark-white">
           <div className="container">
             <div className="prose">
-              <h2>Premium Features</h2>
-              <p className="text-italic">
-                Want any of the features below? Say so using the chat widget in
-                the bottom right!
+              <h2>Usage and limits</h2>
+              <p>
+                What started out as a hobby project to help with prototyping has
+                turned into a service serving over 2,000 requests/minute for
+                over 25,000 JSON bins.
               </p>
+              <p>
+                To keep everything running smoothly, n:point now rate-limits
+                requests as follows:
+              </p>
+              <p>
+                <ul>
+                  <li>
+                    <b>100 requests/min</b> per IP address
+                  </li>
+                  <li>
+                    <b>600 requests/min</b> per JSON bin
+                  </li>
+                </ul>
+              </p>
+              <p>
+                n:point is a one-way JSON store: edit online, fetch via GET
+                requests over API. Editing data over the API via POST requests
+                is in private beta. Even once released, n:point is not meant to
+                be a full backend for your app.
+              </p>
+              <p>
+                Contact <a href="mailto:support@npoint.io">support@npoint.io</a>{' '}
+                if you have any questions!
+              </p>
+
+              <h3 style={{ marginTop: 40 }}>Open source</h3>
+              <p>
+                n:point is completely open source and hosted on{' '}
+                <a target="_blank" href="https://github.com/azirbel/npoint">
+                  Github
+                </a>
+                .
+              </p>
+              <p style={{ marginBottom: 20 }}>
+                Contributions are welcome! There are also instructions in case
+                you want to self-host your own instance.
+              </p>
+              <iframe
+                src="https://ghbtns.com/github-btn.html?user=azirbel&repo=npoint&type=star&count=true&size=large"
+                frameborder="0"
+                scrolling="0"
+                width="170"
+                height="30"
+                title="GitHub"
+              />
             </div>
-            <ul>
-              {_.isEmpty(this.state.premiumFeatures) && (
-                <PageLoadingPlaceholder />
-              )}
-              {this.state.premiumFeatures.map(feature => (
-                <li key={feature.title} className="feature">
-                  <MdStarOutline className="feature-icon" />
-                  <div>
-                    <h3>{feature.title}</h3>
-                    <ReactMarkdown source={feature.description} />
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
