@@ -6,9 +6,9 @@ Save FAQ answers, customer stories, configuration data, or	anything else that
 will fit in a JSON blob. Then access your data	directly via API.
 
 Once your app is live, come back later to edit your saved JSON	without having
-to redeploy. Or share edit permissions with a	friend so they can help you
-experiment! Features like schmema validation and locking mean you can make
-these changes confidently, without	breaking your app.
+to redeploy. Or share a login with a	friend so they can help you experiment!
+Features like schmema validation and locking mean you can make these changes
+confidently, without breaking your app.
 
 ![Demo screenshot](public/img/demo-screenshot-locked.png)
 
@@ -51,10 +51,6 @@ yarn test  # no jest tests yet
 app in `app/assets`. Build with `npm run build` first, or set up capybara to run against
 your live webpack version (I haven't done this yet, but have ideas in `spec_helper.rb`).
 
-Testing in IE: Use BrowserStack, which provides an [open
-source](https://www.browserstack.com/open-source) plan. (Contact Alex for setup
-details)
-
 ## Maintaining
 
 #### Production build
@@ -84,6 +80,29 @@ Deploy prod manually via render UI.
 
 * [JSON Schema](http://json-schema.org/)
 * [JSON in Postgres](https://blog.codeship.com/unleash-the-power-of-storing-json-in-postgres/)
+
+## Self-hosting
+
+Want to run your own instance of n:point? Go right ahead!
+
+I'd recommend setting it up on [render.com](https://render.com/), which is what
+I use for [npoint.io](https://www.npoint.io).
+
+1. Set up a hosted Potsgres DB in render, and make sure `DATABASE_URL` points there
+2. Configure environment variables. You'll at least need `HOST` (e.g. `npoint.io`)
+3. Use these render settings:
+
+```
+# build command
+./build.sh
+
+# start command
+./start.sh
+```
+
+The one piece of the app that won't work is password-reset emails, which go
+through a Sendgrid account. I recommend deleting the code for this and handling
+it yourself.
 
 ## Codebase TODOs / Wishlist
 
