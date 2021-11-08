@@ -46,9 +46,11 @@ class DocumentIndexPage extends Component {
   }
 
   deleteDocument(doc) {
-    Document.delete(doc.token).then(() => {
-      this.setState({ documents: _.without(this.state.documents, doc) })
-    })
+    if(confirm(`Are you sure, you want to delete this pin ${doc.title} ?`)) {
+      Document.delete(doc.token).then(() => {
+        this.setState({ documents: _.without(this.state.documents, doc) })
+      })
+    }
   }
 
   render() {
