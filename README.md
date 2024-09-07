@@ -7,7 +7,7 @@ will fit in a JSON blob. Then access your data	directly via API.
 
 Once your app is live, come back later to edit your saved JSON	without having
 to redeploy. Or share a login with a	friend so they can help you experiment!
-Features like schmema validation and locking mean you can make these changes
+Features like schema validation and locking mean you can make these changes
 confidently, without breaking your app.
 
 ![Demo screenshot](public/img/demo-screenshot-locked.png)
