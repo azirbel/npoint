@@ -36,5 +36,17 @@ module Npoint
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
+
+    # Rails console helpers
+    console do
+      # Look up document by token: `token 'abc'`
+      module ConsoleHelpers
+        def token(token_str)
+          Document.find_by!(token: token_str)
+        end
+      end
+
+      TOPLEVEL_BINDING.eval('self').extend(ConsoleHelpers)
+    end
   end
 end

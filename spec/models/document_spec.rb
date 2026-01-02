@@ -74,5 +74,71 @@ RSpec.describe Document do
         expect(document.errors.messages).to eq({})
       end
     end
+
+    context 'document size limits' do
+      let(:small_contents) { { 'data' => 'small' } }
+      let(:large_contents) { { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE + 1000) } }
+      let(:schema) { nil }
+
+      context 'when contents are under the limit' do
+        let(:contents) { small_contents }
+
+        it 'is valid' do
+          expect(document.valid?).to be(true)
+          expect(document.errors.messages).to eq({})
+        end
+      end
+
+      context 'when updating with contents over the limit' do
+        it 'is invalid' do
+          document = create(:document, contents: small_contents)
+          document.contents = large_contents
+
+          expect(document.valid?).to be(false)
+          expect(document.errors.messages[:contents].first).to match(/is too large/)
+        end
+      end
+
+      context 'when an existing large document is not modified' do
+        it 'remains valid' do
+          # Create a document with large contents by bypassing validations
+          document = create(:document, contents: small_contents)
+          document.update_column(:contents, large_contents)
+
+          # Reload and verify it can be loaded
+          reloaded = Document.find(document.id)
+          expect(reloaded).to be_present
+          expect(reloaded.contents).to eq(large_contents)
+
+          # Should be valid when not changing contents
+          reloaded.title = 'Updated title'
+          expect(reloaded.valid?).to be(true)
+        end
+      end
+
+      context 'when a rejected edit to a large document preserves original state' do
+        it 'keeps the document in its pre-edit state after failed save' do
+          # Create a document with large contents by bypassing validations
+          original_large_contents = { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE + 1000) }
+          document = create(:document, contents: small_contents)
+          document.update_column(:contents, original_large_contents)
+
+          # Reload the document
+          reloaded = Document.find(document.id)
+
+          # Try to edit the large document (should fail)
+          new_large_contents = { 'data' => 'y' * (Document::MAX_CONTENTS_SIZE + 2000) }
+          reloaded.contents = new_large_contents
+
+          expect(reloaded.save).to be(false)
+          expect(reloaded.errors.messages[:contents].first).to match(/is too large/)
+
+          # Verify the document still has its original contents in the database
+          reloaded.reload
+          expect(reloaded.contents).to eq(original_large_contents)
+          expect(reloaded).to be_valid
+        end
+      end
+    end
   end
 end
