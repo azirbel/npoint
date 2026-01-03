@@ -44,10 +44,9 @@ class Document < ActiveRecord::Base
   end
 
   def contents_size_within_limit
-    return if contents.nil?
+    return if original_contents.nil?
 
-    contents_json = contents.to_json
-    size_in_bytes = contents_json.bytesize
+    size_in_bytes = original_contents.bytesize
 
     if size_in_bytes > MAX_CONTENTS_SIZE_BYTES
       size_in_kb = (size_in_bytes.to_f / 1.kilobyte).round(2)

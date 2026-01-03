@@ -146,16 +146,13 @@ class DocumentPage extends Component {
     )
   }
   get currentDocumentSizeInBytes() {
-    if (!this.state.contents) return 0
-    const jsonString = JSON.stringify(this.state.contents)
+    if (!this.state.originalContents) return 0
     // Use TextEncoder to match Ruby's .bytesize (UTF-8 bytes, not UTF-16 code units)
-    return new TextEncoder().encode(jsonString).length
+    return new TextEncoder().encode(this.state.originalContents).length
   }
   get savedDocumentSizeInBytes() {
     if (!this.state.savedOriginalContents) return 0
-    const parsed = JSON.parse(this.state.savedOriginalContents)
-    const jsonString = JSON.stringify(parsed)
-    return new TextEncoder().encode(jsonString).length
+    return new TextEncoder().encode(this.state.savedOriginalContents).length
   }
   get isCurrentDocumentOverSizeLimit() {
     const maxSize = this.state.document.maxContentsSize || 0
