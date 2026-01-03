@@ -28,6 +28,7 @@ const CONFIRM_TEXT =
 const INITIAL_STATE = {
   contents: null,
   contentsErrorMessage: '',
+  contentsSizeErrorMessage: '',
   document: {},
   isLoading: false,
   isSaving: false,
@@ -144,15 +145,25 @@ class DocumentPage extends Component {
       this.state.originalSchema === this.state.savedOriginalSchema
     )
   }
-  get documentSizeInBytes() {
+  get currentDocumentSizeInBytes() {
     if (!this.state.contents) return 0
     const jsonString = JSON.stringify(this.state.contents)
     // Use TextEncoder to match Ruby's .bytesize (UTF-8 bytes, not UTF-16 code units)
     return new TextEncoder().encode(jsonString).length
   }
-  get isOverSizeLimit() {
+  get savedDocumentSizeInBytes() {
+    if (!this.state.savedOriginalContents) return 0
+    const parsed = JSON.parse(this.state.savedOriginalContents)
+    const jsonString = JSON.stringify(parsed)
+    return new TextEncoder().encode(jsonString).length
+  }
+  get isCurrentDocumentOverSizeLimit() {
     const maxSize = this.state.document.maxContentsSize || 0
-    return this.documentSizeInBytes > maxSize
+    return this.currentDocumentSizeInBytes > maxSize
+  }
+  get isSavedDocumentOverSizeLimit() {
+    const maxSize = this.state.document.maxContentsSize || 0
+    return this.savedDocumentSizeInBytes > maxSize
   }
 
   // Ace editor is picky and gets upset when we try to kick off a validation job
@@ -175,8 +186,9 @@ class DocumentPage extends Component {
             contentsErrorMessage: errorMessage,
           })
           if (_.isEmpty(errorMessage)) {
+            this.validateSizeLimit()
             this.validateSchemaMatch()
-            if (_.isEmpty(this.state.validationErrorMessage)) {
+            if (_.isEmpty(this.state.validationErrorMessage) && _.isEmpty(this.state.contentsSizeErrorMessage)) {
               this.setState({ showContentsErrorMessage: false })
             }
           }
@@ -212,6 +224,25 @@ class DocumentPage extends Component {
     if (this.state.schemaErrorMessage) {
       this.setState({
         showSchemaErrorMessage: true,
+      })
+    }
+  }
+
+  validateSizeLimit = () => {
+    // Only show error if document is over limit AND has been edited
+    // (if not edited, the header badge already shows it, an it'll block the autoformat button)
+    if (this.isCurrentDocumentOverSizeLimit && !this.hasSaved) {
+      const maxSize = this.state.document.maxContentsSize || 0
+      const currentSize = this.currentDocumentSizeInBytes
+      const maxSizeKB = Math.round(maxSize / 1024)
+      const currentSizeKB = Math.ceil(currentSize / 1024)
+      this.setState({
+        contentsSizeErrorMessage: `Document is too large (${currentSizeKB} KB). Maximum size is ${maxSizeKB} KB.`,
+        showContentsErrorMessage: true,
+      })
+    } else {
+      this.setState({
+        contentsSizeErrorMessage: null,
       })
     }
   }
@@ -288,6 +319,7 @@ class DocumentPage extends Component {
   saveDocument = extraParams => {
     if (
       this.state.contentsErrorMessage ||
+      this.state.contentsSizeErrorMessage ||
       this.state.schemaErrorMessage ||
       this.state.validationErrorMessage
     ) {
@@ -318,6 +350,13 @@ class DocumentPage extends Component {
         savedOriginalContents: saveState.originalContents,
         savedOriginalSchema: saveState.originalSchema,
       })
+    }).catch(error => {
+      this.setState({ isSaving: false })
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error)
+      } else {
+        alert('Failed to save document. Please try again.')
+      }
     })
   }
 
@@ -385,6 +424,9 @@ class DocumentPage extends Component {
         (this.state.contentsErrorMessage
           ? 'Syntax error in JSON data'
           : null) ||
+        (this.state.contentsSizeErrorMessage
+          ? 'JSON data is too large'
+          : null) ||
         (this.state.schemaErrorMessage ? 'Syntax error in schema' : null) ||
         (this.state.validationErrorMessage
           ? 'JSON data does not match schema'
@@ -426,10 +468,10 @@ class DocumentPage extends Component {
         <DocumentPageHeader
           contentsEditable={this.contentsEditable}
           document={this.state.document}
-          documentSizeInBytes={this.documentSizeInBytes}
+          documentSizeInBytes={this.savedDocumentSizeInBytes}
           errorMessage={overallErrorMessage}
           hasSaved={this.hasSaved}
-          isOverSizeLimit={this.isOverSizeLimit}
+          isOverSizeLimit={this.isSavedDocumentOverSizeLimit}
           isSavingDocument={this.state.isSaving}
           onClone={this.requestCloneDocument}
           onSaveTitle={this.onSaveTitle}
@@ -500,7 +542,9 @@ class DocumentPage extends Component {
       <div>
         <ContentsEditor
           errorMessage={
-            this.state.contentsErrorMessage || this.state.validationErrorMessage
+            this.state.contentsErrorMessage ||
+            this.state.contentsSizeErrorMessage ||
+            this.state.validationErrorMessage
           }
           canGenerateSchema={!this.state.originalSchema}
           onAutoformatContents={this.autoformatContents}

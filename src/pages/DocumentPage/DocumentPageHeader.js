@@ -82,7 +82,7 @@ export default class DocumentPageHeader extends Component {
             overlay={
               <div style={{ maxWidth: '300px' }}>
                 <div>
-                  This document is <b>{Math.round(this.props.documentSizeInBytes / 1024)} KB</b> out of a maximum <b>{Math.round((this.props.document.maxContentsSize || 0) / 1024)} KB</b>.
+                  This document is <b>{Math.ceil(this.props.documentSizeInBytes / 1024)} KB</b> out of a maximum <b>{Math.round((this.props.document.maxContentsSize || 0) / 1024)} KB</b>.
                 </div>
                 <br />
                 <div>

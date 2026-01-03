@@ -34,6 +34,8 @@ class DocumentsController < ApplicationController
   def update
     document.update!(update_params)
     render json: document, serializer: SERIALIZER
+  rescue Document::OverSizeLimit => e
+    render json: { error: e.message }, status: :bad_request
   rescue ActiveRecord::RecordInvalid
     # TODO(test)
     head :bad_request

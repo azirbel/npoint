@@ -1,4 +1,6 @@
 class Document < ActiveRecord::Base
+  class OverSizeLimit < StandardError; end
+
   before_validation :create_unique_identifier, on: :create
 
   validate :contents_must_match_schema
@@ -48,9 +50,9 @@ class Document < ActiveRecord::Base
     size_in_bytes = contents_json.bytesize
 
     if size_in_bytes > MAX_CONTENTS_SIZE_BYTES
-      size_in_mb = (size_in_bytes.to_f / 1.megabyte).round(2)
-      limit_in_mb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.megabyte).round(2)
-      errors.add(:contents, "is too large (#{size_in_mb}MB). Maximum size is #{limit_in_mb}MB")
+      size_in_kb = (size_in_bytes.to_f / 1.kilobyte).round(2)
+      limit_in_kb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.kilobyte).round(2)
+      raise OverSizeLimit, "Document is too large (#{size_in_kb} KB). Maximum size is #{limit_in_kb} KB."
     end
   end
 end
