@@ -6,6 +6,7 @@ class DocumentSerializer < DocumentIndexSerializer
   attributes :api_url,
     :contents,
     :example_subproperty_url,
+    :max_contents_size,
     :original_contents,
     :original_schema,
     :owned_by_current_user,
@@ -13,6 +14,10 @@ class DocumentSerializer < DocumentIndexSerializer
 
   def api_url
     url_for(controller: 'api/documents', subdomain: 'api', action: 'show', token: object.token)
+  end
+
+  def max_contents_size
+    Document::MAX_CONTENTS_SIZE_BYTES
   end
 
   def example_subproperty_url

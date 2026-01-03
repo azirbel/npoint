@@ -18,9 +18,7 @@ class Document < ActiveRecord::Base
   # since URLs show up in logs and can't be rolled back if leaked.
   TOKEN_LENGTH = 10
 
-  # Maximum size for document contents (in bytes of JSON)
-  # Set to 1MB by default - adjust as needed
-  MAX_CONTENTS_SIZE = 1.megabyte
+  MAX_CONTENTS_SIZE_BYTES = 30.kilobytes
 
   def create_unique_identifier
     begin
@@ -49,9 +47,9 @@ class Document < ActiveRecord::Base
     contents_json = contents.to_json
     size_in_bytes = contents_json.bytesize
 
-    if size_in_bytes > MAX_CONTENTS_SIZE
+    if size_in_bytes > MAX_CONTENTS_SIZE_BYTES
       size_in_mb = (size_in_bytes.to_f / 1.megabyte).round(2)
-      limit_in_mb = (MAX_CONTENTS_SIZE.to_f / 1.megabyte).round(2)
+      limit_in_mb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.megabyte).round(2)
       errors.add(:contents, "is too large (#{size_in_mb}MB). Maximum size is #{limit_in_mb}MB")
     end
   end

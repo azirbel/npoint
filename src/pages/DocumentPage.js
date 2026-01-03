@@ -144,6 +144,16 @@ class DocumentPage extends Component {
       this.state.originalSchema === this.state.savedOriginalSchema
     )
   }
+  get documentSizeInBytes() {
+    if (!this.state.contents) return 0
+    const jsonString = JSON.stringify(this.state.contents)
+    // Use TextEncoder to match Ruby's .bytesize (UTF-8 bytes, not UTF-16 code units)
+    return new TextEncoder().encode(jsonString).length
+  }
+  get isOverSizeLimit() {
+    const maxSize = this.state.document.maxContentsSize || 0
+    return this.documentSizeInBytes > maxSize
+  }
 
   // Ace editor is picky and gets upset when we try to kick off a validation job
   // during the content change handler. (Any tiny slowness causes lag and makes the cursor
@@ -416,8 +426,10 @@ class DocumentPage extends Component {
         <DocumentPageHeader
           contentsEditable={this.contentsEditable}
           document={this.state.document}
+          documentSizeInBytes={this.documentSizeInBytes}
           errorMessage={overallErrorMessage}
           hasSaved={this.hasSaved}
+          isOverSizeLimit={this.isOverSizeLimit}
           isSavingDocument={this.state.isSaving}
           onClone={this.requestCloneDocument}
           onSaveTitle={this.onSaveTitle}
