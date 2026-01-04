@@ -1,7 +1,10 @@
 class Document < ActiveRecord::Base
+  class OverSizeLimit < StandardError; end
+
   before_validation :create_unique_identifier, on: :create
 
   validate :contents_must_match_schema
+  validate :contents_size_within_limit, if: :contents_changed?, on: :update
   validates :token, presence: true, uniqueness: true
 
   belongs_to :user, optional: true
@@ -16,6 +19,8 @@ class Document < ActiveRecord::Base
   # But it's ok for now. Token-based security is only so strong anyway,
   # since URLs show up in logs and can't be rolled back if leaked.
   TOKEN_LENGTH = 10
+
+  MAX_CONTENTS_SIZE_BYTES = 100.kilobytes
 
   def create_unique_identifier
     begin
@@ -35,6 +40,18 @@ class Document < ActiveRecord::Base
         schema != [] &&
         !JSON::Validator.validate(schema, contents)
       errors.add(:contents, "does not match schema")
+    end
+  end
+
+  def contents_size_within_limit
+    return if original_contents.nil?
+
+    size_in_bytes = original_contents.bytesize
+
+    if size_in_bytes > MAX_CONTENTS_SIZE_BYTES
+      size_in_kb = (size_in_bytes.to_f / 1.kilobyte).ceil
+      limit_in_kb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.kilobyte).round
+      raise OverSizeLimit, "Document is too large (#{size_in_kb} KB). Maximum size is #{limit_in_kb} KB."
     end
   end
 end

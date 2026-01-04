@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Tooltip from 'rc-tooltip'
+import { MdReportProblem } from 'react-icons/lib/md'
 import _ from 'lodash'
 
 import Button from '../../components/Button'
@@ -14,8 +15,10 @@ export default class DocumentPageHeader extends Component {
   static propTypes = {
     contentsEditable: PropTypes.bool,
     document: PropTypes.object.isRequired,
+    documentSizeInBytes: PropTypes.number,
     errorMessage: PropTypes.string,
     hasSaved: PropTypes.bool.isRequired,
+    isOverSizeLimit: PropTypes.bool,
     isSavingDocument: PropTypes.bool,
     onClone: PropTypes.func.isRequired,
     onSaveTitle: PropTypes.func.isRequired,
@@ -71,6 +74,36 @@ export default class DocumentPageHeader extends Component {
               <div className="badge dark-gray">Public</div>
             </Tooltip>
           )
+        )}
+        {this.props.document.editable && this.props.isOverSizeLimit && (
+          <Tooltip
+            placement="bottom"
+            trigger={['hover']}
+            overlay={
+              <div style={{ maxWidth: '300px' }}>
+                <div>
+                  This document is <b>{Math.ceil(this.props.documentSizeInBytes / 1024)} KB</b> out of a maximum <b>{Math.round((this.props.document.maxContentsSize || 0) / 1024)} KB</b>.
+                </div>
+                <br />
+                <div>
+                  It's still online, but further edits won't be saved until the size is below {Math.round((this.props.document.maxContentsSize || 0) / 1024)} KB.
+                </div>
+                <br />
+                <div>
+                  This limit was added in January 2026 in order to keep costs down so the site can stay free.
+                </div>
+                <br/>
+                <div>
+                  More info at <a target="_blank" href="https://www.npoint.io/changelog>" style={{ color: 'white', fontWeight: 'bold' }}>www.npoint.io/changelog</a>.
+                </div>
+              </div>
+            }
+          >
+            <span className="badge danger" style={{ textTransform: '' }}>
+              <MdReportProblem style={{ marginRight: '4px' }} />
+              Over size limit
+            </span>
+          </Tooltip>
         )}
         <div className="flex-spring" />
         {this.props.contentsEditable && this.renderSaveButton()}
