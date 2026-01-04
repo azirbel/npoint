@@ -20,7 +20,7 @@ class Document < ActiveRecord::Base
   # since URLs show up in logs and can't be rolled back if leaked.
   TOKEN_LENGTH = 10
 
-  MAX_CONTENTS_SIZE_BYTES = 30.kilobytes
+  MAX_CONTENTS_SIZE_BYTES = 100.kilobytes
 
   def create_unique_identifier
     begin
