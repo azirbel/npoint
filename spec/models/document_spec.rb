@@ -77,7 +77,7 @@ RSpec.describe Document do
 
     context 'document size limits' do
       let(:small_contents) { { 'data' => 'small' } }
-      let(:large_contents) { { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE + 1000) } }
+      let(:large_contents) { { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE_BYTES + 1000) } }
       let(:schema) { nil }
 
       context 'when contents are under the limit' do
@@ -90,12 +90,12 @@ RSpec.describe Document do
       end
 
       context 'when updating with contents over the limit' do
-        it 'is invalid' do
+        it 'raises an error on save' do
           document = create(:document, contents: small_contents)
           document.contents = large_contents
+          document.original_contents = JSON.generate(large_contents)
 
-          expect(document.valid?).to be(false)
-          expect(document.errors.messages[:contents].first).to match(/is too large/)
+          expect { document.save! }.to raise_error(Document::OverSizeLimit, /is too large/)
         end
       end
 
@@ -119,7 +119,7 @@ RSpec.describe Document do
       context 'when a rejected edit to a large document preserves original state' do
         it 'keeps the document in its pre-edit state after failed save' do
           # Create a document with large contents by bypassing validations
-          original_large_contents = { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE + 1000) }
+          original_large_contents = { 'data' => 'x' * (Document::MAX_CONTENTS_SIZE_BYTES + 1000) }
           document = create(:document, contents: small_contents)
           document.update_column(:contents, original_large_contents)
 
@@ -127,11 +127,11 @@ RSpec.describe Document do
           reloaded = Document.find(document.id)
 
           # Try to edit the large document (should fail)
-          new_large_contents = { 'data' => 'y' * (Document::MAX_CONTENTS_SIZE + 2000) }
+          new_large_contents = { 'data' => 'y' * (Document::MAX_CONTENTS_SIZE_BYTES + 2000) }
           reloaded.contents = new_large_contents
+          reloaded.original_contents = JSON.generate(new_large_contents)
 
-          expect(reloaded.save).to be(false)
-          expect(reloaded.errors.messages[:contents].first).to match(/is too large/)
+          expect { reloaded.save! }.to raise_error(Document::OverSizeLimit, /is too large/)
 
           # Verify the document still has its original contents in the database
           reloaded.reload
