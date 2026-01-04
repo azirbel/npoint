@@ -49,8 +49,8 @@ class Document < ActiveRecord::Base
     size_in_bytes = original_contents.bytesize
 
     if size_in_bytes > MAX_CONTENTS_SIZE_BYTES
-      size_in_kb = (size_in_bytes.to_f / 1.kilobyte).round(2)
-      limit_in_kb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.kilobyte).round(2)
+      size_in_kb = (size_in_bytes.to_f / 1.kilobyte).ceil
+      limit_in_kb = (MAX_CONTENTS_SIZE_BYTES.to_f / 1.kilobyte).round
       raise OverSizeLimit, "Document is too large (#{size_in_kb} KB). Maximum size is #{limit_in_kb} KB."
     end
   end
